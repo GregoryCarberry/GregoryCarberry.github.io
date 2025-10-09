@@ -5,23 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gregory John Carberry — Cloud Portfolio</title>
   <meta name="description" content="AWS & Cloud portfolio: projects, certifications, and contact." />
+  <link rel="canonical" href="https://gregorycarberry.github.io/" />
+
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
-  <!-- Tailwind via CDN -->
+
+  <!-- Tailwind via CDN (preconnect to speed up) -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { display: ['Inter', 'ui-sans-serif', 'system-ui'], body: ['Inter','ui-sans-serif','system-ui'] },
+          fontFamily: { display: ['Inter','ui-sans-serif','system-ui'], body: ['Inter','ui-sans-serif','system-ui'] },
         }
       },
       darkMode: 'class'
     };
   </script>
+
+  <!-- Theming & color scheme hints -->
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gregory John Carberry — Cloud Portfolio">
+  <meta property="og:description" content="Hands-on AWS builds, certs, and projects.">
+  <meta property="og:url" content="https://gregorycarberry.github.io/">
+  <meta property="og:image" content="https://gregorycarberry.github.io/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gregory John Carberry — Cloud Portfolio">
+  <meta name="twitter:description" content="Hands-on AWS builds, certs, and projects.">
+  <meta name="twitter:image" content="https://gregorycarberry.github.io/og-image.png">
+
   <style>
-    /* Nice subtle gradient background */
+    /* Subtle dot grid background for cards */
     .bg-grid { background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px); background-size: 24px 24px; }
+    /* Skip link */
+    .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus { position:fixed; left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; border-radius:.5rem; background:#111827; color:#fff; z-index:10000; }
   </style>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -37,12 +63,15 @@
   }
   </script>
 </head>
+
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <a href="#projects" class="skip-link">Skip to main content</a>
+
   <!-- Nav -->
   <header class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-900/60 border-b border-slate-200/60 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#home" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
-     <nav id="navLinks" class="hidden sm:flex gap-6 text-sm"></nav>
+     <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
 
       <button id="themeToggle" aria-label="Toggle theme" class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">🌙</button>
     </div>
@@ -353,6 +382,41 @@ async function loadLinks() {
   }
 }
 loadLinks();
+
+// --- Active section underline (IntersectionObserver)
+(function() {
+  const nav = document.getElementById('navLinks');
+  if (!nav) return;
+  const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  if (!('IntersectionObserver' in window) || sections.length === 0) return;
+
+  const setActive = (id) => {
+    links.forEach(a => {
+      const on = a.getAttribute('href') === `#${id}`;
+      a.classList.toggle('underline', on);
+      a.setAttribute('aria-current', on ? 'page' : null);
+    });
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    // choose the most visible section
+    const topMost = entries
+      .filter(e => e.isIntersecting)
+      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (topMost?.target?.id) setActive(topMost.target.id);
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: [0, .25, .5, .75, 1] });
+
+  sections.forEach(s => io.observe(s));
+})();
+
+// --- Respect reduced motion for smooth scrolling
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.style.scrollBehavior = 'auto';
+}
 
   </script>
 </body>
