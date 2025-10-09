@@ -42,13 +42,8 @@
   <header class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-900/60 border-b border-slate-200/60 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#home" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
-      <nav class="hidden sm:flex gap-6 text-sm">
-        <a href="#projects" class="hover:underline">Projects</a>
-        <a href="#certs" class="hover:underline">Certifications</a>
-        <a href="#skills" class="hover:underline">Skills</a>
-        <a href="#timeline" class="hover:underline">Timeline</a>
-        <a href="#contact" class="hover:underline">Contact</a>
-      </nav>
+     <nav id="navLinks" class="hidden sm:flex gap-6 text-sm"></nav>
+
       <button id="themeToggle" aria-label="Toggle theme" class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">🌙</button>
     </div>
   </header>
@@ -61,13 +56,8 @@
         <div>
           <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight">Gregory John Carberry</h1>
           <p id="heroTagline" class="mt-4 text-lg text-slate-600 dark:text-slate-300"></p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a class="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500" href="#projects">View Projects</a>
-            <a class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700" href="https://www.linkedin.com/in/gregory-carberry/" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700" href="https://www.credly.com/users/gregory-carberry" target="_blank" rel="noopener">Credly</a>
-            <a class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700" href="/Gregory-Carberry-CV.pdf" target="_blank" rel="noopener">Download CV</a>
-            <a class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700" href="https://github.com/GregoryCarberry" target="_blank" rel="noopener">Browse All Repositories</a>
-          </div>
+          <div id="heroButtons" class="mt-6 flex flex-wrap gap-3"></div>
+
           <p id="heroLearning" class="mt-4 text-sm text-slate-500 dark:text-slate-400"></p>
         </div>
         <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm bg-grid">
@@ -121,11 +111,8 @@
     <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-2xl sm:text-3xl font-bold">Contact</h2>
       <p class="mt-2 text-slate-600 dark:text-slate-300">Open to junior cloud/support roles (remote or West Midlands). Best ways to reach me:</p>
-      <div class="mt-6 flex flex-wrap gap-3 text-sm">
-        <a class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700" href="mailto:Carberry.GJ@gmail.com">Email</a>
-        <a class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700" href="https://www.linkedin.com/in/gregory-carberry/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700" href="https://github.com/GregoryCarberry" target="_blank" rel="noopener">GitHub</a>
-      </div>
+      <div id="contactButtons" class="mt-6 flex flex-wrap gap-3 text-sm"></div>
+
     </div>
   </section>
 
@@ -308,6 +295,65 @@
       }
     }
     loadSkills();
+
+// --- Data-driven links (nav + hero + contact)
+async function loadLinks() {
+  try {
+    const res = await fetch('/data/links.json', { cache: 'no-store' });
+    const links = await res.json();
+
+    const nav = document.getElementById('navLinks');
+    const hero = document.getElementById('heroButtons');
+    const contact = document.getElementById('contactButtons');
+
+    const mkBtn = (label, href, variant) => {
+      const a = document.createElement('a');
+      a.href = href || '#';
+      a.target = href?.startsWith('http') ? '_blank' : undefined;
+      a.rel = a.target === '_blank' ? 'noopener' : undefined;
+
+      if (variant === 'primary') {
+        a.className = 'px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500';
+      } else {
+        a.className = 'px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700';
+      }
+      a.textContent = label;
+      return a;
+    };
+
+    // NAV
+    if (nav) {
+      nav.innerHTML = '';
+      links.filter(l => l.slot === 'nav').forEach(l => {
+        const a = document.createElement('a');
+        a.href = l.href || '#';
+        a.className = 'hover:underline';
+        a.textContent = l.label;
+        nav.appendChild(a);
+      });
+    }
+
+    // HERO BUTTONS
+    if (hero) {
+      hero.innerHTML = '';
+      links.filter(l => l.slot === 'hero').forEach(l => {
+        hero.appendChild(mkBtn(l.label, l.href, l.variant));
+      });
+    }
+
+    // CONTACT BUTTONS
+    if (contact) {
+      contact.innerHTML = '';
+      links.filter(l => l.slot === 'contact').forEach(l => {
+        contact.appendChild(mkBtn(l.label, l.href));
+      });
+    }
+  } catch {
+    // Soft-fail silently; the page still works without the JSON.
+  }
+}
+loadLinks();
+
   </script>
 </body>
 </html>
