@@ -43,6 +43,12 @@
   <style>
     /* Subtle dot grid background for cards */
     .bg-grid { background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px); background-size: 24px 24px; }
+    /* Smooth card transitions */
+#projectGrid a {
+  transform: translateY(0);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
     /* Skip link */
     .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
     .skip-link:focus { position:fixed; left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; border-radius:.5rem; background:#111827; color:#fff; z-index:10000; }
@@ -166,58 +172,89 @@
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Dynamic projects: load curated list from /data/projects.json
-    async function loadProjects() {
-      const grid = document.getElementById('projectGrid');
-      grid.innerHTML = '<div class="text-sm text-slate-500">Loading projects…</div>';
-      try {
-        const res = await fetch('/data/projects.json', { cache: 'no-store' });
-        const projects = await res.json();
-        grid.innerHTML = '';
-        projects.forEach(p => {
-          const owner = p.owner || 'GregoryCarberry';
-          const repo = p.repo || '';
-          const link = p.link || (repo ? `https://github.com/${owner}/${repo}` : '#');
+    // --- Enhanced Projects Loader (with skeletons + hover polish)
+async function loadProjects() {
+  const grid = document.getElementById('projectGrid');
+  if (!grid) return;
 
-          const el = document.createElement('a');
-          el.href = link; el.target = '_blank'; el.rel = 'noopener';
-          el.className = 'block group rounded-2xl border border-slate-200 dark:border-slate-800 p-5 hover:shadow-sm bg-white dark:bg-slate-900';
-          el.innerHTML = `
-            <div class="flex items-start justify-between gap-3">
-              <h3 class="text-lg font-semibold group-hover:underline">${p.title || repo}</h3>
-              <span class="text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">Case Study</span>
-            </div>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">${p.blurb || ''}</p>
-            <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">${p.readme || ''}</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              ${(p.tags || []).map(t => `<span class="text-xs px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">${t}</span>`).join('')}
-            </div>
-            <div class="mt-3 text-xs text-slate-500 flex gap-4" data-meta>
-              <span class="stars" title="Stars">★ —</span>
-              <span class="forks" title="Forks">⑂ —</span>
-            </div>`;
-          grid.appendChild(el);
+  // skeleton loaders (3 placeholders)
+  grid.innerHTML = Array(3).fill(`
+    <div class="animate-pulse rounded-2xl border border-slate-200 dark:border-slate-800 p-5 bg-white/60 dark:bg-slate-900/40">
+      <div class="h-5 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      <div class="h-3 w-5/6 mt-3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      <div class="h-3 w-3/4 mt-2 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      <div class="flex gap-2 mt-4">
+        <div class="h-4 w-10 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+        <div class="h-4 w-14 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+      </div>
+    </div>
+  `).join('');
 
-          // Progressive enhancement: fetch GitHub repo stats (no token required but rate-limited)
-          if (owner && repo) {
-            fetch(`https://api.github.com/repos/${owner}/${repo}`)
-              .then(r => r.ok ? r.json() : null)
-              .then(meta => {
-                if (!meta) return;
-                const m = el.querySelector('[data-meta]');
-                if (m) {
-                  m.querySelector('.stars').textContent = `★ ${meta.stargazers_count}`;
-                  m.querySelector('.forks').textContent = `⑂ ${meta.forks_count}`;
-                }
-              })
-              .catch(() => {/* ignore */});
-          }
-        });
-      } catch (e) {
-        grid.innerHTML = '<div class="text-sm text-rose-600">Could not load projects.json. Ensure /data/projects.json exists.</div>';
+  try {
+    const res = await fetch('/data/projects.json', { cache: 'no-store' });
+    const projects = await res.json();
+    grid.innerHTML = '';
+
+    projects.forEach(p => {
+      const owner = p.owner || 'GregoryCarberry';
+      const repo = p.repo || '';
+      const link = p.link || (repo ? `https://github.com/${owner}/${repo}` : '#');
+
+      const el = document.createElement('a');
+      el.href = link;
+      el.target = '_blank';
+      el.rel = 'noopener';
+      el.className = `
+        block group rounded-2xl border border-slate-200 dark:border-slate-800 p-5 
+        bg-white dark:bg-slate-900 shadow-sm transition 
+        hover:-translate-y-1 hover:shadow-md hover:border-indigo-400/70 
+        dark:hover:border-indigo-600/70
+      `;
+
+      el.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="text-lg font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${p.title || repo}</h3>
+          <span class="text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">Case Study</span>
+        </div>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">${p.blurb || ''}</p>
+        <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">${p.readme || ''}</p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          ${(p.tags || [])
+            .map(t => `<span class="text-xs px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">${t}</span>`)
+            .join('')}
+        </div>
+        <div class="mt-3 text-xs text-slate-500 flex gap-4" data-meta>
+          <span class="stars" title="Stars">★ —</span>
+          <span class="forks" title="Forks">⑂ —</span>
+        </div>
+      `;
+      grid.appendChild(el);
+
+      // Progressive enhancement: fetch GitHub repo stats (no token required)
+      if (owner && repo) {
+        fetch(`https://api.github.com/repos/${owner}/${repo}`)
+          .then(r => (r.ok ? r.json() : null))
+          .then(meta => {
+            if (!meta) return;
+            const m = el.querySelector('[data-meta]');
+            if (m) {
+              m.querySelector('.stars').textContent = `★ ${meta.stargazers_count}`;
+              m.querySelector('.forks').textContent = `⑂ ${meta.forks_count}`;
+            }
+          })
+          .catch(() => {});
       }
-    }
-    loadProjects();
+    });
+  } catch (e) {
+    grid.innerHTML = `
+      <div class="text-sm text-rose-600">
+        Could not load projects.json or GitHub API limit reached.
+        Try refreshing later.
+      </div>
+    `;
+  }
+}
+loadProjects();
 
     // Dynamic certifications from /data/certs.json
     async function loadCerts() {
