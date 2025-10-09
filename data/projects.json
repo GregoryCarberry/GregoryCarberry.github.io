@@ -1,0 +1,58 @@
+[
+  {
+    "repo": "WarehouseOne",
+    "owner": "GregoryCarberry",
+    "title": "WarehouseOne — Internal Ordering & WMS",
+    "blurb": "Python/Flask + Postgres + Docker. RBAC, stock lifecycle, future courier flows.",
+    "tags": ["Python", "Flask", "Postgres", "Docker"],
+    "readme": "Auth, RBAC, picking/packing, API-first. Devcontainer + Compose."
+  },
+  {
+    "repo": "aws-static-site-cf",
+    "owner": "GregoryCarberry",
+    "title": "Well-Architected Static Site (S3 + CloudFront + OAC)",
+    "blurb": "Static hosting with CloudFront OAC, Route 53, WAF, cache invalidation CI.",
+    "tags": ["AWS", "S3", "CloudFront", "Route 53", "WAF", "GitHub Actions"],
+    "readme": "Terraform IaC + deploy pipeline => versioned S3, CF invalidation on merge."
+  },
+  {
+    "repo": "serverless-crud-api",
+    "owner": "GregoryCarberry",
+    "title": "Serverless CRUD (API Gateway + Lambda + DynamoDB)",
+    "blurb": "Cognito auth, fine-grained IAM; Lambda aliases for canary releases.",
+    "tags": ["AWS", "API Gateway", "Lambda", "DynamoDB", "Cognito", "IaC"],
+    "readme": "Blue/green via aliases; unit tests; OpenAPI spec."
+  },
+  {
+    "repo": "event-driven-image-pipeline",
+    "owner": "GregoryCarberry",
+    "title": "Event-Driven Image Pipeline",
+    "blurb": "S3 -> EventBridge -> Lambda thumbnails -> notify via SNS.",
+    "tags": ["AWS", "S3", "EventBridge", "Lambda", "SNS", "Observability"],
+    "readme": "CloudWatch dashboards + alarms; sample images + demo script."
+  },
+  {
+    "repo": "vpc-baseline-terraform",
+    "owner": "GregoryCarberry",
+    "title": "IaC VPC Baseline",
+    "blurb": "Public/private subnets, NAT, SGs, SSM Session Manager bastion.",
+    "tags": ["AWS", "VPC", "NAT", "EC2", "SSM", "Terraform"],
+    "readme": "Security groups opinionated defaults; cost + security notes."
+  },
+  {
+    "repo": "connect-call-quality-monitor",
+    "owner": "GregoryCarberry",
+    "title": "Amazon Connect Call-Quality Monitor",
+    "blurb": "Dashboards + alarms for latency/AHT signals; sample Contact Lens notes.",
+    "tags": ["Amazon Connect", "CloudWatch", "IaC", "Dashboards", "Alarms"],
+    "readme": "Edge test utility + CW metrics; runbook included."
+  },
+  {
+    "repo": "ecs-fargate-webapp",
+    "owner": "GregoryCarberry",
+    "title": "Containerised App on ECS Fargate",
+    "blurb": "ECR + ECS service with ALB, health checks, and autoscaling.",
+    "tags": ["AWS", "ECS Fargate", "ECR", "ALB", "Autoscaling", "GitHub Actions"],
+    "readme": "Multi-env deploy (dev/prod) with task definition versioning."
+  }
+]
