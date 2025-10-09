@@ -1,0 +1,14 @@
+[
+  {
+    "title": "AWS",
+    "text": "IAM, VPC, EC2, S3, Lambda, API Gateway, CloudWatch, CloudFront, Route 53, Amazon Connect, Bedrock (intro)."
+  },
+  {
+    "title": "Dev & Ops",
+    "text": "Python, Flask, Docker, GitHub Actions, Terraform (foundations), Linux, Networking (VLANs, Wi-Fi APs)."
+  },
+  {
+    "title": "Support & Tooling",
+    "text": "Customer support, Jira, ITSM principles, troubleshooting, documentation."
+  }
+]
