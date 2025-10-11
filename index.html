@@ -156,9 +156,11 @@
     </div>
   </section>
 
-  <footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
-    © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
-  </footer>
+<footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
+  © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
+  <div class="mt-2">Last updated: <span id="lastUpdated">—</span></div>
+</footer>
+
 
   <script>
     // Theme toggle (default to dark unless user explicitly chose light)
@@ -482,9 +484,4 @@ function setLastUpdated() {
     setTimeout(setLastUpdated, 400); // give fetches a moment to complete
   </script>
 </body>
-<footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
-  © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
-  <div class="mt-2">Last updated: <span id="lastUpdated">—</span></div>
-</footer>
-
 </html>
