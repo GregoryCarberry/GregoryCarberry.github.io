@@ -173,10 +173,28 @@
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // --- Last-updated tracker
+const __lastDates = [];
+function recordLastUpdated(res) {
+  try {
+    const hdr = res.headers?.get('last-modified');
+    if (hdr) __lastDates.push(new Date(hdr));
+  } catch {}
+}
+function setLastUpdated() {
+  const el = document.getElementById('lastUpdated');
+  if (!el) return;
+  if (!__lastDates.length) return; // nothing fetched yet
+  const latest = new Date(Math.max(...__lastDates.map(d => d.getTime())));
+  el.textContent = new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeStyle: 'short' }).format(latest);
+}
+
+
     // --- Data-driven links (nav + hero + contact)
     async function loadLinks() {
       try {
         const res = await fetch('/data/links.json', { cache: 'no-store' });
+        recordLastUpdated(res);
         const links = await res.json();
         const nav = document.getElementById('navLinks');
         const hero = document.getElementById('heroButtons');
@@ -222,6 +240,7 @@
       const hlEl = document.getElementById('quickHighlights');
       try {
         const res = await fetch('/data/profile.json', { cache: 'no-store' });
+        recordLastUpdated(res);
         const p = await res.json();
         if (taglineEl) taglineEl.textContent = p.tagline || '';
         if (learningEl) learningEl.textContent = p.learning || '';
@@ -246,6 +265,7 @@
       grid.innerHTML = '<div class="text-sm text-slate-500">Loading skills…</div>';
       try {
         const res = await fetch('/data/skills.json', { cache: 'no-store' });
+        recordLastUpdated(res);
         const skills = await res.json();
         grid.innerHTML = '';
         skills.forEach(s => {
@@ -280,6 +300,7 @@
       `).join('');
       try {
         const res = await fetch('/data/projects.json', { cache: 'no-store' });
+        recordLastUpdated(res);
         const projects = await res.json();
         grid.innerHTML = '';
         projects.forEach(p => {
@@ -350,6 +371,7 @@
 
       try {
         const res = await fetch('/data/certs.json', { cache: 'no-store' });
+        recordLastUpdated(res);
         const certs = await res.json();
 
         if (countEl) countEl.textContent = `${certs.length} certifications`;
@@ -412,6 +434,7 @@
       list.innerHTML = '<li class="pl-6 py-3"><div class="text-sm text-slate-500">Loading…</div></li>';
       try {
         const res = await fetch('/data/timeline.json', { cache: 'no-store' });
+        recordLastUpdated(res);
         const items = await res.json();
         list.innerHTML = '';
         items.forEach(it => {
@@ -455,6 +478,13 @@
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.style.scrollBehavior = 'auto';
     }
+
+    setTimeout(setLastUpdated, 400); // give fetches a moment to complete
   </script>
 </body>
+<footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
+  © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
+  <div class="mt-2">Last updated: <span id="lastUpdated">—</span></div>
+</footer>
+
 </html>
