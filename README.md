@@ -1,27 +1,35 @@
 # ☁️ Gregory John Carberry — Cloud Portfolio
 
-Welcome to my digital portfolio — a showcase of hands-on **AWS and Cloud projects**, certifications, and ongoing learning.
+A modern, data-driven **AWS & Cloud portfolio** showcasing real projects, certifications, and skills — designed for clarity, speed, and maintainability.
 
-This site is deployed on **GitHub Pages** and built with lightweight **HTML + Tailwind CSS**, using data-driven JSON files for easy updates.
+Built with **HTML + Tailwind CSS**, deployed on **GitHub Pages**, and powered by JSON-based data files for effortless content updates.
 
 ---
 
-## 🧩 What’s Inside
-- **Projects:** Real AWS builds and automation examples  
-  *(Lambda, API Gateway, DynamoDB, ECS Fargate, and more)*
-- **Certifications:** Verified AWS, Cisco, and (ISC)² credentials  
-- **Skills & Tools:** Python, Docker, Terraform, Linux, Networking, and DevOps foundations
-- **Timeline:** Recent activity and project milestones
+## 🚀 Highlights
+- **Data-driven content:** Projects, certifications, skills, and timeline all pull from `/data/*.json`
+- **Dark-mode by default:** Clean, accessible UI with subtle motion
+- **PWA-ready:** Installable on desktop and mobile, works offline
+- **Lightweight analytics:** Privacy-friendly insights via [Plausible](https://plausible.io/)
+- **Fast + minimal:** No frameworks, build tools, or dependencies
 
 Visit the live site → **[https://GregoryCarberry.github.io](https://GregoryCarberry.github.io)**
 
 ---
 
+## 🧩 What’s Inside
+- **Projects:** AWS-based builds (Lambda, DynamoDB, CloudFront, ECS Fargate, and more)
+- **Certifications:** Verified AWS, Cisco, (ISC)², Atlassian, and SkillFront credentials
+- **Skills & Tools:** Python, Docker, Terraform, Linux, Networking, and DevOps foundations
+- **Timeline:** Ongoing learning and project milestones
+
+---
+
 ## 🧠 Current Focus
-I’m expanding my AWS portfolio with:
+Expanding hands-on AWS expertise through:
 - Infrastructure as Code (Terraform + GitHub Actions)
 - Serverless & Event-Driven Design
-- Cost-effective, secure, Well-Architected builds
+- Cost-efficient, secure, Well-Architected builds
 
 ---
 
@@ -35,6 +43,14 @@ I’m expanding my AWS portfolio with:
 
 ---
 
+## 📱 Features
+- **Progressive Web App (PWA):** `manifest.webmanifest` + `sw.js` for offline caching  
+- **SEO & Social:** Open Graph + Twitter cards with `og-image.png`  
+- **Accessibility:** Skip links, ARIA roles, reduced-motion support  
+- **Dynamic visuals:** Skeleton loaders and hover animations  
+
+---
+
 ## 🔗 Connect
 - **LinkedIn:** [linkedin.com/in/gregory-carberry](https://www.linkedin.com/in/gregory-carberry/)
 - **Credly:** [credly.com/users/gregory-carberry](https://www.credly.com/users/gregory-carberry)
@@ -43,4 +59,4 @@ I’m expanding my AWS portfolio with:
 
 ---
 
-© 2025 Gregory John Carberry · Hosted on GitHub Pages
+© 2025 Gregory John Carberry · Built with Tailwind · Hosted on GitHub Pages
