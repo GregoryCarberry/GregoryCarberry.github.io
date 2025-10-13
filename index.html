@@ -7,6 +7,11 @@
   <meta name="description" content="AWS & Cloud portfolio: projects, certifications, and contact." />
   <link rel="canonical" href="https://gregorycarberry.github.io/" />
 
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
 
@@ -68,7 +73,7 @@
     "knowsAbout": ["Amazon Web Services", "DevOps", "Python", "Networking", "Customer Support"]
   }
   </script>
-  
+
   <!-- Analytics: Plausible -->
   <script defer data-domain="gregorycarberry.github.io" src="https://plausible.io/js/script.js"></script>
 
@@ -486,6 +491,14 @@ function setLastUpdated() {
     }
 
     setTimeout(setLastUpdated, 400); // give fetches a moment to complete
+
+    // PWA: register service worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+    }
+
   </script>
 </body>
 </html>
