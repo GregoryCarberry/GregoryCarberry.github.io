@@ -9,6 +9,7 @@
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>'">
 
+  <!-- Tailwind -->
   <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -17,6 +18,21 @@
       darkMode: 'class'
     };
   </script>
+
+  <!-- GitHub Markdown CSS -->
+  <link id="ghmd-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.1/github-markdown-light.min.css">
+  <link id="ghmd-dark" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.1/github-markdown-dark.min.css" media="(prefers-color-scheme: dark)">
+
+  <!-- highlight.js for code blocks -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
+
+  <!-- Mermaid (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+
+  <!-- marked.js for Markdown fallback -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
@@ -32,17 +48,17 @@
   <meta name="twitter:description" content="Project details and README.">
   <meta name="twitter:image" content="https://gregorycarberry.github.io/og-image.png">
 
-  <!-- marked.js for Markdown fallback rendering -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
   <style>
     .bg-grid { background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px); background-size: 24px 24px; }
     .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
     .skip-link:focus { position:fixed; left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; border-radius:.5rem; background:#111827; color:#fff; z-index:10000; }
-    .prose a { text-decoration: underline; }
     .stat { display:inline-flex; align-items:center; gap:.35rem; }
     .badge { font-size:.75rem; padding:.125rem .5rem; border-radius: 999px; }
-    .shadow-smooth { box-shadow: 0 6px 16px rgba(0,0,0,.06); }
+
+    /* GitHub-like container */
+    .markdown-body { box-sizing: border-box; min-width: 200px; max-width: 100%; }
+    .markdown-body img { max-width: 100%; }
+    .markdown-body table { display: block; width: 100%; overflow: auto; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
@@ -72,18 +88,17 @@
       </div>
     </div>
 
-    <section class="mt-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-smooth bg-grid">
+    <section class="mt-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 bg-grid">
       <h2 class="font-semibold">README</h2>
-      <div id="readme" class="prose prose-slate dark:prose-invert max-w-none mt-4">
+      <article id="readme" class="markdown-body mt-4">
         <div class="animate-pulse">
           <div class="h-5 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
           <div class="h-3 w-5/6 mt-3 bg-slate-200 dark:bg-slate-700 rounded"></div>
           <div class="h-3 w-4/6 mt-2 bg-slate-200 dark:bg-slate-700 rounded"></div>
         </div>
-      </div>
+      </article>
     </section>
 
-    <!-- Prev / Next navigation -->
     <nav id="prevNext" class="mt-8 flex items-center justify-between gap-4">
       <a id="prevProject" class="text-sm px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 invisible" href="#"></a>
       <a id="nextProject" class="text-sm px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 invisible" href="#"></a>
@@ -142,6 +157,8 @@
     const [ownerFromRepo, repoFromRepo] = repoParam.includes('/') ? repoParam.split('/') : [null, repoParam];
     const owner = ownerParam || ownerFromRepo || 'GregoryCarberry';
     const repo = repoFromRepo || repoParam;
+    const repoURL = (owner && repo) ? `https://github.com/${owner}/${repo}` : '#';
+    const rawBase = `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/`;
 
     function setDynamicSEO(project){
       if(!project) return;
@@ -167,25 +184,54 @@
     }
     function stat(text){ const s=document.createElement('span'); s.className='stat'; s.textContent=text; return s; }
 
+    // Post-process README HTML to look/behave like GitHub
+    function githubifyReadme(container){
+      if(!container) return;
+      // Rewrite relative image src -> raw.githubusercontent.com
+      container.querySelectorAll('img').forEach(img => {
+        const src = img.getAttribute('src') || '';
+        if (src && !/^https?:\/\//i.test(src) && !src.startsWith('#')) {
+          const clean = src.replace(/^\.\//,'').replace(/^\/+/,''); // remove ./ and leading slash
+          img.src = rawBase + clean;
+        }
+      });
+      // Rewrite relative links -> GitHub blob URLs
+      container.querySelectorAll('a').forEach(a => {
+        const href = a.getAttribute('href') || '';
+        if (!href) return;
+        if (/^https?:\/\//i.test(href) || href.startsWith('#')) return;
+        const clean = href.replace(/^\.\//,'').replace(/^\/+/,''); 
+        a.href = `${repoURL}/blob/HEAD/${clean}`;
+        a.target = '_blank'; a.rel = 'noopener';
+      });
+      // Code highlighting
+      container.querySelectorAll('pre code').forEach(el => { try { hljs.highlightElement(el); } catch(e){} });
+      // Mermaid
+      if (window.mermaid) {
+        container.querySelectorAll('code.language-mermaid, pre code.language-mermaid').forEach(block => {
+          const parent = block.closest('pre') || block.parentElement;
+          const graph = document.createElement('div');
+          graph.className = 'mermaid';
+          graph.textContent = block.textContent;
+          parent.replaceWith(graph);
+        });
+        try { mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: (document.documentElement.classList.contains('dark') ? 'dark' : 'default') }); } catch(e){}
+      }
+    }
+
+    // README fetchers
     async function fetchReadmeHTML(owner, repo){
-      // Attempt 1: GitHub API HTML
       try{
         const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
           headers: { 'Accept': 'application/vnd.github.v3.html' }
         });
-        if (res.ok) {
-          return { html: await res.text(), source: 'api-html' };
-        } else {
-          // If rate-limited or 404, fall through to raw fallback
-          // console.warn('README API HTML failed', res.status);
-        }
+        if (res.ok) return { html: await res.text(), source: 'api-html' };
       }catch{}
-      // Attempt 2: Raw README + marked
       try{
         const raw = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/HEAD/README.md`);
         if (raw.ok) {
           const md = await raw.text();
-          const html = (window.marked && window.marked.parse) ? window.marked.parse(md) : `<pre>${md.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</pre>`;
+          const html = (window.marked && window.marked.parse) ? window.marked.parse(md) : `<pre>${md.replace(/[&<>]/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</pre>`;
           return { html, source: 'raw-md' };
         }
       }catch{}
@@ -212,8 +258,7 @@
 
       titleEl.textContent = project?.title || repo || 'Project';
       blurbEl.textContent = project?.blurb || '';
-      const fallbackRepoURL = (owner && repo) ? `https://github.com/${owner}/${repo}` : '#';
-      repoLink.href = project?.link || fallbackRepoURL;
+      repoLink.href = project?.link || repoURL;
 
       if (project?.demo){
         demoLink.href = project.demo;
@@ -248,14 +293,16 @@
         }catch{}
       }
 
-      // README with fallback
+      // README with GitHub-like styling and link rewrites
       if (owner && repo){
         const { html, source } = await fetchReadmeHTML(owner, repo);
         if (html) {
           readmeEl.innerHTML = html;
+          // ensure external links open new tab
           readmeEl.querySelectorAll('a[href^="http"]').forEach(a => { a.target='_blank'; a.rel='noopener'; });
+          githubifyReadme(readmeEl);
         } else {
-          readmeEl.innerHTML = `<div class="text-sm text-slate-500">README not available right now. <a class="underline" target="_blank" rel="noopener" href="${fallbackRepoURL}#readme">Open on GitHub</a>.</div>`;
+          readmeEl.innerHTML = `<div class="text-sm text-slate-500">README not available right now. <a class="underline" target="_blank" rel="noopener" href="${repoURL}#readme">Open on GitHub</a>.</div>`;
         }
       } else {
         readmeEl.innerHTML = `<div class="text-sm text-slate-500">Repository not specified.</div>`;
@@ -293,9 +340,7 @@
 
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+      window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(() => {}); });
     }
   </script>
 </body>
