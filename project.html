@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project — Gregory John Carberry</title>
+  <meta name="description" content="Deep-dive on a portfolio project by Gregory John Carberry." />
+  <link rel="canonical" href="https://gregorycarberry.github.io/project.html" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>'">
+
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { display: ['Inter','ui-sans-serif','system-ui'], body: ['Inter','ui-sans-serif','system-ui'] } } },
+      darkMode: 'class'
+    };
+  </script>
+
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Project — Gregory John Carberry">
+  <meta property="og:description" content="Project details and README.">
+  <meta property="og:url" content="https://gregorycarberry.github.io/project.html">
+  <meta property="og:image" content="https://gregorycarberry.github.io/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Project — Gregory John Carberry">
+  <meta name="twitter:description" content="Project details and README.">
+  <meta name="twitter:image" content="https://gregorycarberry.github.io/og-image.png">
+
+  <style>
+    .bg-grid { background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px); background-size: 24px 24px; }
+    .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus { position:fixed; left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; border-radius:.5rem; background:#111827; color:#fff; z-index:10000; }
+    .prose a { text-decoration: underline; }
+    .stat { display:inline-flex; align-items:center; gap:.35rem; }
+    .badge { font-size:.75rem; padding:.125rem .5rem; border-radius: 999px; }
+    .shadow-smooth { box-shadow: 0 6px 16px rgba(0,0,0,.06); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-900/60 border-b border-slate-200/60 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
+      <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
+      <button id="themeToggle" aria-label="Toggle theme" class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">🌙</button>
+    </div>
+  </header>
+
+  <main id="main" class="max-w-6xl mx-auto px-4 py-10 sm:py-14">
+    <a href="/projects.html" class="text-sm underline">← All Projects</a>
+
+    <div class="mt-3 flex items-start justify-between gap-6">
+      <div>
+        <h1 id="title" class="text-3xl sm:text-4xl font-extrabold">Project</h1>
+        <p id="blurb" class="mt-2 text-slate-600 dark:text-slate-300"></p>
+        <div id="tags" class="mt-3 flex flex-wrap gap-2"></div>
+        <div class="mt-3 text-xs text-slate-500 flex flex-wrap gap-4" id="stats"></div>
+      </div>
+      <div class="flex gap-2 shrink-0">
+        <a id="repoLink" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700" target="_blank" rel="noopener">GitHub</a>
+        <a id="demoLink" class="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 hidden" target="_blank" rel="noopener">Live Demo</a>
+      </div>
+    </div>
+
+    <section class="mt-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-smooth bg-grid">
+      <h2 class="font-semibold">README</h2>
+      <div id="readme" class="prose prose-slate dark:prose-invert max-w-none mt-4">
+        <div class="animate-pulse">
+          <div class="h-5 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+          <div class="h-3 w-5/6 mt-3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+          <div class="h-3 w-4/6 mt-2 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prev / Next navigation -->
+    <nav id="prevNext" class="mt-8 flex items-center justify-between gap-4">
+      <a id="prevProject" class="text-sm px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 invisible" href="#"></a>
+      <a id="nextProject" class="text-sm px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 invisible" href="#"></a>
+    </nav>
+  </main>
+
+  <footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
+    © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
+    <div class="mt-2">Last updated: <span id="lastUpdated">—</span></div>
+  </footer>
+
+  <script>
+    // Theme
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light') root.classList.remove('dark'); else root.classList.add('dark');
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      root.classList.toggle('dark');
+      localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Last-updated tracker
+    const __lastDates = [];
+    function recordLastUpdated(res){ try{ const h=res.headers?.get('last-modified'); if(h) __lastDates.push(new Date(h)); }catch{} }
+    function setLastUpdated(){
+      const el=document.getElementById('lastUpdated'); if(!el || !__lastDates.length) return;
+      const latest=new Date(Math.max(...__lastDates.map(d=>d.getTime())));
+      el.textContent = new Intl.DateTimeFormat('en-GB',{dateStyle:'medium',timeStyle:'short'}).format(latest);
+    }
+
+    // Data-driven nav
+    (async function loadLinks(){
+      try{
+        const res = await fetch('/data/links.json', { cache: 'no-store' });
+        recordLastUpdated(res);
+        const links = await res.json();
+        const nav = document.getElementById('navLinks');
+        if(nav){
+          nav.innerHTML='';
+          links.filter(l=>l.slot==='nav').forEach(l=>{
+            const a=document.createElement('a');
+            a.href=l.href||'#';
+            a.className='hover:underline';
+            a.textContent=l.label;
+            nav.appendChild(a);
+          });
+        }
+      }catch{}
+    })();
+
+    // Helpers
+    const qs = new URLSearchParams(location.search);
+    const repoParam = qs.get('repo') || '';
+    const ownerParam = qs.get('owner') || '';
+    const [ownerFromRepo, repoFromRepo] = repoParam.includes('/') ? repoParam.split('/') : [null, repoParam];
+    const owner = ownerParam || ownerFromRepo || 'GregoryCarberry';
+    const repo = repoFromRepo || repoParam;
+
+    function setDynamicSEO(project){
+      if(!project) return;
+      const title = `${project.title || repo} — Project by Gregory John Carberry`;
+      document.title = title;
+      const desc = project.blurb || 'Project details and README.';
+      const pairs = [
+        ['meta[name="description"]','content',desc],
+        ['meta[property="og:title"]','content',title],
+        ['meta[property="og:description"]','content',desc],
+        ['meta[property="og:url"]','content',location.href],
+        ['meta[name="twitter:title"]','content',title],
+        ['meta[name="twitter:description"]','content',desc],
+      ];
+      pairs.forEach(([sel,attr,val])=>{ const el = document.querySelector(sel); if(el) el.setAttribute(attr,val); });
+    }
+
+    function chip(text){
+      const span=document.createElement('span');
+      span.className='badge border border-slate-200 dark:border-slate-700';
+      span.textContent=text;
+      return span;
+    }
+    function stat(text){ const s=document.createElement('span'); s.className='stat'; s.textContent=text; return s; }
+
+    async function loadProject(){
+      let project = null, list = [];
+      try{
+        const res = await fetch('/data/projects.json', { cache: 'no-store' });
+        recordLastUpdated(res);
+        list = await res.json();
+        project = list.find(p => (p.repo||'').toLowerCase() === (repo||'').toLowerCase() ||
+                                  (p.link||'').toLowerCase().endsWith(`/${owner}/${repo}`));
+      }catch{}
+
+      const titleEl = document.getElementById('title');
+      const blurbEl = document.getElementById('blurb');
+      const tagsEl  = document.getElementById('tags');
+      const statsEl = document.getElementById('stats');
+      const readmeEl= document.getElementById('readme');
+      const repoLink= document.getElementById('repoLink');
+      const demoLink= document.getElementById('demoLink');
+
+      titleEl.textContent = project?.title || repo || 'Project';
+      blurbEl.textContent = project?.blurb || '';
+      repoLink.href = project?.link || (owner && repo ? `https://github.com/${owner}/${repo}` : '#');
+
+      if (project?.demo){
+        demoLink.href = project.demo;
+        demoLink.classList.remove('hidden');
+      }
+
+      tagsEl.innerHTML = '';
+      (project?.tags || []).forEach(t => tagsEl.appendChild(chip(t)));
+      if (project?.badge) {
+        const b = document.createElement('span');
+        b.className = 'badge bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60';
+        b.textContent = project.badge;
+        tagsEl.appendChild(b);
+      }
+
+      setDynamicSEO(project);
+
+      if (owner && repo){
+        try{
+          const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+          const meta = res.ok ? await res.json() : null;
+          if (meta){
+            statsEl.innerHTML = '';
+            statsEl.appendChild(stat(`★ ${meta.stargazers_count}`));
+            statsEl.appendChild(stat(`⑂ ${meta.forks_count}`));
+            if (project?.updated || meta.updated_at) {
+              const dt = new Date(project?.updated || meta.updated_at);
+              const span = stat(`Updated ${dt.toLocaleDateString('en-GB')}`);
+              statsEl.appendChild(span);
+            }
+          }
+        }catch{}
+      }
+
+      if (owner && repo){
+        try{
+          const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
+            headers: { 'Accept': 'application/vnd.github.v3.html' }
+          });
+          if (res.ok) {
+            const html = await res.text();
+            readmeEl.innerHTML = html;
+            readmeEl.querySelectorAll('a[href^="http"]').forEach(a => { a.target='_blank'; a.rel='noopener'; });
+          } else {
+            readmeEl.innerHTML = `<div class="text-sm text-slate-500">README not available for this repository.</div>`;
+          }
+        }catch{
+          readmeEl.innerHTML = `<div class="text-sm text-rose-600">Failed to load README from GitHub.</div>`;
+        }
+      } else {
+        readmeEl.innerHTML = `<div class="text-sm text-slate-500">Repository not specified.</div>`;
+      }
+
+      // Prev / Next computation
+      let fullList = list || [];
+      if (project && Array.isArray(fullList)) {
+        const idx = fullList.findIndex(p => (p.repo||'').toLowerCase() === (repo||'').toLowerCase());
+        const prev = idx > 0 ? fullList[idx - 1] : null;
+        const next = idx >= 0 && idx < fullList.length - 1 ? fullList[idx + 1] : null;
+        const prevEl = document.getElementById('prevProject');
+        const nextEl = document.getElementById('nextProject');
+        const toHref = (p) => {
+          const own = (p.owner || 'GregoryCarberry');
+          const r = p.repo || '';
+          return r ? `/project.html?repo=${own}/${r}` : '/projects.html';
+        };
+        if (prev) {
+          prevEl.textContent = `← ${prev.title || prev.repo || 'Previous'}`;
+          prevEl.href = toHref(prev);
+          prevEl.classList.remove('invisible');
+        }
+        if (next) {
+          nextEl.textContent = `${next.title || next.repo || 'Next'} →`;
+          nextEl.href = toHref(next);
+          nextEl.classList.remove('invisible');
+        }
+      }
+
+      setTimeout(setLastUpdated, 400);
+    }
+    loadProject();
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
