@@ -1,5 +1,6 @@
 [
   { "slot": "nav", "label": "Projects", "href": "#projects" },
+  { "slot": "nav", "label": "All Projects", "href": "/projects.html" },
   { "slot": "nav", "label": "Certifications", "href": "#certs" },
   { "slot": "nav", "label": "Skills", "href": "#skills" },
   { "slot": "nav", "label": "Timeline", "href": "#timeline" },

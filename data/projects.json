@@ -8,13 +8,17 @@
     "readme": "Auth, RBAC, picking/packing, API-first. Devcontainer + Compose."
   },
   {
-    "repo": "aws-static-site-cf",
-    "owner": "GregoryCarberry",
-    "title": "Well-Architected Static Site (S3 + CloudFront + OAC)",
-    "blurb": "Static hosting with CloudFront OAC, Route 53, WAF, cache invalidation CI.",
-    "tags": ["AWS", "S3", "CloudFront", "Route 53", "WAF", "GitHub Actions"],
-    "readme": "Terraform IaC + deploy pipeline => versioned S3, CF invalidation on merge."
-  },
+  "title": "Well-Architected Static Site",
+  "owner": "GregoryCarberry",
+  "repo": "well-architected-static-site",
+  "link": "https://github.com/GregoryCarberry/well-architected-static-site",
+  "blurb": "S3 + CloudFront + WAF + OAC, built with Terraform and GitHub Actions.",
+  "readme": "Security headers, budgets, and CI checks baked in.",
+  "tags": ["AWS", "CloudFront", "Terraform", "GitHub Actions"],
+  "badge": "Case Study",
+  "featured": true,
+  "updated": "2025-10-23"
+},
   {
     "repo": "serverless-crud-api",
     "owner": "GregoryCarberry",

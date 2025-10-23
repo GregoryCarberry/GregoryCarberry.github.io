@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects — Gregory John Carberry</title>
+  <meta name="description" content="All AWS & Cloud projects by Gregory John Carberry." />
+  <link rel="canonical" href="https://gregorycarberry.github.io/projects.html" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>'">
+
+  <!-- Tailwind via CDN -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display: ['Inter','ui-sans-serif','system-ui'], body: ['Inter','ui-sans-serif','system-ui'] },
+        }
+      },
+      darkMode: 'class'
+    };
+  </script>
+
+  <!-- Theming & color scheme -->
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects — Gregory John Carberry">
+  <meta property="og:description" content="Browse all AWS and Cloud projects with tags and quick summaries.">
+  <meta property="og:url" content="https://gregorycarberry.github.io/projects.html">
+  <meta property="og:image" content="https://gregorycarberry.github.io/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Projects — Gregory John Carberry">
+  <meta name="twitter:description" content="Browse all AWS and Cloud projects with tags and quick summaries.">
+  <meta name="twitter:image" content="https://gregorycarberry.github.io/og-image.png">
+
+  <style>
+    .bg-grid { background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px); background-size: 24px 24px; }
+    .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus { position:fixed; left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; border-radius:.5rem; background:#111827; color:#fff; z-index:10000; }
+    #grid a { transform: translateY(0); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .chip { cursor: pointer; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Header / Nav -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-900/60 border-b border-slate-200/60 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
+      <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
+      <button id="themeToggle" aria-label="Toggle theme" class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">🌙</button>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main id="main" class="max-w-6xl mx-auto px-4 py-10 sm:py-14">
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold">All Projects</h1>
+        <p class="mt-2 text-slate-600 dark:text-slate-300">Browse every build. Filter by tag or search title/summary.</p>
+      </div>
+      <a class="text-sm underline self-end" href="https://github.com/GregoryCarberry" target="_blank" rel="noopener">GitHub ▸</a>
+    </div>
+
+    <!-- Controls -->
+    <div class="mt-6 grid gap-3 sm:grid-cols-3">
+      <label class="sm:col-span-2">
+        <span class="sr-only">Search projects</span>
+        <input id="search" type="search" placeholder="Search projects (title, blurb, tags)…"
+               class="w-full px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
+      </label>
+      <label>
+        <span class="sr-only">Sort by</span>
+        <select id="sort" class="w-full px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
+          <option value="featured">Featured first</option>
+          <option value="alpha">A → Z</option>
+          <option value="recent">Most recently updated</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Tags -->
+    <div id="tags" class="mt-4 flex flex-wrap gap-2"></div>
+
+    <!-- Count -->
+    <div class="mt-2 text-sm text-slate-500" id="count">—</div>
+
+    <!-- Grid -->
+    <div id="grid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- skeletons -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
+    © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
+    <div class="mt-2">Last updated: <span id="lastUpdated">—</span></div>
+  </footer>
+
+  <script>
+    // Theme
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light') root.classList.remove('dark'); else root.classList.add('dark');
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      root.classList.toggle('dark');
+      localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Last-updated tracker (reuse pattern)
+    const __lastDates = [];
+    function recordLastUpdated(res){ try{ const h=res.headers?.get('last-modified'); if(h) __lastDates.push(new Date(h)); }catch{} }
+    function setLastUpdated(){
+      const el=document.getElementById('lastUpdated'); if(!el || !__lastDates.length) return;
+      const latest=new Date(Math.max(...__lastDates.map(d=>d.getTime())));
+      el.textContent = new Intl.DateTimeFormat('en-GB',{dateStyle:'medium',timeStyle:'short'}).format(latest);
+    }
+
+    // Load links (nav)
+    async function loadLinks(){
+      try{
+        const res = await fetch('/data/links.json', { cache: 'no-store' });
+        recordLastUpdated(res);
+        const links = await res.json();
+        const nav = document.getElementById('navLinks');
+        if(nav){
+          nav.innerHTML='';
+          links.filter(l=>l.slot==='nav').forEach(l=>{
+            const a=document.createElement('a');
+            a.href=l.href||'#';
+            a.className='hover:underline';
+            a.textContent=l.label;
+            nav.appendChild(a);
+          });
+        }
+      }catch{}
+    }
+    loadLinks();
+
+    // Projects overview
+    const state = { q:'', tag:null, sort:'featured', data:[] };
+
+    function skeletons(){
+      const grid=document.getElementById('grid');
+      grid.innerHTML = Array(6).fill(`
+        <div class="animate-pulse rounded-2xl border border-slate-200 dark:border-slate-800 p-5 bg-white/60 dark:bg-slate-900/40">
+          <div class="h-5 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+          <div class="h-3 w-5/6 mt-3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+          <div class="h-3 w-3/4 mt-2 bg-slate-200 dark:bg-slate-700 rounded"></div>
+          <div class="flex gap-2 mt-4">
+            <div class="h-4 w-10 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+            <div class="h-4 w-16 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function normalise(s){ return (s||'').toString().toLowerCase(); }
+
+    function render(){
+      const grid=document.getElementById('grid');
+      const count=document.getElementById('count');
+      const q = normalise(state.q);
+      let items = [...state.data];
+
+      // Filter by search
+      if(q){
+        items = items.filter(p=>{
+          const hay = [p.title, p.blurb, (p.tags||[]).join(' ')].map(normalise).join(' ');
+          return hay.includes(q);
+        });
+      }
+      // Filter by tag
+      if(state.tag){
+        items = items.filter(p=>(p.tags||[]).map(normalise).includes(normalise(state.tag)));
+      }
+
+      // Sort
+      if(state.sort==='alpha'){
+        items.sort((a,b)=>normalise(a.title||'').localeCompare(normalise(b.title||'')));
+      }else if(state.sort==='recent'){
+        // use optional p.updated or fallback to title; your projects.json can include {"updated":"2025-10-21"}
+        items.sort((a,b)=>new Date(b.updated||0)-new Date(a.updated||0));
+      }else{
+        // featured first (boolean or numeric weight), then alpha
+        items.sort((a,b)=>{
+          const aw = (a.featured?1:0) - (b.featured?1:0);
+          if(aw!==0) return -aw;
+          return normalise(a.title||'').localeCompare(normalise(b.title||''));
+        });
+      }
+
+      // Count
+      count.textContent = `${items.length} project${items.length===1?'':'s'}`;
+
+      // Render
+      if(!items.length){
+        grid.innerHTML = `<div class="text-sm text-slate-500">No projects match your filters.</div>`;
+        return;
+      }
+      grid.innerHTML='';
+      items.forEach(p=>{
+        const owner = p.owner || 'GregoryCarberry';
+        const repo = p.repo || '';
+        const link = p.link || (repo ? `https://github.com/${owner}/${repo}` : '#');
+        const card = document.createElement('a');
+        card.href = link; card.target = '_blank'; card.rel = 'noopener';
+        card.className = `
+          block group rounded-2xl border border-slate-200 dark:border-slate-800 p-5
+          bg-white dark:bg-slate-900 shadow-sm transition
+          hover:-translate-y-1 hover:shadow-md hover:border-indigo-400/70
+          dark:hover:border-indigo-600/70
+        `;
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="text-lg font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${p.title || repo}</h3>
+            ${p.badge ? `<span class="text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">${p.badge}</span>` : ''}
+          </div>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">${p.blurb || ''}</p>
+          ${p.readme ? `<p class="mt-3 text-xs text-slate-500 dark:text-slate-400">${p.readme}</p>` : ''}
+          <div class="mt-4 flex flex-wrap gap-2">
+            ${(p.tags||[]).map(t=>`<span class="text-xs px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">${t}</span>`).join('')}
+          </div>
+          <div class="mt-3 text-xs text-slate-500 flex gap-4" data-meta>
+            <span class="stars" title="Stars">★ —</span>
+            <span class="forks" title="Forks">⑂ —</span>
+            ${p.updated ? `<span class="updated" title="Updated">${new Date(p.updated).toLocaleDateString('en-GB')}</span>` : ''}
+          </div>
+        `;
+        grid.appendChild(card);
+
+        // Opportunistic GitHub meta
+        if(owner && repo){
+          fetch(`https://api.github.com/repos/${owner}/${repo}`)
+            .then(r=>r.ok?r.json():null)
+            .then(meta=>{
+              if(!meta) return;
+              const m = card.querySelector('[data-meta]');
+              if(m){
+                m.querySelector('.stars').textContent = `★ ${meta.stargazers_count}`;
+                m.querySelector('.forks').textContent = `⑂ ${meta.forks_count}`;
+              }
+            }).catch(()=>{});
+        }
+      });
+    }
+
+    function renderTags(all){
+      const tagsEl = document.getElementById('tags');
+      const uniq = new Set();
+      all.forEach(p => (p.tags||[]).forEach(t => uniq.add(t)));
+      const tags = Array.from(uniq).sort((a,b)=>a.localeCompare(b));
+      tagsEl.innerHTML = [
+        `<button class="chip px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700 ${state.tag?'' : 'bg-indigo-600 text-white border-indigo-600'}" data-tag="">All</button>`,
+        ...tags.map(t=>`<button class="chip px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700 ${state.tag===t?'bg-indigo-600 text-white border-indigo-600':''}" data-tag="${t}">${t}</button>`)
+      ].join(' ');
+      tagsEl.querySelectorAll('.chip').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          state.tag = btn.dataset.tag || null;
+          renderTags(state.data);
+          render();
+        });
+      });
+    }
+
+    async function loadProjects(){
+      skeletons();
+      try{
+        const res = await fetch('/data/projects.json', { cache: 'no-store' });
+        recordLastUpdated(res);
+        const projects = await res.json();
+        // ensure fields exist
+        state.data = projects.map(p=>({ ...p }));
+        renderTags(state.data);
+        render();
+      }catch{
+        document.getElementById('grid').innerHTML = `<div class="text-sm text-rose-600">Could not load projects.json</div>`;
+      }
+    }
+    loadProjects();
+
+    // Controls
+    document.getElementById('search').addEventListener('input', (e)=>{ state.q=e.target.value; render(); });
+    document.getElementById('sort').addEventListener('change', (e)=>{ state.sort=e.target.value; render(); });
+
+    // After data loads, update footer timestamp
+    setTimeout(setLastUpdated, 500);
+  </script>
+</body>
+</html>
