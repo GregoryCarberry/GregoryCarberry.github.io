@@ -230,27 +230,40 @@
           <div class="mt-4 flex flex-wrap gap-2">
             ${(p.tags||[]).map(t=>`<span class="text-xs px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">${t}</span>`).join('')}
           </div>
-          
-            <div class="mt-4 flex gap-2">
-              ${owner && repo 
-                ? `
-                  <a class="text-xs px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700"
-                     href="/project.html?repo=${owner}/${repo}">Details</a>
-                `
-                : `
-                  <span class="text-xs px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 opacity-50 cursor-not-allowed"
-                        aria-disabled="true" title="No details available">Details</span>
-                `}
-              <a class="text-xs px-3 py-1 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500"
-                 href="${link}" target="_blank" rel="noopener">GitHub</a>
-            </div>
-            <div class="mt-3 text-xs text-slate-500 flex gap-4" data-meta>
+          <div class="mt-3 text-xs text-slate-500 flex gap-4" data-meta>
             <span class="stars" title="Stars">★ —</span>
             <span class="forks" title="Forks">⑂ —</span>
             ${p.updated ? `<span class="updated" title="Updated">${new Date(p.updated).toLocaleDateString('en-GB')}</span>` : ''}
           </div>
         `;
-        grid.appendChild(card);
+        
+        // Insert Details + GitHub buttons
+        (function() {
+          const actions = document.createElement('div');
+          actions.className = 'mt-4 flex gap-2';
+          if (owner && repo) {
+            const a = document.createElement('a');
+            a.className = 'text-xs px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700';
+            a.href = `/project.html?repo=${owner}/${repo}`;
+            a.textContent = 'Details';
+            actions.appendChild(a);
+          } else {
+            const span = document.createElement('span');
+            span.className = 'text-xs px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 opacity-50 cursor-not-allowed';
+            span.setAttribute('aria-disabled','true');
+            span.title = 'No details available';
+            span.textContent = 'Details';
+            actions.appendChild(span);
+          }
+          const gh = document.createElement('a');
+          gh.className = 'text-xs px-3 py-1 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500';
+          gh.href = link; gh.target = '_blank'; gh.rel = 'noopener';
+          gh.textContent = 'GitHub';
+          actions.appendChild(gh);
+          const meta = card.querySelector('[data-meta]');
+          if (meta && meta.parentNode) meta.parentNode.insertBefore(actions, meta);
+        })();
+grid.appendChild(card);
 
         // Opportunistic GitHub meta
         if(owner && repo){
