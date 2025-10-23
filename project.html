@@ -32,6 +32,9 @@
   <meta name="twitter:description" content="Project details and README.">
   <meta name="twitter:image" content="https://gregorycarberry.github.io/og-image.png">
 
+  <!-- marked.js for Markdown fallback rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <style>
     .bg-grid { background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px); background-size: 24px 24px; }
     .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
@@ -164,6 +167,31 @@
     }
     function stat(text){ const s=document.createElement('span'); s.className='stat'; s.textContent=text; return s; }
 
+    async function fetchReadmeHTML(owner, repo){
+      // Attempt 1: GitHub API HTML
+      try{
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
+          headers: { 'Accept': 'application/vnd.github.v3.html' }
+        });
+        if (res.ok) {
+          return { html: await res.text(), source: 'api-html' };
+        } else {
+          // If rate-limited or 404, fall through to raw fallback
+          // console.warn('README API HTML failed', res.status);
+        }
+      }catch{}
+      // Attempt 2: Raw README + marked
+      try{
+        const raw = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/HEAD/README.md`);
+        if (raw.ok) {
+          const md = await raw.text();
+          const html = (window.marked && window.marked.parse) ? window.marked.parse(md) : `<pre>${md.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</pre>`;
+          return { html, source: 'raw-md' };
+        }
+      }catch{}
+      return { html: null, source: 'none' };
+    }
+
     async function loadProject(){
       let project = null, list = [];
       try{
@@ -184,7 +212,8 @@
 
       titleEl.textContent = project?.title || repo || 'Project';
       blurbEl.textContent = project?.blurb || '';
-      repoLink.href = project?.link || (owner && repo ? `https://github.com/${owner}/${repo}` : '#');
+      const fallbackRepoURL = (owner && repo) ? `https://github.com/${owner}/${repo}` : '#';
+      repoLink.href = project?.link || fallbackRepoURL;
 
       if (project?.demo){
         demoLink.href = project.demo;
@@ -219,20 +248,14 @@
         }catch{}
       }
 
+      // README with fallback
       if (owner && repo){
-        try{
-          const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
-            headers: { 'Accept': 'application/vnd.github.v3.html' }
-          });
-          if (res.ok) {
-            const html = await res.text();
-            readmeEl.innerHTML = html;
-            readmeEl.querySelectorAll('a[href^="http"]').forEach(a => { a.target='_blank'; a.rel='noopener'; });
-          } else {
-            readmeEl.innerHTML = `<div class="text-sm text-slate-500">README not available for this repository.</div>`;
-          }
-        }catch{
-          readmeEl.innerHTML = `<div class="text-sm text-rose-600">Failed to load README from GitHub.</div>`;
+        const { html, source } = await fetchReadmeHTML(owner, repo);
+        if (html) {
+          readmeEl.innerHTML = html;
+          readmeEl.querySelectorAll('a[href^="http"]').forEach(a => { a.target='_blank'; a.rel='noopener'; });
+        } else {
+          readmeEl.innerHTML = `<div class="text-sm text-slate-500">README not available right now. <a class="underline" target="_blank" rel="noopener" href="${fallbackRepoURL}#readme">Open on GitHub</a>.</div>`;
         }
       } else {
         readmeEl.innerHTML = `<div class="text-sm text-slate-500">Repository not specified.</div>`;
