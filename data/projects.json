@@ -44,7 +44,7 @@
     "readme": "Security groups opinionated defaults; cost + security notes."
   },
   {
-    "repo": "connect-call-quality-monitor",
+    "repo": "ac-call-quality-monitor",
     "owner": "GregoryCarberry",
     "title": "Amazon Connect Call-Quality Monitor",
     "blurb": "Dashboards + alarms for latency/AHT signals; sample Contact Lens notes.",
