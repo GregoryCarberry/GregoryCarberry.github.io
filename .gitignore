@@ -14,7 +14,8 @@ node_modules/
 .pnp.js
 
 # Editor / IDE
-.vscode/
+.vscode/*         # ignore everything in .vscode
+!.vscode/settings.json   # ...except this file
 *.code-workspace
 
 # Local server / build cache
