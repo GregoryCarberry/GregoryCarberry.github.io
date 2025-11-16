@@ -114,7 +114,17 @@
         <h1 id="title" class="text-3xl sm:text-4xl font-extrabold">Project</h1>
         <p id="blurb" class="mt-2 text-slate-600 dark:text-slate-300"></p>
         <div id="tags" class="mt-3 flex flex-wrap gap-2"></div>
-        <div id="stats" class="mt-3 text-xs text-slate-500 flex flex-wrap gap-4"></div>
+        <div id="stats" class="mt-3 text-xs text-slate-500 flex flex-wrap gap-4">
+          <!-- Loading skeleton for GitHub repo stats.
+               assets/project.js will overwrite this once the API responses arrive. -->
+          <div class="animate-pulse flex items-center gap-2">
+            <span class="h-3 w-14 rounded bg-slate-200 dark:bg-slate-700"></span>
+            <span class="h-3 w-10 rounded bg-slate-200 dark:bg-slate-700"></span>
+          </div>
+          <div class="animate-pulse flex items-center gap-2">
+            <span class="h-3 w-20 rounded bg-slate-200 dark:bg-slate-700"></span>
+          </div>
+        </div>
       </div>
       <div class="flex gap-2 shrink-0">
         <a

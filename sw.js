@@ -1,55 +1,97 @@
-// sw.js — minimal offline + JSON cache
-const CACHE = 'gjc-portfolio-v1';
-const CORE = [
-  '/',            // index.html
-  '/og-image.png',
-  '/manifest.webmanifest'
+// Simple, GitHub Pages–friendly service worker
+// - Pre-caches core pages and assets
+// - Network-first for navigations with 500.html fallback
+// - Cache-first for static assets
+// - Ignores cross-origin requests (e.g. GitHub API)
+
+const CACHE_VERSION = 'v3';
+const STATIC_CACHE = `static-${CACHE_VERSION}`;
+
+const CORE_ASSETS = [
+  '/',               // homepage
+  '/index.html',
+  '/projects.html',
+  '/project.html',
+  '/404.html',
+  '/500.html',
+  '/assets/site.css',
+  '/assets/common.js',
+  '/assets/index.js',
+  '/assets/projects.js',
+  '/assets/project.js',
 ];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)));
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
+// Install: pre-cache core assets
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(STATIC_CACHE)
+      .then((cache) => cache.addAll(CORE_ASSETS))
+      .then(() => self.skipWaiting())
   );
-  self.clients.claim();
 });
 
-// Strategy:
-// - Same-origin JSON: stale-while-revalidate
-// - Other same-origin: cache-first fallback
-self.addEventListener('fetch', (e) => {
-  const url = new URL(e.request.url);
-  if (url.origin !== location.origin) return; // ignore CDN etc.
+// Activate: clean up old caches
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key !== STATIC_CACHE)
+          .map((key) => caches.delete(key))
+      )
+    ).then(() => self.clients.claim())
+  );
+});
 
-  // JSON (data/*.json): stale-while-revalidate
-  if (url.pathname.startsWith('/data/')) {
-    e.respondWith((async () => {
-      const cache = await caches.open(CACHE);
-      const cached = await cache.match(e.request);
-      const fetchPromise = fetch(e.request, { cache: 'no-store' })
-        .then(res => { cache.put(e.request, res.clone()); return res; })
-        .catch(() => cached || Response.error());
-      return cached || fetchPromise;
-    })());
+// Fetch: network-first for navigations, cache-first for same-origin assets
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+
+  // Only handle same-origin requests
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) {
+    return; // Let the browser handle GitHub API, CDNs, etc.
+  }
+
+  // HTML navigations → network-first with 500 fallback
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          // Cache successful navigations
+          const copy = response.clone();
+          caches.open(STATIC_CACHE).then((cache) => cache.put(request, copy));
+          return response;
+        })
+        .catch(() =>
+          // If offline or network fails:
+          caches.match(request).then((cached) => cached || caches.match('/500.html'))
+        )
+    );
     return;
   }
 
-  // Everything else (index, og image, manifest)
-  e.respondWith(
-    caches.match(e.request).then(res =>
-      res || fetch(e.request).then(net => {
-        // Optionally cache navigations and root assets
-        if (e.request.method === 'GET' && (url.pathname === '/' || url.pathname === '/index.html')) {
-          caches.open(CACHE).then(c => c.put(e.request, net.clone()));
-        }
-        return net;
-      }).catch(() => caches.match('/'))
-    )
-  );
+  // For other same-origin GETs → cache-first, then network
+  if (request.method === 'GET') {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        if (cached) return cached;
+
+        return fetch(request)
+          .then((response) => {
+            const copy = response.clone();
+            caches.open(STATIC_CACHE).then((cache) => cache.put(request, copy));
+            return response;
+          })
+          .catch(() => {
+            // As a last resort, serve 500 only for HTML-like requests
+            const accept = request.headers.get('accept') || '';
+            if (accept.includes('text/html')) {
+              return caches.match('/500.html');
+            }
+            // Otherwise, just fail silently and let the browser handle it
+          });
+      })
+    );
+  }
 });
