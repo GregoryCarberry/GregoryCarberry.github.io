@@ -1,0 +1,18 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Gregory John Carberry",
+  "url": "https://gregorycarberry.github.io/",
+  "sameAs": [
+    "https://www.linkedin.com/in/gregory-carberry/",
+    "https://www.credly.com/users/gregory-carberry"
+  ],
+  "jobTitle": "Cloud / IT Support",
+  "knowsAbout": [
+    "Amazon Web Services",
+    "DevOps",
+    "Python",
+    "Networking",
+    "Customer Support"
+  ]
+}

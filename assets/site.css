@@ -1,0 +1,19 @@
+/* Shared utilities */
+.bg-grid { background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px); background-size: 24px 24px; }
+.skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+.skip-link:focus { position:fixed; left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; border-radius:.5rem; background:#111827; color:#fff; z-index:10000; }
+
+/* Index / Projects hover polish */
+#projectGrid a, #grid a { transform: translateY(0); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+#certGrid > a { transition: opacity .2s ease, box-shadow .2s ease, border-color .2s ease; }
+#certGrid > a:hover { border-color: rgb(129 140 248 / .7); }
+
+/* Projects page */
+.chip { cursor: pointer; }
+
+/* Single project page */
+.stat { display:inline-flex; align-items:center; gap:.35rem; }
+.badge { font-size:.75rem; padding:.125rem .5rem; border-radius: 999px; }
+.markdown-body { box-sizing: border-box; min-width: 200px; max-width: 100%; }
+.markdown-body img { max-width: 100%; }
+.markdown-body table { display: block; width: 100%; overflow: auto; }
