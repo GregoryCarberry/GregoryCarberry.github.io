@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",      // Tailwind IntelliSense (critical)
+    "ritwickdey.liveserver",          // Live Server for local dev
+    "esbenp.prettier-vscode",         // Prettier (optional but helpful)
+    "yzhang.markdown-all-in-one"      // Better Markdown experience (READMEs)
+  ],
+  "unwantedRecommendations": [
+    "formulahendry.auto-close-tag",   // Causes duplicates with Tailwind
+    "naumovs.color-highlight"         // Often conflicts with Tailwind classes
+  ]
+}
