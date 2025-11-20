@@ -1,0 +1,51 @@
+{
+  "domains": [
+    {
+      "id": "cloud-infra",
+      "title": "Cloud & Infrastructure",
+      "skills": [
+        "AWS (S3, CloudFront, Lambda, Route 53, Connect)",
+        "Serverless & event-driven basics",
+        "Terraform (entry-level)",
+        "GitHub Actions",
+        "Linux basics",
+        "Networking fundamentals (TCP/IP, DNS, LAN/WAN)"
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Security & Compliance",
+      "skills": [
+        "Security principles & CIA triad",
+        "Access control & authentication",
+        "Basic network hardening",
+        "Endpoint & system protection",
+        "Incident response fundamentals",
+        "Critical infrastructure protection basics"
+      ]
+    },
+    {
+      "id": "dev-automation",
+      "title": "Development & Automation",
+      "skills": [
+        "Python (entry-level scripting)",
+        "Bash & shell scripting basics",
+        "API consumption & CLI tooling",
+        "Git & GitHub workflows",
+        "Network programmability (Cisco DevNet concepts)"
+      ]
+    },
+    {
+      "id": "support-itsm",
+      "title": "Support, ITSM & Collaboration",
+      "skills": [
+        "Technical service desk fundamentals",
+        "Incident logging & triage",
+        "Root-cause thinking",
+        "ITIL / ISO/IEC 20000 awareness",
+        "Jira & Jira Service Management",
+        "Customer communication"
+      ]
+    }
+  ]
+}

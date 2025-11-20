@@ -96,9 +96,9 @@ function mkBtn(label, href, variant){
       const el = document.createElement('a');
       el.href = link; el.target = '_blank'; el.rel = 'noopener';
       el.className = `
-        block group rounded-2xl border border-slate-200 dark:border-slate-800 p-5 
-        bg-white dark:bg-slate-900 shadow-sm transition 
-        hover:-translate-y-1 hover:shadow-md hover:border-indigo-400/70 
+        block group rounded-2xl border border-slate-200 dark:border-slate-800 p-5
+        bg-white dark:bg-slate-900 shadow-sm transition
+        hover:-translate-y-1 hover:shadow-md hover:border-indigo-400/70
         dark:hover:border-indigo-600/70
       `;
       el.innerHTML = `
@@ -162,28 +162,135 @@ function mkBtn(label, href, variant){
   }
 })();
 
-// Timeline
+// Timeline with icons, legend, and continuous auto-scroll
 (async function loadTimeline(){
+  const section = document.getElementById('timeline');
   const list = document.getElementById('timelineList');
-  if (!list) return;
+  if (!section || !list) return;
+
   list.innerHTML = '<li class="pl-6 py-3"><div class="text-sm text-slate-500">Loading…</div></li>';
-  try{
+
+  try {
     const res = await fetch('/data/timeline.json', { cache: 'no-store' });
     recordLastUpdated(res);
     const items = await res.json();
+
     list.innerHTML = '';
+
+    // Ensure the list behaves like a scrollable pane (4–5 items high)
+    list.classList.add('max-h-96', 'overflow-y-auto', 'pr-2');
+
+    // Icon + colour per category
+    const icons = {
+      project:   { icon: "🛠️", colour: "text-indigo-500" },
+      cert:      { icon: "🏅", colour: "text-emerald-500" },
+      course:    { icon: "📘", colour: "text-fuchsia-500" },
+      education: { icon: "🎓", colour: "text-amber-500" },
+      other:     { icon: "📌", colour: "text-slate-500" }
+    };
+
+    // Build legend from the data present
+    const seen = new Set();
+    const legendWrapper = document.createElement("div");
+    legendWrapper.className = "timeline-legend flex flex-wrap gap-4 mt-1 text-xs text-slate-500";
+
     items.forEach(it => {
-      const li = document.createElement('li');
-      li.className = 'pl-6 py-3 relative';
-      li.innerHTML = `
-        <span class="before:content-[''] before:w-2 before:h-2 before:rounded-full before:bg-indigo-500 before:absolute before:-left-1 before:top-5"></span>
-        <div class="text-sm text-slate-500">${it.when}</div>
-        <div class="font-medium">${it.text}</div>
+      const cat = it.category || "other";
+      if (seen.has(cat)) return;
+      seen.add(cat);
+      const conf = icons[cat] || icons.other;
+      const block = document.createElement("div");
+      block.className = "flex items-center gap-1";
+      block.innerHTML = `
+        <span class="${conf.colour} text-lg">${conf.icon}</span>
+        <span class="capitalize">${cat}</span>
       `;
+      legendWrapper.appendChild(block);
+    });
+
+    const header = section.querySelector("h2");
+    if (header && !section.querySelector(".timeline-legend")) {
+      header.insertAdjacentElement("afterend", legendWrapper);
+    }
+
+    // Render all items
+    items.forEach(it => {
+      const when    = it.date    || it.when    || "";
+      const title   = it.title   || it.text    || "";
+      const summary = it.summary || "";
+      const cat     = it.category || "other";
+
+      const conf = icons[cat] || icons.other;
+
+      const li = document.createElement("li");
+      li.className = "timeline-item pl-8 py-3 relative";
+      li.dataset.category = cat;
+
+      li.innerHTML = `
+        <span class="timeline-icon absolute left-0 top-4 ${conf.colour} text-xl">${conf.icon}</span>
+        <div class="text-xs text-slate-500">${when}</div>
+        <div class="font-medium">${title}</div>
+        ${summary ? `<div class="text-sm text-slate-400 mt-1">${summary}</div>` : ""}
+      `;
+
       list.appendChild(li);
     });
-  }catch{
-    list.innerHTML = '<li class="pl-6 py-3"><div class="text-sm text-rose-600">Could not load timeline.json.</div></li>';
+
+    const allItems = Array.from(list.querySelectorAll(".timeline-item"));
+    if (!allItems.length) return;
+
+    // --- Continuous auto-scroll with pause on user interaction ---
+
+    const SPEED_PX_PER_SEC = 12; // smaller = slower, larger = faster
+    const PAUSE_MS = 6000;       // pause this long after user input
+
+    let userPausedUntil = 0;
+    let lastTs = null;
+    let scrollPos = list.scrollTop || 0;
+
+
+    function pauseFromUser() {
+      userPausedUntil = Date.now() + PAUSE_MS;
+    }
+
+    // Pause auto-scroll when the user interacts with the timeline
+    list.addEventListener('wheel',     pauseFromUser, { passive: true });
+    list.addEventListener('touchmove', pauseFromUser, { passive: true });
+    list.addEventListener('keydown',   pauseFromUser);
+
+    function autoScroll(timestamp) {
+      const maxScroll = list.scrollHeight - list.clientHeight;
+
+      if (maxScroll > 0) {
+        if (lastTs === null) {
+          lastTs = timestamp;
+        }
+        const dt = timestamp - lastTs;
+        lastTs = timestamp;
+
+        const now = Date.now();
+        if (now >= userPausedUntil) {
+          const delta = (SPEED_PX_PER_SEC * dt) / 1000; // px this frame
+
+scrollPos += delta;
+if (scrollPos >= maxScroll) {
+  scrollPos = 0; // loop back to top
+}
+
+list.scrollTop = scrollPos;
+
+        }
+      }
+
+      requestAnimationFrame(autoScroll);
+    }
+
+    requestAnimationFrame(autoScroll);
+
+  } catch (err) {
+    console.error(err);
+    list.innerHTML =
+      '<li class="pl-6 py-3"><div class="text-sm text-rose-600">Could not load timeline.json.</div></li>';
   }
 })();
 

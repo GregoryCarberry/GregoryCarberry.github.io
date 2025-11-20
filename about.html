@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Me — Gregory John Carberry</title>
+  <meta name="description"
+    content="About Gregory John Carberry — cloud-focused IT professional with hands-on AWS, IT support, and automation experience." />
+  <link rel="canonical" href="https://gregorycarberry.github.io/about.html" />
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+
+  <!-- Tailwind v4 browser build -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Tailwind configuration -->
+  <style type="text/tailwindcss">
+    @custom-variant dark (&:where(.dark, .dark *));
+    @theme {
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+  </style>
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="assets/site.css">
+
+  <!-- Colour scheme hints -->
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
+
+  <!-- Social / OG -->
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="About Me — Gregory John Carberry">
+  <meta property="og:description"
+    content="Learn more about Gregory John Carberry — cloud-focused IT professional with hands-on AWS, IT support, and automation experience.">
+  <meta property="og:image" content="https://gregorycarberry.github.io/og-image.png">
+  <meta property="og:url" content="https://gregorycarberry.github.io/about.html">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header
+    class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
+      <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
+      <button id="themeToggle" aria-label="Toggle theme"
+        class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="max-w-6xl mx-auto px-4 py-16 sm:py-20">
+
+    <!-- Page title + avatar -->
+    <header class="max-w-5xl flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+      <div>
+        <p class="text-sm font-semibold text-indigo-500">About</p>
+        <h1 class="mt-2 text-3xl sm:text-4xl font-extrabold">Gregory John Carberry</h1>
+        <p class="mt-4 text-slate-600 dark:text-slate-300">
+          Cloud-focused IT professional based in Telford, UK, with a growing portfolio of
+          hands-on projects in AWS, infrastructure-as-code, and technical support.
+        </p>
+      </div>
+
+      <!-- Avatar / photo block -->
+      <aside class="shrink-0">
+        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-slate-200 dark:border-slate-800
+                     bg-gradient-to-br from-indigo-500/70 via-sky-500/70 to-emerald-400/70
+                     flex items-center justify-center text-3xl font-semibold
+                     text-slate-900 dark:text-slate-100 shadow-lg shadow-indigo-500/20 md:translate-y-11">
+          GJC
+        </div>
+
+
+<!--
+  To use a real photo instead of the gradient initials, replace the entire <div> above with:
+
+  <img
+    src="assets/avatar-gjc.jpg"
+    alt="Portrait of Gregory John Carberry"
+    class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-slate-200 dark:border-slate-800
+           object-cover shadow-lg shadow-indigo-500/20 md:translate-y-11"
+    loading="lazy"
+  >
+-->
+
+      </aside>
+    </header>
+
+        <!-- Rotating tagline -->
+        <section
+          class="mt-0 max-w-3xl border border-slate-200/70 dark:border-slate-800 rounded-2xl bg-white/70 dark:bg-slate-900/60 px-4 py-3">
+          <p class="text-xs font-semibold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
+            In a sentence
+          </p>
+          <p id="taglineRotator" class="mt-2 text-lg text-slate-800 dark:text-slate-100">
+            Turning learning, labs, and late-night debugging into practical cloud skills.
+          </p>
+        </section>
+
+
+
+    <!-- Professional summary -->
+    <section class="mt-10 max-w-5xl">
+      <h2 class="text-2xl font-bold">Professional Summary</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I am building a career at the intersection of <strong>cloud platforms</strong> and
+        <strong>technical support</strong> — combining customer-facing skills with practical,
+        lab-based experience across AWS, networking, and automation.
+      </p>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        My background includes structured training in IT support and service desk work,
+        self-directed study in cloud and cybersecurity, and a growing set of
+        real-world projects that mirror the kinds of tasks I’d handle in a junior
+        Cloud, Support, or SRE role. I care about reliability, clear communication,
+        and leaving things in better shape than I found them.
+      </p>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        This portfolio is the practical side of that story — a place to demonstrate how
+        I think about problems, how I design solutions, and how I iterate when the first
+        attempt isn’t good enough.
+      </p>
+    </section>
+
+    <!-- Focus areas -->
+    <section class="mt-10 max-w-5xl">
+      <h2 class="text-2xl font-bold">Current Focus Areas</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I’m deliberately steering my learning and projects around a few core themes:
+      </p>
+      <ul class="mt-4 space-y-2 text-slate-600 dark:text-slate-300">
+        <li>
+          • <strong>AWS & Cloud Architecture</strong> — building small but realistic
+          solutions using services like S3, CloudFront, Lambda, Route&nbsp;53, and Amazon Connect.
+        </li>
+        <li>
+          • <strong>Infrastructure as Code & Automation</strong> — using Terraform, GitHub Actions,
+          and scripting to make deployments repeatable and transparent.
+        </li>
+        <li>
+          • <strong>Technical Support & Service Management</strong> — applying ITIL-style thinking,
+          incident handling, root-cause analysis, and clear communication in support scenarios.
+        </li>
+        <li>
+          • <strong>Security Foundations</strong> — keeping security in mind by default, informed by
+          certifications such as (ISC)² CC and introductory cybersecurity paths.
+        </li>
+        <li>
+          • <strong>Linux & Scripting</strong> — improving day-to-day efficiency with Bash and Python,
+          especially for diagnostics, automation, and glue-code tasks.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Skills snapshot (high level only) -->
+    <section class="mt-10">
+      <h2 class="text-2xl font-bold">Skills Snapshot</h2>
+      <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
+        A high-level view of some of the technologies and domains I’ve spent time with.
+        For a more detailed breakdown, including certifications and specific tools,
+        see the dedicated Certifications &amp; Skills page (coming soon / linked from the navigation).
+      </p>
+
+      <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+        <div class="chip">AWS Cloud (S3, CloudFront, Lambda, Route&nbsp;53, Connect)</div>
+        <div class="chip">Python &amp; Automation</div>
+        <div class="chip">Terraform &amp; GitHub Actions</div>
+        <div class="chip">Linux &amp; Bash</div>
+        <div class="chip">Networking Fundamentals (Cisco, LAN/WAN)</div>
+        <div class="chip">IT Support / Service Desk</div>
+        <div class="chip">ITSM &amp; ISO/IEC 20000 Awareness</div>
+        <div class="chip">Security Foundations ((ISC)² CC, Cisco Cybersecurity)</div>
+        <div class="chip">Version Control (Git / GitHub)</div>
+      </div>
+    </section>
+
+    <!-- How I work -->
+    <section class="mt-10 max-w-5xl">
+      <h2 class="text-2xl font-bold">How I Approach Work</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I tend to approach problems methodically: understand the context, narrow down the
+        likely causes, test small changes, and keep track of what I’ve tried. I’m comfortable
+        saying “I don’t know yet” as long as it is followed by “here’s how I’m going to find out”.
+      </p>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I value clear documentation and reproducible setups — whether that’s through
+        Terraform, shell scripts, or simply writing down the steps that worked.
+        The goal is always the same: make it easier for the next person (or future me)
+        to understand what’s going on.
+      </p>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I also enjoy constructive feedback. If a design, script, or configuration can be
+        made cleaner or more robust, I’d rather know and improve it than ship something
+        that “just about works”.
+      </p>
+    </section>
+
+    <!-- Learning & certifications (high-level) -->
+    <section class="mt-10 max-w-5xl">
+      <h2 class="text-2xl font-bold">Learning & Certifications</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        Formal learning and certifications are a big part of how I structure my progress.
+        Over the last few years I’ve completed multiple cloud, networking, cybersecurity,
+        and service management courses and exams — including AWS, Cisco, (ISC)² and others.
+      </p>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I treat certifications as a starting point, not the final destination. The real value
+        is in being able to translate that knowledge into working solutions, reliable support,
+        and better technical judgement. That’s why this portfolio exists alongside my badges:
+        it shows how I apply what I’ve learned.
+      </p>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        If you’re interested in specific credentials, dates, and issuing bodies, you’ll find
+        a dedicated Certifications &amp; Skills page linked from the navigation, as well as a
+        full record on my Credly and LinkedIn profiles.
+      </p>
+    </section>
+
+    <!-- Personal note -->
+    <section class="mt-10 max-w-5xl">
+      <h2 class="text-2xl font-bold">Beyond the Bullet Points</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I enjoy taking things apart — sometimes literally, sometimes just in my head —
+        to understand how they work. That can mean cloud architectures, network setups,
+        bits of hardware around the house, or the way a support process is structured.
+      </p>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        I’m comfortable with a bit of dry humour and straight talking, but I take the work
+        itself seriously. If there’s a customer waiting on a solution or a system that needs
+        to stay up, that comes first.
+      </p>
+    </section>
+
+    <!-- CTA -->
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">Let’s Connect</h2>
+      <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
+        If you’d like to talk about cloud projects, junior IT roles, or anything related to
+        this portfolio, feel free to get in touch. I’m open to opportunities where I can
+        grow, contribute, and keep learning.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3 text-sm">
+        <a href="/projects.html" class="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500">
+          View Projects
+        </a>
+        <a href="mailto:Carberry.GJ@gmail.com"
+          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">
+          Contact Me
+        </a>
+        <a href="https://www.linkedin.com/in/gregory-carberry" target="_blank" rel="noopener"
+          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">
+          View LinkedIn Profile
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
+    © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
+    <div class="mt-2">
+      Last updated: <span id="lastUpdated">—</span>
+    </div>
+  </footer>
+
+  <!-- Shared JS -->
+  <script defer src="assets/common.js"></script>
+  <script defer src="assets/about.js"></script>
+</body>
+
+</html>

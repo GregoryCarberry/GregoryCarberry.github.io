@@ -1,0 +1,176 @@
+{
+  "categories": [
+    {
+      "id": "cloud-aws",
+      "title": "Cloud & AWS",
+      "items": [
+        {
+          "name": "AWS Certified Cloud Practitioner",
+          "issuer": "Amazon Web Services Training and Certification",
+          "summary": "Core AWS services, cloud concepts, security, pricing, and architecture fundamentals.",
+          "tags": ["AWS", "Cloud"],
+          "year": 2021
+        },
+        {
+          "name": "AWS Cloud Quest: Cloud Practitioner",
+          "issuer": "Amazon Web Services",
+          "summary": "Game-based labs building practical solutions on AWS, reinforcing Cloud Practitioner topics.",
+          "tags": ["AWS", "Hands-on", "Labs"]
+        },
+        {
+          "name": "AWS re/Start Graduate",
+          "issuer": "Amazon Web Services Training and Certification",
+          "summary": "Full-time cloud training including AWS services, Linux, networking, and technical support.",
+          "tags": ["AWS", "Linux", "Networking", "Support"]
+        },
+        {
+          "name": "AWS Educate: Introduction to Generative AI",
+          "issuer": "Amazon Web Services",
+          "summary": "Fundamentals of generative AI concepts and how they map onto AWS services and tooling.",
+          "tags": ["AWS", "Generative AI"]
+        },
+        {
+          "name": "Amazon Connect Developer Specialist",
+          "issuer": "Amazon Web Services",
+          "summary": "Design and configuration of Amazon Connect contact centres, flows, and integrations.",
+          "tags": ["AWS", "Amazon Connect", "Telephony"],
+          "year": 2024
+        }
+      ]
+    },
+    {
+      "id": "security-cyber",
+      "title": "Security & Cybersecurity",
+      "items": [
+        {
+          "name": "Certified in Cybersecurity (CC)",
+          "issuer": "(ISC)²",
+          "summary": "Security principles, access control, network security, security operations, and incident response at entry level.",
+          "tags": ["Security", "(ISC)²"],
+          "year": 2024
+        },
+        {
+          "name": "Junior Cybersecurity Analyst Career Path",
+          "issuer": "Cisco Networking Academy",
+          "summary": "Monitoring and protecting networks, firewalls, cloud security, cryptography, vulnerability assessment, and incident response.",
+          "tags": ["Security", "Networking", "Cisco"]
+        },
+        {
+          "name": "Cybersecurity Essentials",
+          "issuer": "Cisco",
+          "summary": "Core concepts of confidentiality, integrity, availability, basic cryptography, and network security controls.",
+          "tags": ["Security", "Cisco"]
+        },
+        {
+          "name": "OPSWAT Introduction to Critical Infrastructure Protection (ICIP)",
+          "issuer": "OPSWAT",
+          "summary": "Security considerations and cyber risks for critical infrastructure and industrial environments.",
+          "tags": ["Security", "Critical Infrastructure"]
+        },
+        {
+          "name": "Cyber Security Foundation Professional Certificate (CSFPC)",
+          "issuer": "Certiprof",
+          "summary": "Foundation-level understanding of security controls, risk, and basic governance.",
+          "tags": ["Security", "Foundations"]
+        },
+        {
+          "name": "IBM Z Day 2024 — Security Certificate",
+          "issuer": "IBM / BeMyApp",
+          "summary": "Exposure to mainframe security concepts and platform-specific security tooling.",
+          "tags": ["Security", "IBM Z"]
+        }
+      ]
+    },
+    {
+      "id": "networking",
+      "title": "Networking & Infrastructure",
+      "items": [
+        {
+          "name": "Cisco DevNet Associate",
+          "issuer": "Cisco",
+          "summary": "Network programmability, APIs, basic automation, and infrastructure-as-code concepts for Cisco platforms.",
+          "tags": ["Networking", "Automation", "Cisco"],
+          "year": 2022
+        },
+        {
+          "name": "Network Addressing and Basic Troubleshooting",
+          "issuer": "Cisco",
+          "summary": "IP addressing, DNS, LAN/WAN concepts, and first-line network troubleshooting workflows.",
+          "tags": ["Networking", "DNS"]
+        },
+        {
+          "name": "Extreme Networks Associate — Introduction to Future Networking",
+          "issuer": "Extreme Networks",
+          "summary": "OSI model, switching and routing basics, and modern enterprise networking concepts.",
+          "tags": ["Networking", "OSI Model"]
+        },
+        {
+          "name": "Introduction to Packet Tracer",
+          "issuer": "Cisco",
+          "summary": "Network simulation and basic lab topologies using Cisco Packet Tracer.",
+          "tags": ["Networking", "Simulation"]
+        },
+        {
+          "name": "Introduction to IoT",
+          "issuer": "Cisco Networking Academy",
+          "summary": "IoT fundamentals including connectivity, data flows, and cloud integration patterns.",
+          "tags": ["IoT", "Networking", "Cloud"]
+        }
+      ]
+    },
+    {
+      "id": "itsm",
+      "title": "ITSM, Service Management & Tooling",
+      "items": [
+        {
+          "name": "ISO/IEC 20000 IT Service Management Internal Auditor",
+          "issuer": "SkillFront",
+          "summary": "IT service management concepts, process auditing, continual improvement, and service quality.",
+          "tags": ["ITSM", "ISO/IEC 20000"]
+        },
+        {
+          "name": "Jira Fundamentals",
+          "issuer": "Atlassian",
+          "summary": "Working with Jira for issue tracking, agile boards, workflows, and basic configuration.",
+          "tags": ["Jira", "Collaboration"]
+        },
+        {
+          "name": "Jira Service Management Fundamentals",
+          "issuer": "Atlassian",
+          "summary": "Service projects, queues, SLAs, and request handling in Jira Service Management.",
+          "tags": ["Jira Service Management", "ITSM"]
+        }
+      ]
+    },
+    {
+      "id": "platforms-foundations",
+      "title": "Operating Systems, Platforms & Foundations",
+      "items": [
+        {
+          "name": "CompTIA IT Fundamentals+ (ITF+)",
+          "issuer": "CompTIA",
+          "summary": "Overview of IT concepts including hardware, software, databases, networking, and security at entry level.",
+          "tags": ["IT Fundamentals"]
+        },
+        {
+          "name": "Mastering Active Directory: Administration and Fundamentals",
+          "issuer": "Udemy",
+          "summary": "Active Directory concepts, user and group management, Group Policy, and admin fundamentals.",
+          "tags": ["Active Directory", "Windows Server"]
+        },
+        {
+          "name": "IBM Z Day 2024 — AI & Data Certificate",
+          "issuer": "IBM / BeMyApp",
+          "summary": "Exposure to AI and data workloads on IBM Z and large-scale enterprise platforms.",
+          "tags": ["IBM Z", "AI", "Data"]
+        },
+        {
+          "name": "IBM Z Day 2024 — Skills Certificate",
+          "issuer": "IBM / BeMyApp",
+          "summary": "General skills related to IBM Z, enterprise computing, and mainframe environments.",
+          "tags": ["IBM Z", "Mainframe"]
+        }
+      ]
+    }
+  ]
+}

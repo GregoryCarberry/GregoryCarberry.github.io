@@ -1,4 +1,116 @@
 [
-  { "when": "2025", "text": "Built WarehouseOne MVP (auth, RBAC, stock flows) and containerised stack." },
-  { "when": "2024", "text": "Earned Amazon Connect Developer Specialist • (ISC)² CC • ISO/IEC 20000 Internal Auditor." }
+  {
+    "date": "2025-02",
+    "title": "Portfolio revamp: dedicated About and Certs & Skills pages",
+    "summary": "Restructured the portfolio so the homepage is a clean hub, with long-form About and a data-driven Certifications & Skills page backed by JSON.",
+    "category": "project"
+  },
+  {
+    "date": "2025-02",
+    "title": "Timeline redesign planning",
+    "summary": "Started planning a richer, animated timeline driven by JSON data, ready for auto-rotation and manual scroll controls.",
+    "category": "project"
+  },
+  {
+    "date": "2024-11",
+    "title": "Amazon Connect Developer Specialist",
+    "summary": "Completed the Amazon Connect Developer Specialist credential, focusing on contact flows, telephony, call quality monitoring, and integration patterns.",
+    "category": "cert"
+  },
+  {
+    "date": "2024-11",
+    "title": "Amazon Connect call quality monitor project",
+    "summary": "Built a proof-of-concept for monitoring Amazon Connect call quality using Lambda, EventBridge, and CloudWatch metrics as part of a portfolio project.",
+    "category": "project"
+  },
+  {
+    "date": "2024-10",
+    "title": "ISO/IEC 20000 IT Service Management Internal Auditor",
+    "summary": "Passed the ITSM Internal Auditor exam, reinforcing knowledge of incident, problem, change, and continual improvement processes.",
+    "category": "cert"
+  },
+  {
+    "date": "2024-10",
+    "title": "Mastering Active Directory: Administration and Fundamentals",
+    "summary": "Completed an Active Directory fundamentals course, covering users, groups, Group Policy, and day-to-day admin tasks.",
+    "category": "course"
+  },
+  {
+    "date": "2024-10",
+    "title": "IBM Z Day 2024 certificates",
+    "summary": "Earned IBM Z Day AI & Data, Skills, and Security certificates, gaining exposure to mainframe platforms, security, and large-scale workloads.",
+    "category": "cert"
+  },
+  {
+    "date": "2024-08",
+    "title": "Jira Fundamentals & Jira Service Management Fundamentals",
+    "summary": "Completed Atlassian badges for Jira and Jira Service Management, focusing on issues, boards, queues, SLAs, and support workflows.",
+    "category": "cert"
+  },
+  {
+    "date": "2024-08",
+    "title": "Introduction to IoT (Cisco Networking Academy)",
+    "summary": "Studied IoT fundamentals, including device connectivity, data flows, and cloud integration patterns.",
+    "category": "cert"
+  },
+  {
+    "date": "2024-07",
+    "title": "Certified in Cybersecurity (CC)",
+    "summary": "Completed the (ISC)² CC certification, covering security principles, access control, network security, and basic incident response.",
+    "category": "cert"
+  },
+  {
+    "date": "2024-04",
+    "title": "OPSWAT Introduction to Critical Infrastructure Protection (ICIP)",
+    "summary": "Learned about securing critical infrastructure and industrial environments, focusing on threat vectors and protection strategies.",
+    "category": "cert"
+  },
+  {
+    "date": "2024-03",
+    "title": "Well-Architected Static Site project (AWS + Terraform)",
+    "summary": "Developed a Well-Architected static website on AWS using S3, CloudFront, WAF, and Route 53, managed with Terraform and GitHub Actions.",
+    "category": "project"
+  },
+  {
+    "date": "2023-11",
+    "title": "Portfolio v1 on GitHub Pages",
+    "summary": "Deployed the first version of the cloud portfolio on GitHub Pages, using data-driven sections and Tailwind for styling.",
+    "category": "project"
+  },
+  {
+    "date": "2022-02",
+    "title": "Cisco DevNet Associate",
+    "summary": "Earned the DevNet Associate certification, combining networking concepts with APIs, automation, and programmability.",
+    "category": "cert"
+  },
+  {
+    "date": "2021-06",
+    "title": "AWS re/Start graduate (TechTalent Academy)",
+    "summary": "Completed the TechTalent Academy / AWS re/Start training programme focused on AWS, Linux, networking, scripting, and cloud DevOps fundamentals.",
+    "category": "education"
+  },
+  {
+    "date": "2021-06",
+    "title": "AWS Certified Cloud Practitioner",
+    "summary": "Achieved the AWS Cloud Practitioner certification, validating core AWS services, cloud concepts, and pricing models.",
+    "category": "cert"
+  },
+  {
+    "date": "2021-03",
+    "title": "Cybersecurity Essentials (Cisco)",
+    "summary": "Completed Cisco Cybersecurity Essentials, covering CIA triad, basic cryptography, and network security fundamentals.",
+    "category": "cert"
+  },
+  {
+    "date": "2020-11",
+    "title": "Introduction to Packet Tracer (Cisco)",
+    "summary": "Learned to build and test small network topologies using Cisco Packet Tracer for simulation and practice.",
+    "category": "cert"
+  },
+  {
+    "date": "2018-12",
+    "title": "CompTIA IT Fundamentals+ (ITF+)",
+    "summary": "Completed CompTIA ITF+, gaining broad fundamentals across hardware, software, networking, and basic security.",
+    "category": "cert"
+  }
 ]

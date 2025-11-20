@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Certifications & Skills — Gregory John Carberry</title>
+  <meta name="description"
+    content="Certifications and skills for Gregory John Carberry — cloud-focused IT professional with experience across AWS, networking, security, and IT support." />
+  <link rel="canonical" href="https://gregorycarberry.github.io/certifications.html" />
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+
+  <!-- Tailwind v4 browser build -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Tailwind configuration -->
+  <style type="text/tailwindcss">
+    @custom-variant dark (&:where(.dark, .dark *));
+    @theme {
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+  </style>
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="assets/site.css">
+
+  <!-- Colour scheme hints -->
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
+
+  <!-- Social / OG -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Certifications & Skills — Gregory John Carberry">
+  <meta property="og:description"
+    content="Overview of cloud, security, networking, and ITSM certifications and skills held by Gregory John Carberry.">
+  <meta property="og:image" content="https://gregorycarberry.github.io/og-image.png">
+  <meta property="og:url" content="https://gregorycarberry.github.io/certifications.html">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header
+    class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
+      <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
+      <button id="themeToggle" aria-label="Toggle theme"
+        class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="max-w-6xl mx-auto px-4 py-16 sm:py-20">
+    <!-- Page title -->
+    <header class="max-w-5xl">
+      <p class="text-sm font-semibold text-indigo-500">Certifications &amp; Skills</p>
+      <h1 class="mt-2 text-3xl sm:text-4xl font-extrabold">
+        Certifications &amp; Skills Overview
+      </h1>
+      <p class="mt-4 text-slate-600 dark:text-slate-300">
+        A consolidated view of the certifications, learning paths, and technical skills
+        that underpin the projects and case studies in this portfolio.
+      </p>
+      <p class="mt-2 text-slate-600 dark:text-slate-300">
+        This page focuses on <strong>what I’ve studied</strong> and <strong>what I can work with</strong>.
+        The portfolio itself shows <strong>how I apply it</strong>.
+      </p>
+
+      <div class="mt-5 flex flex-wrap gap-3 text-sm">
+        <a href="https://www.credly.com/users/gregory-carberry" target="_blank" rel="noopener"
+          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900">
+          View full badge list on Credly
+        </a>
+        <a href="https://www.linkedin.com/in/gregory-carberry" target="_blank" rel="noopener"
+          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900">
+          View profile on LinkedIn
+        </a>
+      </div>
+    </header>
+
+    <!-- Certifications by area (data-driven) -->
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">Key Certifications</h2>
+      <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
+        Data-driven from <code>data/certifications-page.json</code>. Edit that file to add, remove,
+        or reorganise certifications without touching this HTML.
+      </p>
+
+      <div id="certCategories" class="mt-6 space-y-10">
+        <!-- Loading state -->
+        <p class="text-sm text-slate-500 dark:text-slate-400">Loading certifications…</p>
+      </div>
+    </section>
+
+    <!-- Skills grouped by domain (data-driven) -->
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold">Skills by Domain</h2>
+      <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
+        Data-driven from <code>data/skills-page.json</code>. This is designed to be editor-friendly:
+        each domain is just a title plus an array of short skill labels.
+      </p>
+
+      <div id="skillsDomains" class="mt-6 grid gap-6 md:grid-cols-2">
+        <!-- Loading state -->
+        <p class="text-sm text-slate-500 dark:text-slate-400">Loading skills…</p>
+      </div>
+    </section>
+
+    <!-- Closing note -->
+    <section class="mt-16 max-w-5xl">
+      <h2 class="text-2xl font-bold">How This Connects to the Portfolio</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        Certifications and skills are useful signposts, but the real test is whether they translate into
+        working solutions and solid day-to-day support. The projects and case studies elsewhere on this site
+        are where I put this knowledge into practice — from AWS builds to troubleshooting and automation work.
+      </p>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
+        If you’d like to understand how any of these certifications or skills map onto a particular role,
+        feel free to get in touch or ask about a specific area.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3 text-sm">
+        <a href="/projects.html" class="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500">
+          View Projects
+        </a>
+        <a href="/about.html" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">
+          Read About Me
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
+    © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
+    <div class="mt-2">
+      Last updated: <span id="lastUpdated">—</span>
+    </div>
+  </footer>
+
+  <!-- Shared JS -->
+  <script defer src="assets/common.js"></script>
+  <script defer src="assets/certifications.js"></script>
+</body>
+
+</html>

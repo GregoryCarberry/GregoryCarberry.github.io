@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth dark">
+
 <head>
   <!-- Basic metadata -->
   <meta charset="utf-8" />
@@ -14,10 +15,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <!-- Favicon -->
-  <link
-    rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>"
-  >
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
 
   <!-- Tailwind v4 browser build -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -75,57 +74,45 @@
   </script>
 
   <!-- Analytics: Plausible (kept as-is) -->
-  <script
-    defer
-    data-domain="gregorycarberry.github.io"
-    src="https://plausible.io/js/script.js"
-  ></script>
+  <script defer data-domain="gregorycarberry.github.io" src="https://plausible.io/js/script.js"></script>
 </head>
+
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
   <!-- Accessibility: skip to main content -->
   <a href="#projects" class="skip-link">Skip to main content</a>
 
-  <!-- Sticky nav -->
-<header class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
-  <!-- Top nav bar -->
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-    <a href="#home" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
-    <nav
-      id="navLinks"
-      role="navigation"
-      aria-label="Primary"
-      class="hidden sm:flex gap-6 text-sm"
-    ></nav>
-    <button
-      id="themeToggle"
-      aria-label="Toggle theme"
-      class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700"
-    >
-      🌙
-    </button>
-  </div>
-
-  <!-- Floating full-width status banner -->
-  <div class="shadow-sm border-t border-amber-200/70 dark:border-amber-800/70">
-    <div
-      class="max-w-6xl mx-auto px-4 py-2 text-xs sm:text-sm rounded-t-2xl sm:rounded-t-2xl
-                 bg-amber-100/95 dark:bg-amber-900/90
-                 text-amber-900 dark:text-amber-100
-                 flex items-center justify-center gap-2"
-    >
-      <span aria-hidden="true">⚠️</span>
-      <span>
-        This portfolio is currently being updated — some sections may be incomplete.
-      </span>
+  <!-- Sticky nav + update banner -->
+  <header
+    class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
+    <!-- Top nav bar -->
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#home" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
+      <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
+      <button id="themeToggle" aria-label="Toggle theme"
+        class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">
+        🌙
+      </button>
     </div>
-  </div>
-</header>
 
-
+    <!-- Floating full-width status banner -->
+    <div class="shadow-sm border-t border-amber-200/70 dark:border-amber-800/70">
+      <div class="max-w-6xl mx-auto px-4 py-2 text-xs sm:text-sm rounded-t-2xl sm:rounded-t-2xl
+                   bg-amber-100/95 dark:bg-amber-900/90
+                   text-amber-900 dark:text-amber-100
+                   flex items-center justify-center gap-2">
+        <span aria-hidden="true">⚠️</span>
+        <span>
+          This portfolio is currently being updated — some sections may be incomplete.
+        </span>
+      </div>
+    </div>
+  </header>
 
   <!-- Hero -->
   <section id="home" class="relative">
-    <div class="absolute inset-0 bg-gradient-to-b from-indigo-100/60 via-transparent to-transparent dark:from-indigo-950/40 pointer-events-none"></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-indigo-100/60 via-transparent to-transparent dark:from-indigo-950/40 pointer-events-none">
+    </div>
     <div class="max-w-6xl mx-auto px-4 py-16 sm:py-24">
       <div class="grid md:grid-cols-2 gap-10 items-center">
         <div>
@@ -136,7 +123,8 @@
           <div id="heroButtons" class="mt-6 flex flex-wrap gap-3"></div>
           <p id="heroLearning" class="mt-4 text-sm text-slate-500 dark:text-slate-400"></p>
         </div>
-        <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm bg-grid">
+        <div
+          class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm bg-grid">
           <h2 class="font-semibold">Quick Highlights</h2>
           <ul id="quickHighlights" class="mt-3 space-y-2 text-sm"></ul>
         </div>
@@ -144,99 +132,127 @@
     </div>
   </section>
 
-  <!-- Featured projects -->
-  <section id="projects" class="py-16 sm:py-20 border-top border-slate-200/70 dark:border-slate-800 border-t">
+  <!-- Overview tiles linking to dedicated pages -->
+  <section class="py-6 sm:py-8">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="flex items-end justify-between gap-4">
-        <h2 class="text-2xl sm:text-3xl font-bold">Featured Projects</h2>
-        <a
-          class="text-sm underline"
-          href="https://github.com/GregoryCarberry"
-          target="_blank"
-          rel="noopener"
-        >
-          GitHub ▸
+      <h2 class="text-xl sm:text-2xl font-semibold mb-4">Explore the portfolio</h2>
+      <div class="grid gap-4 md:grid-cols-3">
+        <!-- About preview -->
+        <a href="/about.html"
+          class="block rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-4 sm:p-5 hover:border-indigo-400 hover:shadow-md transition">
+          <h3 class="font-semibold">About Me</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Who I am, what I’m working towards, and how I approach cloud and support work.
+          </p>
+        </a>
+
+        <!-- Projects preview -->
+        <a href="/projects.html"
+          class="block rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-4 sm:p-5 hover:border-indigo-400 hover:shadow-md transition">
+          <h3 class="font-semibold">Projects</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Data-driven cards for every build, with deep-dive pages for key case studies.
+          </p>
+        </a>
+
+        <!-- Certifications & skills preview -->
+        <a href="/certs.html"
+          class="block rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-4 sm:p-5 hover:border-indigo-400 hover:shadow-md transition">
+          <h3 class="font-semibold">Certifications &amp; Skills</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Verified badges plus a structured skills map across cloud, networking, and support.
+          </p>
         </a>
       </div>
-      <p class="mt-2 text-slate-600 dark:text-slate-300">
-        Hands-on builds that mirror real hiring signals: IaC, reliability, automation, and clear READMEs.
-      </p>
-      <div id="projectGrid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Loading skeletons for featured projects.
-             assets/index.js will replace this innerHTML once data + GitHub metadata load. -->
-        <article
-          class="animate-pulse rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col gap-3">
-          <div class="h-4 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="h-3 w-full bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="h-3 w-5/6 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="mt-2 flex flex-wrap gap-2">
-            <span class="h-5 w-14 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-            <span class="h-5 w-16 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-          </div>
-        </article>
-
-        <article
-          class="animate-pulse rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col gap-3">
-          <div class="h-4 w-1/2 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="h-3 w-5/6 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="h-3 w-3/4 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="mt-2 flex flex-wrap gap-2">
-            <span class="h-5 w-10 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-            <span class="h-5 w-20 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-          </div>
-        </article>
-
-        <article
-          class="animate-pulse rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col gap-3">
-          <div class="h-4 w-3/4 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="h-3 w-4/5 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="h-3 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="mt-2 flex flex-wrap gap-2">
-            <span class="h-5 w-16 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-            <span class="h-5 w-12 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-          </div>
-        </article>
-      </div>
-
     </div>
   </section>
 
-  <!-- Certifications -->
-  <section id="certs" class="py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
+  <!-- Featured projects -->
+<section id="projects" class="hidden py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl sm:text-3xl font-bold">Certifications</h2>
-      <p class="mt-2 text-slate-600 dark:text-slate-300">
-        A snapshot — full list lives on Credly.
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl sm:text-3xl font-bold">Featured Projects</h2>
+        <a class="text-sm underline" href="/projects.html">
+          View all projects ▸
+        </a>
+      </div>
+      <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+        A small selection of builds that best show how I think about reliability, automation, and supportability.
       </p>
 
-      <div class="mt-4 flex items-center justify-between gap-4">
-        <div id="certCount" class="text-sm text-slate-500"></div>
-        <button
-          id="toggleAllCerts"
-          class="text-sm px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
-          aria-expanded="false"
-        >
+      <!-- Project grid rendered by assets/index.js -->
+      <div id="projectGrid" class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- Certifications snapshot -->
+<section id="certs" class="hidden py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 space-y-6">
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold">Certifications (Snapshot)</h2>
+          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+            A quick view of recent and relevant badges. The full breakdown lives on the Certifications &amp; Skills
+            page.
+          </p>
+        </div>
+        <a href="/certs.html" class="text-sm underline shrink-0">
+          View full list ▸
+        </a>
+      </div>
+
+      <div class="flex items-center justify-between gap-4 text-sm">
+        <div class="flex items-center gap-2">
+          <span id="certCount"
+            class="inline-flex items-center justify-center rounded-full bg-slate-900 text-slate-50 dark:bg-slate-100 dark:text-slate-900 px-3 py-1 text-xs font-semibold">
+            …
+          </span>
+          <span class="text-slate-600 dark:text-slate-300">
+            verified certifications across cloud, networking, and security.
+          </span>
+        </div>
+        <button id="toggleAllCerts"
+          class="text-xs sm:text-sm px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700">
           Show all
         </button>
       </div>
 
-      <div id="certGrid" class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <!-- Cert cards rendered by assets/index.js -->
+      <div id="certGrid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
     </div>
   </section>
 
-  <!-- Skills -->
-  <section id="skills" class="py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
+  <!-- Skills snapshot -->
+  <section id="skills" class="hidden py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl sm:text-3xl font-bold">Skills</h2>
-      <div id="skillsGrid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm"></div>
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold">Skills Overview</h2>
+          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+            Core areas I’m actively using and improving. For the full skills matrix and how it maps to certs, see the
+            Certifications &amp; Skills page.
+          </p>
+        </div>
+        <a href="/certs.html" class="text-sm underline shrink-0">
+          View skills matrix ▸
+        </a>
+      </div>
+
+      <!-- Skills rendered by assets/index.js -->
+      <div id="skillsGrid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
     </div>
   </section>
 
   <!-- Timeline -->
   <section id="timeline" class="py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl sm:text-3xl font-bold">Recent Activity</h2>
-      <ol id="timelineList" class="mt-6 relative border-s border-slate-200 dark:border-slate-800"></ol>
+      <h2 class="text-2xl sm:text-3xl font-bold">Learning &amp; Project Timeline</h2>
+      <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+        A running log of key milestones – certs, builds, and learning sprints.
+      </p>
+
+      <!-- Timeline items rendered by assets/index.js -->
+      <ol id="timelineList" class="mt-6 space-y-4 border-l border-slate-300/60 dark:border-slate-800 pl-4"></ol>
     </div>
   </section>
 
@@ -263,4 +279,5 @@
   <script defer src="assets/common.js"></script>
   <script defer src="assets/index.js"></script>
 </body>
+
 </html>

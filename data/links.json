@@ -1,9 +1,9 @@
 [
   { "slot": "nav", "label": "All Projects", "href": "/projects.html" },
-  { "slot": "nav", "label": "Certifications", "href": "#certs" },
-  { "slot": "nav", "label": "Skills", "href": "#skills" },
-  { "slot": "nav", "label": "Timeline", "href": "#timeline" },
-  { "slot": "nav", "label": "Contact", "href": "#contact" },
+  { "slot": "nav", "label": "Certs & Skills", "href": "/certifications.html" },
+  { "slot": "nav", "label": "Contact", "href": "/index.html#contact" },
+  { "slot": "nav", "label": "About Me", "href": "/about.html" },
+
 
   { "slot": "hero", "label": "View Projects", "href": "#projects", "variant": "primary" },
   { "slot": "hero", "label": "LinkedIn", "href": "https://www.linkedin.com/in/gregory-carberry/" },
