@@ -4,12 +4,9 @@
   { "slot": "nav", "label": "Contact", "href": "/index.html#contact" },
   { "slot": "nav", "label": "About Me", "href": "/about.html" },
 
-
-  { "slot": "hero", "label": "View Projects", "href": "#projects", "variant": "primary" },
   { "slot": "hero", "label": "LinkedIn", "href": "https://www.linkedin.com/in/gregory-carberry/" },
   { "slot": "hero", "label": "Credly", "href": "https://www.credly.com/users/gregory-carberry" },
-  { "slot": "hero", "label": "Download CV", "href": "/Gregory-Carberry-CV.pdf" },
-  { "slot": "hero", "label": "Browse All Repositories", "href": "https://github.com/GregoryCarberry" },
+  { "slot": "hero", "label": "Email", "href": "mailto:Carberry.GJ@gmail.com" },
 
   { "slot": "contact", "label": "Email", "href": "mailto:Carberry.GJ@gmail.com" },
   { "slot": "contact", "label": "LinkedIn", "href": "https://www.linkedin.com/in/gregory-carberry/" },

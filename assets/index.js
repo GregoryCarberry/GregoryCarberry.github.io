@@ -5,13 +5,30 @@ const setLastUpdated = window.__setLastUpdated || function(){};
 function mkBtn(label, href, variant){
   const a = document.createElement('a');
   a.href = href || '#';
-  if (/^https?:\/\//.test(href || '')) { a.target = '_blank'; a.rel = 'noopener'; }
-  a.className = variant === 'primary'
-    ? 'px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500'
-    : 'px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700';
+
+  // External links open in new tab
+  if (/^https?:\/\//.test(href || '')) {
+    a.target = '_blank';
+    a.rel = 'noopener';
+  }
+
+  const base =
+    'inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium ' +
+    'transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ' +
+    'focus-visible:ring-indigo-500';
+
+  const primary =
+    ' bg-indigo-600 text-white shadow-sm hover:bg-indigo-500';
+
+  const secondary =
+    ' border border-slate-300 dark:border-slate-700 bg-white/5 text-slate-900 dark:text-slate-100 ' +
+    'hover:bg-slate-100/60 dark:hover:bg-slate-800/80';
+
+  a.className = base + (variant === 'primary' ? primary : secondary);
   a.textContent = label;
   return a;
 }
+
 (async function loadLinksExtended(){
   try{
     const res = await fetch('/data/links.json', { cache: 'no-store' });
@@ -19,31 +36,64 @@ function mkBtn(label, href, variant){
     const links = await res.json();
     const hero = document.getElementById('heroButtons');
     const contact = document.getElementById('contactButtons');
-    if (hero) { hero.innerHTML=''; links.filter(l=>l.slot==='hero').forEach(l=>hero.appendChild(mkBtn(l.label,l.href,l.variant))); }
-    if (contact) { contact.innerHTML=''; links.filter(l=>l.slot==='contact').forEach(l=>contact.appendChild(mkBtn(l.label,l.href))); }
+    if (hero) {
+      hero.innerHTML='';
+      links
+        .filter(l=>l.slot==='hero')
+        .forEach(l=>hero.appendChild(mkBtn(l.label,l.href,l.variant)));
+    }
+    if (contact) {
+      contact.innerHTML='';
+      links
+        .filter(l=>l.slot==='contact')
+        .forEach(l=>contact.appendChild(mkBtn(l.label,l.href)));
+    }
     setTimeout(setLastUpdated, 200);
   }catch{}
 })();
 
-// Profile -> hero + highlights
+// Profile -> hero tagline + learning line
 (async function loadProfile(){
   const taglineEl = document.getElementById('heroTagline');
   const learningEl = document.getElementById('heroLearning');
-  const hlEl = document.getElementById('quickHighlights');
   try{
     const res = await fetch('/data/profile.json', { cache: 'no-store' });
     recordLastUpdated(res);
     const p = await res.json();
     if (taglineEl) taglineEl.textContent = p.tagline || '';
     if (learningEl) learningEl.textContent = p.learning || '';
-    if (hlEl && Array.isArray(p.quick_highlights)) {
-      hlEl.innerHTML = '';
-      p.quick_highlights.forEach(line => {
-        const li = document.createElement('li'); li.textContent = line; hlEl.appendChild(li);
+  }catch{}
+})();
+
+// Highlights strip (data-driven pills)
+(async function loadHighlights(){
+  const strip = document.getElementById('highlightsStrip');
+  if (!strip) return;
+  strip.innerHTML = '<span class="text-xs text-slate-500">Loading highlights…</span>';
+  try{
+    const res = await fetch('/data/highlights.json', { cache: 'no-store' });
+    recordLastUpdated(res);
+    const items = await res.json();
+    strip.innerHTML = '';
+    if (Array.isArray(items) && items.length){
+      items.forEach(raw => {
+        let text = '';
+        if (typeof raw === 'string') {
+          text = raw;
+        } else if (raw && typeof raw === 'object') {
+          text = raw.label || raw.text || '';
+        }
+        if (!text) return;
+        const pill = document.createElement('span');
+        pill.className = 'inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1';
+        pill.textContent = text;
+        strip.appendChild(pill);
       });
+    } else {
+      strip.innerHTML = '<span class="text-xs text-slate-500">No highlights yet.</span>';
     }
   }catch{
-    if (hlEl) hlEl.innerHTML = '<li class="text-rose-600">Could not load profile.json</li>';
+    strip.innerHTML = '<span class="text-xs text-rose-600">Could not load highlights.json</span>';
   }
 })();
 
@@ -248,7 +298,6 @@ function mkBtn(label, href, variant){
     let lastTs = null;
     let scrollPos = list.scrollTop || 0;
 
-
     function pauseFromUser() {
       userPausedUntil = Date.now() + PAUSE_MS;
     }
@@ -271,14 +320,11 @@ function mkBtn(label, href, variant){
         const now = Date.now();
         if (now >= userPausedUntil) {
           const delta = (SPEED_PX_PER_SEC * dt) / 1000; // px this frame
-
-scrollPos += delta;
-if (scrollPos >= maxScroll) {
-  scrollPos = 0; // loop back to top
-}
-
-list.scrollTop = scrollPos;
-
+          scrollPos += delta;
+          if (scrollPos >= maxScroll) {
+            scrollPos = 0; // loop back to top
+          }
+          list.scrollTop = scrollPos;
         }
       }
 
