@@ -1,8 +1,27 @@
 [
-  "AWS Certified Cloud Practitioner",
-  "Amazon Connect Developer Specialist",
-  "(ISC)² Certified in Cybersecurity (CC)",
-  "Cisco DevNet Associate",
-  "Current build: WarehouseOne (Python/Flask + Postgres + Docker)",
-  "AWS Knowledge: Networking Core"
+  {
+    "label": "AWS Certified Cloud Practitioner",
+    "category": "cert",
+    "description": "Foundational AWS cloud certification (valid to 2027)."
+  },
+  {
+    "label": "Amazon Connect Developer Specialist",
+    "category": "cert",
+    "description": "Hands-on labs + assessment for Amazon Connect configuration."
+  },
+  {
+    "label": "(ISC)² Certified in Cybersecurity (CC)",
+    "category": "cert",
+    "description": "Entry-level security cert covering core security operations."
+  },
+  {
+    "label": "Cisco DevNet Associate",
+    "category": "cert",
+    "description": "Cisco automation & programmability (Python, APIs, NetDevOps)."
+  },
+  {
+    "label": "Current build: WarehouseOne (Python/Flask + Postgres + Docker)",
+    "category": "project",
+    "description": "Internal ordering & fulfilment system with role-based access."
+  }
 ]

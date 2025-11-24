@@ -65,37 +65,72 @@ function mkBtn(label, href, variant){
   }catch{}
 })();
 
-// Highlights strip (data-driven pills)
+// Highlights strip (data-driven pills with tooltips)
 (async function loadHighlights(){
   const strip = document.getElementById('highlightsStrip');
   if (!strip) return;
+
   strip.innerHTML = '<span class="text-xs text-slate-500">Loading highlights…</span>';
-  try{
+
+  try {
     const res = await fetch('/data/highlights.json', { cache: 'no-store' });
     recordLastUpdated(res);
     const items = await res.json();
     strip.innerHTML = '';
-    if (Array.isArray(items) && items.length){
+
+    const styles = {
+      project:   { emoji: '🛠️', pill: 'border-indigo-500/40 bg-indigo-500/10' },
+      cert:      { emoji: '🏅', pill: 'border-emerald-500/40 bg-emerald-500/10' },
+      course:    { emoji: '📘', pill: 'border-sky-500/40 bg-sky-500/10' },
+      education: { emoji: '🎓', pill: 'border-amber-500/40 bg-amber-500/10' },
+      other:     { emoji: '📌', pill: 'border-slate-500/40 bg-slate-700/40' }
+    };
+
+    if (Array.isArray(items) && items.length) {
       items.forEach(raw => {
-        let text = '';
+        let label = '';
+        let category = 'other';
+        let desc = '';
+
         if (typeof raw === 'string') {
-          text = raw;
+          // Backwards compatibility: plain string → "other"
+          label = raw;
+          desc = raw;
         } else if (raw && typeof raw === 'object') {
-          text = raw.label || raw.text || '';
+          label = raw.label || raw.text || '';
+          category = raw.category || 'other';
+          desc = raw.description || raw.tooltip || label;
         }
-        if (!text) return;
+
+        if (!label) return;
+
+        const conf = styles[category] || styles.other;
+
         const pill = document.createElement('span');
-        pill.className = 'inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1';
-        pill.textContent = text;
+        pill.className =
+          `inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs sm:text-sm ` +
+          `text-slate-100 border ${conf.pill}`;
+
+        pill.innerHTML = `
+          <span class="text-base">${conf.emoji}</span>
+          <span>${label}</span>
+        `;
+
+        // Tooltip for hover + better accessibility
+        pill.title = desc;
+        pill.setAttribute('aria-label', desc);
+
         strip.appendChild(pill);
       });
     } else {
       strip.innerHTML = '<span class="text-xs text-slate-500">No highlights yet.</span>';
     }
-  }catch{
+  } catch {
     strip.innerHTML = '<span class="text-xs text-rose-600">Could not load highlights.json</span>';
   }
 })();
+
+
 
 // Skills grid
 (async function loadSkills(){
@@ -347,13 +382,45 @@ function mkBtn(label, href, variant){
   const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
   const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
   if (!('IntersectionObserver' in window) || sections.length === 0) return;
+    const ACTIVE_CLASSES = [
+    'underline',
+    'text-indigo-600',
+    'dark:text-indigo-400',
+    'font-semibold'
+  ];
+
   const setActive = (id) => {
     links.forEach(a => {
       const on = a.getAttribute('href') === `#${id}`;
-      a.classList.toggle('underline', on);
-      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      ACTIVE_CLASSES.forEach(cls => a.classList.toggle(cls, on));
+      if (on) {
+        a.setAttribute('aria-current', 'page');
+      } else {
+        a.removeAttribute('aria-current');
+      }
     });
   };
+
+  // Fallback active link highlight for non-index pages
+(function () {
+  const nav = document.getElementById('navLinks');
+  if (!nav) return;
+
+  const path = window.location.pathname; // e.g. "/projects.html"
+  const links = nav.querySelectorAll('a');
+
+  links.forEach(a => {
+    if (a.getAttribute('href') === path) {
+      a.classList.add(
+        'text-indigo-600',
+        'dark:text-indigo-400',
+        'font-semibold',
+        'underline' // triggers our polished animated underline
+      );
+    }
+  });
+})();
+
   const io = new IntersectionObserver((entries) => {
     const topMost = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
     if (topMost?.target?.id) setActive(topMost.target.id);
