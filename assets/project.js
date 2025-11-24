@@ -1,169 +1,229 @@
 const recordLastUpdated = window.__recordLastUpdated || function(){};
 const setLastUpdated = window.__setLastUpdated || function(){};
 
-const qs = new URLSearchParams(location.search);
-const repoParam = qs.get('repo') || '';
-const ownerParam = qs.get('owner') || '';
-const [ownerFromRepo, repoFromRepo] = repoParam.includes('/') ? repoParam.split('/') : [null, repoParam];
-const owner = ownerParam || ownerFromRepo || 'GregoryCarberry';
-const repo = repoFromRepo || repoParam;
-const repoURL = (owner && repo) ? `https://github.com/${owner}/${repo}` : '#';
-const rawBase = `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/`;
-
-function setDynamicSEO(project){
-  if(!project) return;
-  const title = `${project.title || repo} — Project by Gregory John Carberry`;
-  document.title = title;
-  const desc = project.blurb || 'Project details and README.';
-  const pairs = [
-    ['meta[name="description"]','content',desc],
-    ['meta[property="og:title"]','content',title],
-    ['meta[property="og:description"]','content',desc],
-    ['meta[property="og:url"]','content',location.href],
-    ['meta[name="twitter:title"]','content',title],
-    ['meta[name="twitter:description"]','content',desc],
-  ];
-  pairs.forEach(([sel,attr,val])=>{ const el = document.querySelector(sel); if(el) el.setAttribute(attr,val); });
+// Helper: parse ?repo=... from URL
+function getRepoParam() {
+  const params = new URLSearchParams(window.location.search);
+  const value = params.get("repo") || "";
+  return value.trim();
 }
 
-function chip(text){
-  const span=document.createElement('span');
-  span.className='badge border border-slate-200 dark:border-slate-700';
-  span.textContent=text;
-  return span;
-}
-function stat(text){ const s=document.createElement('span'); s.className='stat'; s.textContent=text; return s; }
+// Helper: normalise owner/repo from param + project entry
+function normaliseRepoPair(rawParam, project) {
+  let owner = project.owner || "GregoryCarberry";
+  let repo = project.repo || "";
 
-function githubifyReadme(container){
-  if(!container) return;
-  container.querySelectorAll('img').forEach(img => {
-    const src = img.getAttribute('src') || '';
-    if (src && !/^https?:\/\//i.test(src) && !src.startsWith('#')) {
-      const clean = src.replace(/^\.\//,'').replace(/^\/+/,'');
-      img.src = rawBase + clean;
+  if (!repo && rawParam) {
+    if (rawParam.includes("/")) {
+      const parts = rawParam.split("/");
+      owner = parts[0] || owner;
+      repo = parts[1] || repo;
+    } else {
+      repo = rawParam;
     }
-  });
-  container.querySelectorAll('a').forEach(a => {
-    const href = a.getAttribute('href') || '';
-    if (!href) return;
-    if (/^https?:\/\//i.test(href) || href.startsWith('#')) return;
-    const clean = href.replace(/^\.\//,'').replace(/^\/+/,'');
-    a.href = `${repoURL}/blob/HEAD/${clean}`;
-    a.target = '_blank'; a.rel = 'noopener';
-  });
-  container.querySelectorAll('pre code').forEach(el => { try { hljs.highlightElement(el); } catch(e){} });
-  if (window.mermaid) {
-    container.querySelectorAll('code.language-mermaid, pre code.language-mermaid').forEach(block => {
-      const parent = block.closest('pre') || block.parentElement;
-      const graph = document.createElement('div');
-      graph.className = 'mermaid';
-      graph.textContent = block.textContent;
-      parent.replaceWith(graph);
-    });
-    try { mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: (document.documentElement.classList.contains('dark') ? 'dark' : 'default') }); } catch(e){}
   }
+  return { owner, repo };
 }
 
-async function fetchReadmeHTML(owner, repo){
-  try{
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
-      headers: { 'Accept': 'application/vnd.github.v3.html' }
-    });
-    if (res.ok) return { html: await res.text(), source: 'api-html' };
-  }catch{}
-  try{
-    const raw = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/HEAD/README.md`);
-    if (raw.ok) {
-      const md = await raw.text();
-      const html = (window.marked && window.marked.parse) ? window.marked.parse(md) : `<pre>${md.replace(/[&<>]/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</pre>`;
-      return { html, source: 'raw-md' };
-    }
-  }catch{}
-  return { html: null, source: 'none' };
-}
+(async function initProjectPage() {
+  const titleEl  = document.getElementById("title");
+  const blurbEl  = document.getElementById("blurb");
+  const tagsEl   = document.getElementById("tags");
+  const statsEl  = document.getElementById("stats");
+  const repoLink = document.getElementById("repoLink");
+  const demoLink = document.getElementById("demoLink");
+  const caseEl   = document.getElementById("caseStudy");
 
-(async function loadProject(){
-  let project = null, list = [];
-  try{
-    const res = await fetch('/data/projects.json', { cache: 'no-store' });
+  const prevLink = document.getElementById("prevProject");
+  const nextLink = document.getElementById("nextProject");
+
+  const repoParam = getRepoParam();
+
+  // Load all projects
+  let projects = [];
+  try {
+    const res = await fetch("/data/projects.json", { cache: "no-store" });
     recordLastUpdated(res);
-    list = await res.json();
-    project = list.find(p => (p.repo||'').toLowerCase() === (repo||'').toLowerCase() ||
-                              (p.link||'').toLowerCase().endsWith(`/${owner}/${repo}`));
-  }catch{}
-
-  const titleEl = document.getElementById('title');
-  const blurbEl = document.getElementById('blurb');
-  const tagsEl  = document.getElementById('tags');
-  const statsEl = document.getElementById('stats');
-  const readmeEl= document.getElementById('readme');
-  const repoLink= document.getElementById('repoLink');
-  const demoLink= document.getElementById('demoLink');
-
-  titleEl.textContent = project?.title || repo || 'Project';
-  blurbEl.textContent = project?.blurb || '';
-  repoLink.href = project?.link || repoURL;
-
-  if (project?.demo){
-    demoLink.href = project.demo;
-    demoLink.classList.remove('hidden');
+    projects = await res.json();
+  } catch (err) {
+    console.error("Could not load projects.json", err);
   }
 
-  tagsEl.innerHTML = '';
-  (project?.tags || []).forEach(t => tagsEl.appendChild(chip(t)));
-  if (project?.badge) {
-    const b = document.createElement('span');
-    b.className = 'badge bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60';
-    b.textContent = project.badge;
-    tagsEl.appendChild(b);
+  if (!Array.isArray(projects) || projects.length === 0) {
+    if (titleEl) titleEl.textContent = "Project not found";
+    if (caseEl) {
+      caseEl.innerHTML = "<p class='text-rose-600'>projects.json could not be loaded.</p>";
+    }
+    setTimeout(setLastUpdated, 500);
+    return;
   }
 
-  setDynamicSEO(project);
+  // Find current project from ?repo=
+  let current = null;
+  const paramLower = repoParam.toLowerCase();
 
-  if (owner && repo){
-    try{
-      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
-      const meta = res.ok ? await res.json() : null;
-      if (meta){
-        statsEl.innerHTML = '';
-        statsEl.appendChild(stat(`★ ${meta.stargazers_count}`));
-        statsEl.appendChild(stat(`⑂ ${meta.forks_count}`));
-        if (project?.updated || meta.updated_at) {
-          const dt = new Date(project?.updated || meta.updated_at);
-          const span = stat(`Updated ${dt.toLocaleDateString('en-GB')}`);
-          statsEl.appendChild(span);
+  for (const p of projects) {
+    const owner = p.owner || "GregoryCarberry";
+    const repo = p.repo || "";
+    const combined = (owner + "/" + repo).toLowerCase();
+    if (repoParam && combined === paramLower) {
+      current = p;
+      break;
+    }
+    if (!current && repo && repo.toLowerCase() === paramLower) {
+      current = p;
+    }
+  }
+
+  // Fallback: if still not found but we at least have a param, create a dummy
+  if (!current && repoParam) {
+    current = {
+      title: repoParam,
+      owner: "GregoryCarberry",
+      repo: repoParam
+    };
+  }
+
+  if (!current) {
+    if (titleEl) titleEl.textContent = "Project not found";
+    if (caseEl) {
+      caseEl.innerHTML = "<p class='text-slate-500'>No project matches this URL.</p>";
+    }
+    setTimeout(setLastUpdated, 500);
+    return;
+  }
+
+  // Normalise owner/repo pair
+  const { owner, repo } = normaliseRepoPair(repoParam, current);
+
+  // Page title
+  const pageTitle = (current.title || repo || "Project") + " — Gregory John Carberry";
+  document.title = pageTitle;
+
+  // Core text content
+  if (titleEl) titleEl.textContent = current.title || repo || "Project";
+  if (blurbEl) blurbEl.textContent = current.blurb || "";
+
+  // Tags
+  if (tagsEl) {
+    tagsEl.innerHTML = "";
+    if (Array.isArray(current.tags)) {
+      current.tags.forEach(tag => {
+        const span = document.createElement("span");
+        span.className = "text-xs px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700";
+        span.textContent = tag;
+        tagsEl.appendChild(span);
+      });
+    }
+  }
+
+  // Repo + demo links
+  const repoUrl = owner && repo ? `https://github.com/${owner}/${repo}` : "";
+  if (repoLink) {
+    if (repoUrl) {
+      repoLink.href = repoUrl;
+    } else {
+      repoLink.classList.add("hidden");
+    }
+  }
+
+  if (demoLink) {
+    const demo = current.demo || current.liveDemo || current.url || "";
+    if (demo) {
+      demoLink.href = demo;
+      demoLink.classList.remove("hidden");
+    } else {
+      demoLink.classList.add("hidden");
+    }
+  }
+
+  // GitHub stats (stars / forks)
+  if (statsEl && repoUrl) {
+    statsEl.innerHTML = "<div class='text-xs text-slate-500'>Loading GitHub stats…</div>";
+    try {
+      const metaRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+      const meta = metaRes.ok ? await metaRes.json() : null;
+      statsEl.innerHTML = "";
+      if (meta) {
+        const stars = document.createElement("div");
+        stars.className = "flex items-center gap-1";
+        stars.innerHTML = `<span aria-hidden="true">★</span><span>${meta.stargazers_count} stars</span>`;
+        const forks = document.createElement("div");
+        forks.className = "flex items-center gap-1";
+        forks.innerHTML = `<span aria-hidden="true">⑂</span><span>${meta.forks_count} forks</span>`;
+        statsEl.appendChild(stars);
+        statsEl.appendChild(forks);
+      } else {
+        statsEl.innerHTML = "<div class='text-xs text-slate-500'>GitHub stats unavailable.</div>";
+      }
+    } catch (err) {
+      console.error("GitHub API error", err);
+      statsEl.innerHTML = "<div class='text-xs text-slate-500'>GitHub stats unavailable.</div>";
+    }
+  }
+
+  // Prev / Next project navigation
+  if (prevLink && nextLink && Array.isArray(projects) && projects.length > 1) {
+    const idx = projects.indexOf(current);
+    if (idx !== -1) {
+      if (idx > 0) {
+        const prev = projects[idx - 1];
+        const po = prev.owner || "GregoryCarberry";
+        const pr = prev.repo || "";
+        if (pr) {
+          prevLink.href = `/project.html?repo=${encodeURIComponent(po + "/" + pr)}`;
+          prevLink.textContent = `← ${prev.title || pr}`;
+          prevLink.classList.remove("invisible");
         }
       }
-    }catch{}
-  }
-
-  if (owner && repo){
-    const { html } = await fetchReadmeHTML(owner, repo);
-    if (html) {
-      readmeEl.innerHTML = html;
-      readmeEl.querySelectorAll('a[href^="http"]').forEach(a => { a.target='_blank'; a.rel='noopener'; });
-      githubifyReadme(readmeEl);
-    } else {
-      readmeEl.innerHTML = `<div class="text-sm text-slate-500">README not available. <a class="underline" target="_blank" rel="noopener" href="${repoURL}#readme">Open on GitHub</a>.</div>`;
+      if (idx < projects.length - 1) {
+        const nxt = projects[idx + 1];
+        const no = nxt.owner || "GregoryCarberry";
+        const nr = nxt.repo || "";
+        if (nr) {
+          nextLink.href = `/project.html?repo=${encodeURIComponent(no + "/" + nr)}`;
+          nextLink.textContent = `${nxt.title || nr} →`;
+          nextLink.classList.remove("invisible");
+        }
+      }
     }
-  } else {
-    readmeEl.innerHTML = `<div class="text-sm text-slate-500">Repository not specified.</div>`;
   }
 
-  if (project && Array.isArray(list)) {
-    const idx = list.findIndex(p => (p.repo||'').toLowerCase() === (repo||'').toLowerCase());
-    const prev = idx > 0 ? list[idx - 1] : null;
-    const next = idx >= 0 && idx < list.length - 1 ? list[idx + 1] : null;
-    const prevEl = document.getElementById('prevProject');
-    const nextEl = document.getElementById('nextProject');
-    const toHref = (p) => {
-      const own = (p.owner || 'GregoryCarberry');
-      const r = p.repo || '';
-      return r ? `/project.html?repo=${own}/${r}` : '/projects.html';
-    };
-    if (prev) { prevEl.textContent = `← ${prev.title || prev.repo || 'Previous'}`; prevEl.href = toHref(prev); prevEl.classList.remove('invisible'); }
-    if (next) { nextEl.textContent = `${next.title || next.repo || 'Next'} →`; nextEl.href = toHref(next); nextEl.classList.remove('invisible'); }
+  // Case study: load from /case-studies/<repo>.md
+  if (caseEl && repo) {
+    caseEl.innerHTML = "<p class='text-sm text-slate-500'>Loading case study…</p>";
+    const fileName = (current.caseStudy && current.caseStudy.trim())
+      ? current.caseStudy.trim()
+      : `${repo}.md`;
+
+    const path = `/case-studies/${fileName}`;
+
+    try {
+      const res = await fetch(path, { cache: "no-store" });
+      if (!res.ok) throw new Error("Case study not found");
+      const md = await res.text();
+      // Use marked to render Markdown
+      if (window.marked) {
+        caseEl.innerHTML = window.marked.parse(md);
+      } else {
+        caseEl.textContent = md;
+      }
+      // Syntax highlighting
+      if (window.hljs) {
+        try { window.hljs.highlightAll(); } catch (e) {}
+      }
+      // Mermaid diagrams, if any
+      if (window.mermaid) {
+        try {
+          window.mermaid.initialize({ startOnLoad: false });
+          window.mermaid.run();
+        } catch (e) {}
+      }
+    } catch (err) {
+      console.error("Case study load error", err);
+      caseEl.innerHTML = "<p class='text-rose-600'>Could not load the case study file.</p>";
+    }
   }
 
-  setTimeout(setLastUpdated, 400);
+  setTimeout(setLastUpdated, 500);
 })();

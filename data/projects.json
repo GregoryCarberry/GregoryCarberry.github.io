@@ -1,5 +1,15 @@
 [
   {
+  "title": "Network Troubleshooting Lab",
+  "owner": "GregoryCarberry",
+  "repo": "network-troubleshooting-lab",
+  "blurb": "Hands-on home lab for practising network diagnostics, latency measurement, and link verification across Linux and Windows hosts.",
+  "readme": "Structured scenarios for testing latency, cabling, routing, and basic services in a small lab built with Linux Lite and consumer hardware.",
+  "tags": ["Network lab", "Linux", "Troubleshooting", "Home lab"],
+  "featured": true,
+  "caseStudy": "network-troubleshooting-lab.md"
+  },
+  {
     "repo": "WarehouseOne",
     "owner": "GregoryCarberry",
     "title": "WarehouseOne — Internal Ordering & WMS",
