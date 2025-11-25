@@ -30,21 +30,6 @@
 
   <!-- Shared site styles (bg-grid, skip-link, badges, markdown-body, etc.) -->
   <link rel="stylesheet" href="assets/site.css">
-
-  <!-- GitHub Markdown CSS -->
-  <link
-    id="ghmd-light"
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.1/github-markdown-light.min.css"
-    media="(prefers-color-scheme: light)"
-  >
-  <link
-    id="ghmd-dark"
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.1/github-markdown-dark.min.css"
-    media="(prefers-color-scheme: dark)"
-  >
-
   <!-- highlight.js for code blocks -->
   <link
     rel="stylesheet"
@@ -147,16 +132,24 @@
     </div>
 
     <!-- Case Study section -->
-    <section class="mt-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 bg-grid">
-      <h2 class="font-semibold">Case Study</h2>
-      <article id="caseStudy" class="markdown-body mt-4">
-        <div class="animate-pulse">
-          <div class="h-5 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="h-3 w-5/6 mt-3 bg-slate-200 dark:bg-slate-700 rounded"></div>
-          <div class="h-3 w-4/6 mt-2 bg-slate-200 dark:bg-slate-700 rounded"></div>
-        </div>
-      </article>
+    <section class="mt-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800
+             p-6 sm:p-8 bg-grid shadow-lg shadow-slate-950/40">
+      <div class="max-w-3xl mx-auto">
+        <p class="text-xs font-semibold tracking-[0.18em] text-slate-500 dark:text-slate-400 uppercase">
+          Case Study
+        </p>
+
+        <article id="caseStudy" class="markdown-body mt-4 text-sm sm:text-base leading-relaxed">
+          <!-- skeleton while loading -->
+          <div class="animate-pulse space-y-2">
+            <div class="h-5 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
+            <div class="h-3 w-5/6 bg-slate-200 dark:bg-slate-700 rounded"></div>
+            <div class="h-3 w-4/6 bg-slate-200 dark:bg-slate-700 rounded"></div>
+          </div>
+        </article>
+      </div>
     </section>
+
 
     <!-- Prev / Next navigation -->
     <nav id="prevNext" class="mt-8 flex items-center justify-between gap-4">

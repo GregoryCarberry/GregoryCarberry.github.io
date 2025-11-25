@@ -1,14 +1,14 @@
-const recordLastUpdated = window.__recordLastUpdated || function(){};
-const setLastUpdated = window.__setLastUpdated || function(){};
+const recordLastUpdated = window.__recordLastUpdated || function () {};
+const setLastUpdated = window.__setLastUpdated || function () {};
 
-// Helper: parse ?repo=... from URL
+// Read ?repo=... from URL
 function getRepoParam() {
   const params = new URLSearchParams(window.location.search);
   const value = params.get("repo") || "";
   return value.trim();
 }
 
-// Helper: normalise owner/repo from param + project entry
+// Normalise owner/repo from query + project entry
 function normaliseRepoPair(rawParam, project) {
   let owner = project.owner || "GregoryCarberry";
   let repo = project.repo || "";
@@ -39,7 +39,7 @@ function normaliseRepoPair(rawParam, project) {
 
   const repoParam = getRepoParam();
 
-  // Load all projects
+  // Load project list
   let projects = [];
   try {
     const res = await fetch("/data/projects.json", { cache: "no-store" });
@@ -93,14 +93,13 @@ function normaliseRepoPair(rawParam, project) {
     return;
   }
 
-  // Normalise owner/repo pair
   const { owner, repo } = normaliseRepoPair(repoParam, current);
 
   // Page title
   const pageTitle = (current.title || repo || "Project") + " — Gregory John Carberry";
   document.title = pageTitle;
 
-  // Core text content
+  // Hero content
   if (titleEl) titleEl.textContent = current.title || repo || "Project";
   if (blurbEl) blurbEl.textContent = current.blurb || "";
 
@@ -137,7 +136,7 @@ function normaliseRepoPair(rawParam, project) {
     }
   }
 
-  // GitHub stats (stars / forks)
+  // GitHub stats
   if (statsEl && repoUrl) {
     statsEl.innerHTML = "<div class='text-xs text-slate-500'>Loading GitHub stats…</div>";
     try {
@@ -147,10 +146,10 @@ function normaliseRepoPair(rawParam, project) {
       if (meta) {
         const stars = document.createElement("div");
         stars.className = "flex items-center gap-1";
-        stars.innerHTML = `<span aria-hidden="true">★</span><span>${meta.stargazers_count} stars</span>`;
+        stars.innerHTML = "<span aria-hidden='true'>★</span><span>" + meta.stargazers_count + " stars</span>";
         const forks = document.createElement("div");
         forks.className = "flex items-center gap-1";
-        forks.innerHTML = `<span aria-hidden="true">⑂</span><span>${meta.forks_count} forks</span>`;
+        forks.innerHTML = "<span aria-hidden='true'>⑂</span><span>" + meta.forks_count + " forks</span>";
         statsEl.appendChild(stars);
         statsEl.appendChild(forks);
       } else {
@@ -171,8 +170,8 @@ function normaliseRepoPair(rawParam, project) {
         const po = prev.owner || "GregoryCarberry";
         const pr = prev.repo || "";
         if (pr) {
-          prevLink.href = `/project.html?repo=${encodeURIComponent(po + "/" + pr)}`;
-          prevLink.textContent = `← ${prev.title || pr}`;
+          prevLink.href = "/project.html?repo=" + encodeURIComponent(po + "/" + pr);
+          prevLink.textContent = "← " + (prev.title || pr);
           prevLink.classList.remove("invisible");
         }
       }
@@ -181,38 +180,37 @@ function normaliseRepoPair(rawParam, project) {
         const no = nxt.owner || "GregoryCarberry";
         const nr = nxt.repo || "";
         if (nr) {
-          nextLink.href = `/project.html?repo=${encodeURIComponent(no + "/" + nr)}`;
-          nextLink.textContent = `${nxt.title || nr} →`;
+          nextLink.href = "/project.html?repo=" + encodeURIComponent(no + "/" + nr);
+          nextLink.textContent = (nxt.title || nr) + " →";
           nextLink.classList.remove("invisible");
         }
       }
     }
   }
 
-  // Case study: load from /case-studies/<repo>.md
+  // Case study markdown: /case-studies/<repo>.md or explicit caseStudy field
   if (caseEl && repo) {
     caseEl.innerHTML = "<p class='text-sm text-slate-500'>Loading case study…</p>";
     const fileName = (current.caseStudy && current.caseStudy.trim())
       ? current.caseStudy.trim()
-      : `${repo}.md`;
+      : repo + ".md";
 
-    const path = `/case-studies/${fileName}`;
+    const path = "/case-studies/" + fileName;
 
     try {
       const res = await fetch(path, { cache: "no-store" });
       if (!res.ok) throw new Error("Case study not found");
       const md = await res.text();
-      // Use marked to render Markdown
+
       if (window.marked) {
         caseEl.innerHTML = window.marked.parse(md);
       } else {
         caseEl.textContent = md;
       }
-      // Syntax highlighting
+
       if (window.hljs) {
         try { window.hljs.highlightAll(); } catch (e) {}
       }
-      // Mermaid diagrams, if any
       if (window.mermaid) {
         try {
           window.mermaid.initialize({ startOnLoad: false });
