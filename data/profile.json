@@ -1,12 +1,6 @@
 {
   "name": "Gregory John Carberry",
-  "tagline": "AWS-focused IT professional • Solutions-minded Support • DevOps-curious tinkerer.",
-  "learning": "Actively learning: AWS SAA-C03 • Python (PCEP) • Network fundamentals.",
-  "quick_highlights": [
-    "✅ AWS Certified Cloud Practitioner (valid to 2027)",
-    "✅ Amazon Connect Developer Specialist",
-    "✅ (ISC)² Certified in Cybersecurity (CC)",
-    "✅ Cisco DevNet Associate • Cisco Jr. Cybersecurity Analyst",
-    "🧪 Current build: WarehouseOne (Python/Flask + Postgres + Docker)"
-  ]
+  "tagline": "Cloud and IT support practitioner with a hands-on approach to problem solving.",
+  "learning": "Actively developing skills across AWS, Python, and modern service management."
+
 }

@@ -20,7 +20,7 @@
     "description": "Cisco automation & programmability (Python, APIs, NetDevOps)."
   },
   {
-    "label": "Current build: WarehouseOne (Python/Flask + Postgres + Docker)",
+    "label": "WarehouseOne — Python/Flask, Postgres, Docker",
     "category": "project",
     "description": "Internal ordering & fulfilment system with role-based access."
   }
