@@ -1,0 +1,47 @@
+<svg width="820" height="520" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .box { fill:#1f2937; stroke:#f97316; stroke-width:2; rx:10; ry:10; }
+    .label { fill:#e5e7eb; font-family:Arial, sans-serif; font-size:14px; }
+    .group { stroke:#9ca3af; stroke-dasharray:6,6; fill:none; rx:12; ry:12; }
+    .arrow { stroke:#9ca3af; stroke-width:2; marker-end:url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- Title above group -->
+  <text x="450" y="55" text-anchor="middle" class="label" style="font-size:16px;">
+    Static Site Architecture – AWS
+  </text>
+
+  <!-- Group Box -->
+  <rect x="200" y="70" width="540" height="300" class="group"/>
+
+  <!-- Internet -->
+  <rect x="40" y="240" width="120" height="50" class="box"/>
+  <text x="100" y="270" text-anchor="middle" class="label">Internet</text>
+
+  <!-- Arrow to CF -->
+  <line x1="160" y1="265" x2="260" y2="265" class="arrow"/>
+
+  <!-- CloudFront -->
+  <rect x="260" y="195" width="150" height="140" class="box"/>
+  <text x="335" y="270" text-anchor="middle" class="label">CloudFront</text>
+
+  <!-- Arrow to S3 -->
+  <line x1="410" y1="265" x2="540" y2="265" class="arrow"/>
+
+  <!-- S3 Bucket -->
+  <rect x="540" y="195" width="150" height="140" class="box"/>
+  <text x="615" y="270" text-anchor="middle" class="label">S3 Bucket</text>
+
+  <!-- WAF -->
+  <rect x="300" y="100" width="150" height="70" class="box"/>
+  <text x="375" y="140" text-anchor="middle" class="label">AWS WAF</text>
+
+  <!-- Arrow from WAF to CF -->
+  <line x1="375" y1="170" x2="335" y2="195" class="arrow"/>
+</svg>
