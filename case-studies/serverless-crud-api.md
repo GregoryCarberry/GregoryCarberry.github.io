@@ -133,17 +133,16 @@ Even a small serverless workload benefits from proper operations thinking:
 
 ## What this project demonstrates
 
-From a hiring manager’s perspective, this project shows that you:
+This project showcases practical experience with modern serverless design patterns on AWS. It highlights the ability to:
 
-- Understand how to compose AWS managed services into a cohesive backend.
-- Can think beyond “just code” and design for authentication, authorisation and least privilege.
-- Know how to use Infrastructure as Code to create repeatable environments.
-- Appreciate the importance of safe deployment strategies like canary releases and blue/green.
-- Consider logging, metrics and cost from the beginning rather than as afterthoughts.
+- Compose AWS managed services into a cohesive and secure backend architecture.
+- Design for authentication, authorisation and least‑privilege access using Cognito and IAM.
+- Apply Infrastructure as Code to create consistent, reproducible environments.
+- Implement safe deployment practices using Lambda versions, aliases and canary releases.
+- Build with operational considerations in mind, including logging, metrics, cost awareness and rapid rollback.
 
-Even in its initial scaffolded form, the repository is set up to evolve into a realistic serverless microservice.
+Even in its scaffolded form, the repository is structured to evolve into a production‑ready serverless microservice while keeping the implementation clear, maintainable and testable.
 
----
 
 ## Next steps and possible extensions
 
