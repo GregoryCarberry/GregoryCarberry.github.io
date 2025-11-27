@@ -46,7 +46,7 @@
     "readme": "CloudWatch dashboards + alarms; sample images + demo script."
   },
   {
-    "repo": "vpc-baseline-terraform",
+    "repo": "iac-vpc-baseline",
     "owner": "GregoryCarberry",
     "title": "IaC VPC Baseline",
     "blurb": "Public/private subnets, NAT, SGs, SSM Session Manager bastion.",
@@ -62,7 +62,7 @@
     "readme": "Edge test utility + CW metrics; runbook included."
   },
   {
-    "repo": "ecs-fargate-webapp",
+    "repo": "ecs-fargate-app",
     "owner": "GregoryCarberry",
     "title": "Containerised App on ECS Fargate",
     "blurb": "ECR + ECS service with ALB, health checks, and autoscaling.",

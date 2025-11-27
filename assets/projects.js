@@ -25,15 +25,18 @@ function render(){
   const count=document.getElementById('count');
   const q = normalise(state.q);
   let items = [...state.data];
+
   if(q){
     items = items.filter(p=>{
       const hay = [p.title, p.blurb, (p.tags||[]).join(' ')].map(normalise).join(' ');
       return hay.includes(q);
     });
   }
+
   if(state.tag){
     items = items.filter(p=>(p.tags||[]).map(normalise).includes(normalise(state.tag)));
   }
+
   if(state.sort==='alpha'){
     items.sort((a,b)=>normalise(a.title||'').localeCompare(normalise(b.title||'')));
   }else if(state.sort==='recent'){
@@ -45,24 +48,41 @@ function render(){
       return normalise(a.title||'').localeCompare(normalise(b.title||''));
     });
   }
+
   count.textContent = `${items.length} project${items.length===1?'':'s'}`;
+
   if(!items.length){
     grid.innerHTML = `<div class="text-sm text-slate-500">No projects match your filters.</div>`;
     return;
   }
+
   grid.innerHTML='';
   items.forEach(p=>{
     const owner = p.owner || 'GregoryCarberry';
     const repo = p.repo || '';
     const link = p.link || (repo ? `https://github.com/${owner}/${repo}` : '#');
+
+    const hasDetails = !!(owner && repo);
+    const href = hasDetails
+      ? `/project.html?repo=${owner}/${repo}`
+      : link;
+
     const card = document.createElement('a');
-    card.href = link; card.target = '_blank'; card.rel = 'noopener';
+    card.href = href;
+
+    // Only open in new tab for external links without a case-study page
+    if (!hasDetails && link && link.startsWith('http')) {
+      card.target = '_blank';
+      card.rel = 'noopener';
+    }
+
     card.className = `
       block group rounded-2xl border border-slate-200 dark:border-slate-800 p-5
       bg-white dark:bg-slate-900 shadow-sm transition
       hover:-translate-y-1 hover:shadow-md hover:border-indigo-400/70
       dark:hover:border-indigo-600/70
     `;
+
     card.innerHTML = `
       <div class="flex items-start justify-between gap-3">
         <h3 class="text-lg font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${p.title || repo}</h3>
@@ -79,31 +99,7 @@ function render(){
         ${p.updated ? `<span class="updated" title="Updated">${new Date(p.updated).toLocaleDateString('en-GB')}</span>` : ''}
       </div>
     `;
-    (function() {
-      const actions = document.createElement('div');
-      actions.className = 'mt-4 flex gap-2';
-      if (owner && repo) {
-        const a = document.createElement('a');
-        a.className = 'text-xs px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700';
-        a.href = `/project.html?repo=${owner}/${repo}`;
-        a.textContent = 'Details';
-        actions.appendChild(a);
-      } else {
-        const span = document.createElement('span');
-        span.className = 'text-xs px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 opacity-50 cursor-not-allowed';
-        span.setAttribute('aria-disabled','true');
-        span.title = 'No details available';
-        span.textContent = 'Details';
-        actions.appendChild(span);
-      }
-      const gh = document.createElement('a');
-      gh.className = 'text-xs px-3 py-1 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500';
-      gh.href = link; gh.target = '_blank'; gh.rel = 'noopener';
-      gh.textContent = 'GitHub';
-      actions.appendChild(gh);
-      const meta = card.querySelector('[data-meta]');
-      if (meta && meta.parentNode) meta.parentNode.insertBefore(actions, meta);
-    })();
+
     grid.appendChild(card);
 
     if(owner && repo){
