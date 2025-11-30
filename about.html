@@ -49,7 +49,15 @@
   <header
     class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="/" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
+      <a href="/" class="font-semibold tracking-tight relative group">
+        <span class="relative z-10">GJC • Cloud Portfolio</span>
+        <span class="pointer-events-none absolute left-0 -bottom-1 h-0.5 w-full
+                 bg-indigo-500 origin-left
+                 scale-x-0
+                 transition-transform group-hover:scale-x-100">
+        </span>
+      </a>
+
       <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
       <button id="themeToggle" aria-label="Toggle theme"
         class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">

@@ -47,7 +47,7 @@
     }).format(latest);
   };
 
-  // --- Load top nav from data/links.json (slot === 'nav')
+  // --- Load top nav from data/links.json (slot === 'nav') with active state + animated underline
   (async function loadNav() {
     try {
       const res = await fetch("data/links.json", { cache: "no-store" });
@@ -56,13 +56,48 @@
       const nav = document.getElementById("navLinks");
       if (nav) {
         nav.innerHTML = "";
+
+        const path = window.location.pathname;
+        const currentPath = path.split("/").pop() || "index.html";
+        const currentHash = window.location.hash || "";
+
         links
           .filter((l) => l.slot === "nav")
           .forEach((l) => {
             const a = document.createElement("a");
+
+            const url = new URL(l.href || "#", window.location.origin);
+            const linkPath = url.pathname.split("/").pop() || "index.html";
+            const linkHash = url.hash || "";
+
+            const isActive = linkHash
+              ? currentPath === linkPath && currentHash === linkHash
+              : currentPath === linkPath;
+
             a.href = l.href || "#";
-            a.className = "hover:underline";
-            a.textContent = l.label;
+            a.className = "relative group text-sm";
+
+            const underlineClasses = [
+              "pointer-events-none",
+              "absolute",
+              "left-0",
+              "-bottom-0",
+              "h-0.5",
+              "w-full",
+              "bg-indigo-500",
+              "origin-left",
+              "transition-transform",
+              isActive ? "scale-x-100" : "scale-x-0",
+              isActive ? "" : "group-hover:scale-x-100",
+            ]
+              .filter(Boolean)
+              .join(" ");
+
+            a.innerHTML = `
+              <span class="relative z-10">${l.label}</span>
+              <span class="${underlineClasses}"></span>
+            `;
+
             nav.appendChild(a);
           });
       }
@@ -73,16 +108,15 @@
   })();
 
   // Only register the service worker on the real GitHub Pages site,
-// NOT during local development with Live Server.
-if (
-  'serviceWorker' in navigator &&
-  location.hostname === 'gregorycarberry.github.io'
-) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  });
-}
-
+  // NOT during local development with Live Server.
+  if (
+    "serviceWorker" in navigator &&
+    location.hostname === "gregorycarberry.github.io"
+  ) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    });
+  }
 
   // --- Respect reduced motion globally
   if (

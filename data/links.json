@@ -1,7 +1,7 @@
 [
   { "slot": "nav", "label": "All Projects", "href": "/projects.html" },
   { "slot": "nav", "label": "Certs & Skills", "href": "/certifications.html" },
-  { "slot": "nav", "label": "Contact", "href": "/index.html#contact" },
+  { "slot": "nav", "label": "Contact", "href": "/contact.html" },
   { "slot": "nav", "label": "About Me", "href": "/about.html" },
 
   { "slot": "hero", "label": "LinkedIn", "href": "https://www.linkedin.com/in/gregory-carberry/" },

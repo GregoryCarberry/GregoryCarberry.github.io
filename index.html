@@ -86,13 +86,23 @@
     class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
     <!-- Top nav bar -->
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#home" class="font-semibold tracking-tight">GJC • Cloud Portfolio</a>
+      <!-- Brand link with animated + active underline -->
+      <a href="#home" class="font-semibold tracking-tight relative group">
+        <span class="relative z-10">GJC • Cloud Portfolio</span>
+        <span class="pointer-events-none absolute left-0 -bottom-1 h-0.5 w-full
+                   bg-indigo-500 origin-left
+                   scale-x-100
+                   transition-transform group-hover:scale-x-100">
+        </span>
+      </a>
+
       <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
       <button id="themeToggle" aria-label="Toggle theme"
         class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">
         🌙
       </button>
     </div>
+
 
     <!-- Floating full-width status banner -->
     <div class="shadow-sm border-t border-amber-200/70 dark:border-amber-800/70">
@@ -282,6 +292,10 @@
         Open to junior cloud/support roles (remote or West Midlands). Best ways to reach me:
       </p>
       <div id="contactButtons" class="mt-6 flex flex-wrap gap-3 text-sm"></div>
+      <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">
+        For more detail, see the full <a href="/contact.html" class="underline">Contact page</a>.
+      </p>
+
     </div>
   </section>
 
