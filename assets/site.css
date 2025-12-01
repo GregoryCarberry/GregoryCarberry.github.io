@@ -59,14 +59,43 @@
 .markdown-body img { max-width: 100%; }
 .markdown-body table { display: block; width: 100%; overflow: auto; }
 
-/* Primary nav link layout (underline handled via span from common.js) */
+/* Primary nav link styling + animated underline */
 #navLinks a {
   position: relative;
   display: inline-flex;
   align-items: center;
   padding-bottom: 0.25rem;
+  /* ~pb-1 */
+}
+
+/* Base underline line (hidden by default) */
+#navLinks a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: currentColor;
+  /* follows text colour (indigo when active) */
+  transition: width 180ms ease-out;
+}
+
+/* Hover → animate underline in */
+#navLinks a:hover::after {
+  width: 100%;
+}
+
+/* Active link (IntersectionObserver sets .underline) → full-width underline */
+#navLinks a.underline::after {
+  width: 100%;
+}
+
+/* Remove native text-decoration so only the animated underline shows */
+#navLinks a {
   text-decoration: none !important;
 }
+
 /* --------------------------- */
 /* Case study markdown styling */
 /* --------------------------- */
@@ -221,4 +250,26 @@
 
 .dark .markdown-body hr {
   border-top-color: #1f2937;
+}
+/* About page "In a sentence" progress indicator */
+.tagline-progress {
+  position: relative;
+  width: 3.5rem; /* ~14 */
+  height: 0.125rem; /* ~0.5 */
+  border-radius: 9999px;
+  overflow: hidden;
+  background: rgba(148, 163, 184, 0.45); /* ~slate-400 */
+}
+
+.tagline-progress-inner {
+  position: absolute;
+  inset: 0;
+  background: rgb(129, 140, 248); /* ~indigo-400 */
+  transform-origin: left;
+  animation: tagline-progress 6s linear infinite;
+}
+
+@keyframes tagline-progress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
 }

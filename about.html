@@ -107,9 +107,14 @@
         <!-- Rotating tagline -->
         <section
           class="mt-0 max-w-3xl border border-slate-200/70 dark:border-slate-800 rounded-2xl bg-white/70 dark:bg-slate-900/60 px-4 py-3">
-          <p class="text-xs font-semibold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
-            In a sentence
-          </p>
+          <div class="flex items-center justify-between gap-3">
+            <p class="text-xs font-semibold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
+              In a sentence
+            </p>
+            <div class="tagline-progress" aria-hidden="true">
+              <div class="tagline-progress-inner"></div>
+            </div>
+          </div>
           <p id="taglineRotator" class="mt-2 text-lg text-slate-800 dark:text-slate-100">
             Turning learning, labs, and late-night debugging into practical cloud skills.
           </p>
@@ -258,15 +263,16 @@
       </p>
 
       <div class="mt-6 flex flex-wrap gap-3 text-sm">
-        <a href="/projects.html" class="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500">
+        <a href="/projects.html"
+          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
           View Projects
         </a>
         <a href="mailto:Carberry.GJ@gmail.com"
-          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">
+          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
           Contact Me
         </a>
         <a href="https://www.linkedin.com/in/gregory-carberry" target="_blank" rel="noopener"
-          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700">
+          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
           View LinkedIn Profile
         </a>
       </div>

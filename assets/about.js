@@ -22,5 +22,5 @@
   setInterval(() => {
     index = (index + 1) % taglines.length;
     el.textContent = taglines[index];
-  }, 10000); // 10 seconds
+  }, 6000); // 6 seconds
 })();
