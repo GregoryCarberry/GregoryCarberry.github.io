@@ -1,154 +1,231 @@
-const recordLastUpdated = window.__recordLastUpdated || function(){};
-const setLastUpdated = window.__setLastUpdated || function(){};
+// Projects page logic: filtering, sorting, and tag chips.
+//
+// Depends on:
+// - /data/projects.json (array of project objects)
+// - DOM elements with ids: search, sort, tags, count, grid
+// - Optional window.__recordLastUpdated(res) and window.__setLastUpdated()
 
-const state = { q:'', tag:null, sort:'featured', data:[] };
+const recordLastUpdated = window.__recordLastUpdated || function () {};
+const setLastUpdated = window.__setLastUpdated || function () {};
 
-function skeletons(){
-  const grid=document.getElementById('grid');
-  grid.innerHTML = Array(6).fill(`
-    <div class="animate-pulse rounded-2xl border border-slate-200 dark:border-slate-800 p-5 bg-white/60 dark:bg-slate-900/40">
-      <div class="h-5 w-2/3 bg-slate-200 dark:bg-slate-700 rounded"></div>
-      <div class="h-3 w-5/6 mt-3 bg-slate-200 dark:bg-slate-700 rounded"></div>
-      <div class="h-3 w-3/4 mt-2 bg-slate-200 dark:bg-slate-700 rounded"></div>
-      <div class="flex gap-2 mt-4">
-        <div class="h-4 w-10 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
-        <div class="h-4 w-16 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
-      </div>
-    </div>
-  `).join('');
+const state = {
+  q: "",
+  tag: null,          // null means "All"
+  sort: "featured",   // 'featured' | 'alpha' | 'recent'
+  data: [],
+};
+
+function normalise(value) {
+  return (value || "").toString().toLowerCase();
 }
 
-function normalise(s){ return (s||'').toString().toLowerCase(); }
+// ---------------- Tag rendering ----------------
 
-function render(){
-  const grid=document.getElementById('grid');
-  const count=document.getElementById('count');
-  const q = normalise(state.q);
-  let items = [...state.data];
+function renderTags(allProjects) {
+  const tagsEl = document.getElementById("tags");
+  if (!tagsEl) return;
 
-  if(q){
-    items = items.filter(p=>{
-      const hay = [p.title, p.blurb, (p.tags||[]).join(' ')].map(normalise).join(' ');
-      return hay.includes(q);
+  const tagSet = new Set();
+  allProjects.forEach((p) => {
+    (p.tags || []).forEach((t) => tagSet.add(t));
+  });
+  const tags = Array.from(tagSet).sort((a, b) => a.localeCompare(b));
+
+  tagsEl.innerHTML = "";
+
+  function makeChip(label, tagValue) {
+    const isActive = tagValue === null ? state.tag === null : state.tag === tagValue;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = label;
+
+    btn.className = [
+      "px-3",
+      "py-1",
+      "rounded-full",
+      "border",
+      "text-sm",
+      "font-medium",
+      "transition",
+      isActive
+        ? "bg-indigo-600 text-white border-indigo-600"
+        : "border-slate-300 dark:border-slate-700 text-slate-300 dark:text-slate-400 hover:bg-slate-800 hover:text-slate-200",
+    ].join(" ");
+
+    btn.addEventListener("click", () => {
+      state.tag = tagValue;
+      renderTags(state.data);
+      renderProjects();
+    });
+
+    return btn;
+  }
+
+  // "All" chip
+  tagsEl.appendChild(makeChip("All", null));
+
+  // Individual tags
+  tags.forEach((tag) => {
+    tagsEl.appendChild(makeChip(tag, tag));
+  });
+}
+
+// ---------------- Project filtering / sorting ----------------
+
+function matchesSearch(project, q) {
+  if (!q) return true;
+  const n = normalise(q);
+
+  const haystack = [
+    project.title,
+    project.blurb,
+    (project.tags || []).join(" "),
+  ]
+    .map(normalise)
+    .join(" ");
+
+  return haystack.includes(n);
+}
+
+function matchesTag(project, tag) {
+  if (!tag) return true;
+  return (project.tags || []).map(normalise).includes(normalise(tag));
+}
+
+function sortProjects(list, mode) {
+  const items = [...list];
+
+  if (mode === "alpha") {
+    items.sort((a, b) => normalise(a.title).localeCompare(normalise(b.title)));
+  } else if (mode === "recent") {
+    items.sort(
+      (a, b) => new Date(b.updated || 0) - new Date(a.updated || 0)
+    );
+  } else {
+    // 'featured' default: featured first, then alpha
+    items.sort((a, b) => {
+      const af = a.featured ? 1 : 0;
+      const bf = b.featured ? 1 : 0;
+      if (af !== bf) return bf - af;
+      return normalise(a.title).localeCompare(normalise(b.title));
     });
   }
 
-  if(state.tag){
-    items = items.filter(p=>(p.tags||[]).map(normalise).includes(normalise(state.tag)));
+  return items;
+}
+
+// ---------------- Project card rendering ----------------
+
+function renderProjects() {
+  const grid = document.getElementById("grid");
+  const countEl = document.getElementById("count");
+  if (!grid) return;
+
+  const q = state.q;
+  const tag = state.tag;
+  const sort = state.sort;
+
+  let items = state.data.filter(
+    (p) => matchesSearch(p, q) && matchesTag(p, tag)
+  );
+
+  items = sortProjects(items, sort);
+
+  if (countEl) {
+    countEl.textContent = `${items.length} project${
+      items.length === 1 ? "" : "s"
+    }`;
   }
 
-  if(state.sort==='alpha'){
-    items.sort((a,b)=>normalise(a.title||'').localeCompare(normalise(b.title||'')));
-  }else if(state.sort==='recent'){
-    items.sort((a,b)=>new Date(b.updated||0)-new Date(a.updated||0));
-  }else{
-    items.sort((a,b)=>{
-      const aw = (a.featured?1:0) - (b.featured?1:0);
-      if(aw!==0) return -aw;
-      return normalise(a.title||'').localeCompare(normalise(b.title||''));
-    });
-  }
-
-  count.textContent = `${items.length} project${items.length===1?'':'s'}`;
-
-  if(!items.length){
-    grid.innerHTML = `<div class="text-sm text-slate-500">No projects match your filters.</div>`;
+  if (!items.length) {
+    grid.innerHTML =
+      '<div class="text-sm text-slate-500">No projects match your filters.</div>';
     return;
   }
 
-  grid.innerHTML='';
-  items.forEach(p=>{
-    const owner = p.owner || 'GregoryCarberry';
-    const repo = p.repo || '';
-    const link = p.link || (repo ? `https://github.com/${owner}/${repo}` : '#');
+  grid.innerHTML = "";
 
-    const hasDetails = !!(owner && repo);
-    const href = hasDetails
-      ? `/project.html?repo=${owner}/${repo}`
-      : link;
+  items.forEach((p) => {
+    const owner = p.owner || "GregoryCarberry";
+    const repo = p.repo || "";
+    const pageLink = p.page || "#";
 
-    const card = document.createElement('a');
-    card.href = href;
+    const card = document.createElement("a");
+    card.href = pageLink;
+    card.className = [
+      "block",
+      "group",
+      "rounded-2xl",
+      "border",
+      "border-slate-800",
+      "bg-slate-900/60",
+      "dark:bg-slate-800/60",
+      "p-5",
+      "shadow-sm",
+      "hover:shadow-md",
+      "hover:-translate-y-1",
+      "transition",
+    ].join(" ");
 
-    // Only open in new tab for external links without a case-study page
-    if (!hasDetails && link && link.startsWith('http')) {
-      card.target = '_blank';
-      card.rel = 'noopener';
-    }
-
-    card.className = `
-      block group rounded-2xl border border-slate-200 dark:border-slate-800 p-5
-      bg-white dark:bg-slate-900 shadow-sm transition
-      hover:-translate-y-1 hover:shadow-md hover:border-indigo-400/70
-      dark:hover:border-indigo-600/70
-    `;
+    const tagsHtml = (p.tags || [])
+      .map(
+        (t) =>
+          `<span class="px-2 py-0.5 text-xs rounded-full border border-slate-700 text-slate-300">${t}</span>`
+      )
+      .join("");
 
     card.innerHTML = `
-      <div class="flex items-start justify-between gap-3">
-        <h3 class="text-lg font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${p.title || repo}</h3>
-        ${p.badge ? `<span class="text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">${p.badge}</span>` : ''}
-      </div>
-      <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">${p.blurb || ''}</p>
-      ${p.readme ? `<p class="mt-3 text-xs text-slate-500 dark:text-slate-400">${p.readme}</p>` : ''}
-      <div class="mt-4 flex flex-wrap gap-2">
-        ${(p.tags||[]).map(t=>`<span class="text-xs px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">${t}</span>`).join('')}
-      </div>
-      <div class="mt-3 text-xs text-slate-500 flex gap-4" data-meta>
-        <span class="stars" title="Stars">★ —</span>
-        <span class="forks" title="Forks">⑂ —</span>
-        ${p.updated ? `<span class="updated" title="Updated">${new Date(p.updated).toLocaleDateString('en-GB')}</span>` : ''}
+      <h3 class="text-lg font-semibold mb-1 group-hover:text-indigo-400">${p.title ||
+        repo}</h3>
+      <p class="text-sm text-slate-400 mb-3">${p.blurb || ""}</p>
+      <div class="flex flex-wrap gap-2 mt-auto">
+        ${tagsHtml}
       </div>
     `;
 
     grid.appendChild(card);
-
-    if(owner && repo){
-      fetch(`https://api.github.com/repos/${owner}/${repo}`)
-        .then(r=>r.ok?r.json():null)
-        .then(meta=>{
-          if(!meta) return;
-          const m = card.querySelector('[data-meta]');
-          if(m){
-            m.querySelector('.stars').textContent = `★ ${meta.stargazers_count}`;
-            m.querySelector('.forks').textContent = `⑂ ${meta.forks_count}`;
-          }
-        }).catch(()=>{});
-    }
   });
 }
 
-function renderTags(all){
-  const tagsEl = document.getElementById('tags');
-  const uniq = new Set();
-  all.forEach(p => (p.tags||[]).forEach(t => uniq.add(t)));
-  const tags = Array.from(uniq).sort((a,b)=>a.localeCompare(b));
-  tagsEl.innerHTML = [
-    `<button class="chip px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700 ${state.tag?'':'bg-indigo-600 text-white border-indigo-600'}" data-tag="">All</button>`,
-    ...tags.map(t=>`<button class="chip px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700 ${state.tag===t?'bg-indigo-600 text-white border-indigo-600':''}" data-tag="${t}">${t}</button>`)
-  ].join(' ');
-  tagsEl.querySelectorAll('.chip').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      state.tag = btn.dataset.tag || null;
-      renderTags(state.data);
-      render();
-    });
-  });
-}
+// ---------------- Initialisation ----------------
 
-(async function loadProjects(){
-  skeletons();
-  try{
-    const res = await fetch('/data/projects.json', { cache: 'no-store' });
+(async function init() {
+  try {
+    const res = await fetch("/data/projects.json", { cache: "no-store" });
     recordLastUpdated(res);
+
     const projects = await res.json();
-    state.data = projects.map(p=>({ ...p }));
+    state.data = projects.map((p) => ({ ...p }));
+
     renderTags(state.data);
-    render();
-  }catch{
-    document.getElementById('grid').innerHTML = `<div class="text-sm text-rose-600">Could not load projects.json</div>`;
+    renderProjects();
+  } catch (err) {
+    console.error("Error loading projects.json", err);
+    const grid = document.getElementById("grid");
+    if (grid) {
+      grid.innerHTML =
+        '<div class="text-sm text-rose-500">Could not load projects.json.</div>';
+    }
+  } finally {
+    setTimeout(setLastUpdated, 400);
   }
-  setTimeout(setLastUpdated, 400);
 })();
 
-document.getElementById('search').addEventListener('input', (e)=>{ state.q=e.target.value; render(); });
-document.getElementById('sort').addEventListener('change', (e)=>{ state.sort=e.target.value; render(); });
+// ---------------- Events ----------------
+
+const searchInput = document.getElementById("search");
+if (searchInput) {
+  searchInput.addEventListener("input", (e) => {
+    state.q = e.target.value || "";
+    renderProjects();
+  });
+}
+
+const sortSelect = document.getElementById("sort");
+if (sortSelect) {
+  sortSelect.addEventListener("change", (e) => {
+    state.sort = e.target.value || "featured";
+    renderProjects();
+  });
+}
