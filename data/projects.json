@@ -1,72 +1,129 @@
 [
   {
-  "title": "Network Troubleshooting Lab",
-  "owner": "GregoryCarberry",
-  "repo": "network-troubleshooting-lab",
-  "blurb": "Hands-on home lab for practising network diagnostics, latency measurement, and link verification across Linux and Windows hosts.",
-  "readme": "Structured scenarios for testing latency, cabling, routing, and basic services in a small lab built with Linux Lite and consumer hardware.",
-  "tags": ["Network lab", "Linux", "Troubleshooting", "Home lab"],
-  "featured": true,
-  "caseStudy": "network-troubleshooting-lab.md"
+    "title": "Network Troubleshooting Lab",
+    "owner": "GregoryCarberry",
+    "repo": "network-troubleshooting-lab",
+    "blurb": "Hands-on home lab for practising network diagnostics, latency measurement, and link verification across Linux and Windows hosts.",
+    "readme": "Structured scenarios for testing latency, cabling, routing, and basic services in a small lab built with Linux Lite and consumer hardware.",
+    "tags": [
+      "Network lab",
+      "Linux",
+      "Troubleshooting",
+      "Home lab"
+    ],
+    "featured": true,
+    "caseStudy": "network-troubleshooting-lab.md",
+    "page": "/project.html?repo=network-troubleshooting-lab"
   },
   {
-    "repo": "WarehouseOne",
+    "repo": "warehouseone",
     "owner": "GregoryCarberry",
     "title": "WarehouseOne — Internal Ordering & WMS",
     "blurb": "Python/Flask + Postgres + Docker. RBAC, stock lifecycle, future courier flows.",
-    "tags": ["Python", "Flask", "Postgres", "Docker"],
-    "readme": "Auth, RBAC, picking/packing, API-first. Devcontainer + Compose."
+    "tags": [
+      "Python",
+      "Flask",
+      "Postgres",
+      "Docker"
+    ],
+    "readme": "Auth, RBAC, picking/packing, API-first. Devcontainer + Compose.",
+    "page": "/project.html?repo=WarehouseOne"
   },
   {
-  "title": "Well-Architected Static Site",
-  "owner": "GregoryCarberry",
-  "repo": "well-architected-static-site",
-  "link": "https://github.com/GregoryCarberry/well-architected-static-site",
-  "blurb": "S3 + CloudFront + WAF + OAC, built with Terraform and GitHub Actions.",
-  "readme": "Security headers, budgets, and CI checks baked in.",
-  "tags": ["AWS", "CloudFront", "Terraform", "GitHub Actions"],
-  "badge": "Case Study",
-  "featured": true,
-  "updated": "2025-10-23"
-},
+    "title": "Well-Architected Static Site",
+    "owner": "GregoryCarberry",
+    "repo": "well-architected-static-site",
+    "link": "https://github.com/GregoryCarberry/well-architected-static-site",
+    "blurb": "S3 + CloudFront + WAF + OAC, built with Terraform and GitHub Actions.",
+    "readme": "Security headers, budgets, and CI checks baked in.",
+    "tags": [
+      "AWS",
+      "CloudFront",
+      "Terraform",
+      "GitHub Actions"
+    ],
+    "badge": "Case Study",
+    "featured": true,
+    "updated": "2025-10-23",
+    "page": "/project.html?repo=well-architected-static-site"
+  },
   {
     "repo": "serverless-crud-api",
     "owner": "GregoryCarberry",
     "title": "Serverless CRUD (API Gateway + Lambda + DynamoDB)",
     "blurb": "Cognito auth, fine-grained IAM; Lambda aliases for canary releases.",
-    "tags": ["AWS", "API Gateway", "Lambda", "DynamoDB", "Cognito", "IaC"],
-    "readme": "Blue/green via aliases; unit tests; OpenAPI spec."
+    "tags": [
+      "AWS",
+      "API Gateway",
+      "Lambda",
+      "DynamoDB",
+      "Cognito",
+      "IaC"
+    ],
+    "readme": "Blue/green via aliases; unit tests; OpenAPI spec.",
+    "page": "/project.html?repo=serverless-crud-api"
   },
   {
     "repo": "event-driven-image-pipeline",
     "owner": "GregoryCarberry",
     "title": "Event-Driven Image Pipeline",
     "blurb": "S3 -> EventBridge -> Lambda thumbnails -> notify via SNS.",
-    "tags": ["AWS", "S3", "EventBridge", "Lambda", "SNS", "Observability"],
-    "readme": "CloudWatch dashboards + alarms; sample images + demo script."
+    "tags": [
+      "AWS",
+      "S3",
+      "EventBridge",
+      "Lambda",
+      "SNS",
+      "Observability"
+    ],
+    "readme": "CloudWatch dashboards + alarms; sample images + demo script.",
+    "page": "/project.html?repo=event-driven-image-pipeline"
   },
   {
     "repo": "iac-vpc-baseline",
     "owner": "GregoryCarberry",
     "title": "IaC VPC Baseline",
     "blurb": "Public/private subnets, NAT, SGs, SSM Session Manager bastion.",
-    "tags": ["AWS", "VPC", "NAT", "EC2", "SSM", "Terraform"],
-    "readme": "Security groups opinionated defaults; cost + security notes."
+    "tags": [
+      "AWS",
+      "VPC",
+      "NAT",
+      "EC2",
+      "SSM",
+      "Terraform"
+    ],
+    "readme": "Security groups opinionated defaults; cost + security notes.",
+    "page": "/project.html?repo=iac-vpc-baseline"
   },
   {
     "repo": "ac-call-quality-monitor",
     "owner": "GregoryCarberry",
     "title": "Amazon Connect Call-Quality Monitor",
     "blurb": "Dashboards + alarms for latency/AHT signals; sample Contact Lens notes.",
-    "tags": ["Amazon Connect", "CloudWatch", "IaC", "Dashboards", "Alarms"],
-    "readme": "Edge test utility + CW metrics; runbook included."
+    "tags": [
+      "Amazon Connect",
+      "CloudWatch",
+      "IaC",
+      "Dashboards",
+      "Alarms"
+    ],
+    "readme": "Edge test utility + CW metrics; runbook included.",
+    "page": "/project.html?repo=ac-call-quality-monitor"
   },
   {
     "repo": "ecs-fargate-app",
     "owner": "GregoryCarberry",
     "title": "Containerised App on ECS Fargate",
     "blurb": "ECR + ECS service with ALB, health checks, and autoscaling.",
-    "tags": ["AWS", "ECS Fargate", "ECR", "ALB", "Autoscaling", "GitHub Actions"],
-    "readme": "Multi-env deploy (dev/prod) with task definition versioning."
+    "tags": [
+      "AWS",
+      "ECS Fargate",
+      "ECR",
+      "ALB",
+      "Autoscaling",
+      "GitHub Actions"
+    ],
+    "readme": "Multi-env deploy (dev/prod) with task definition versioning.",
+    "page": "/project.html?repo=ecs-fargate-app"
   }
 ]
