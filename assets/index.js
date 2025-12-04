@@ -13,7 +13,7 @@ function mkBtn(label, href, variant){
   }
 
   const base =
-    'inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium ' +
+    'inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium ' +
     'transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ' +
     'focus-visible:ring-indigo-500';
 
@@ -25,7 +25,32 @@ function mkBtn(label, href, variant){
     'hover:bg-slate-100/60 dark:hover:bg-slate-800/80';
 
   a.className = base + (variant === 'primary' ? primary : secondary);
-  a.textContent = label;
+
+  // Decide which icon to use based on href
+  let iconId = null;
+  const url = href || '';
+
+  if (/github\.com/i.test(url)) {
+    iconId = 'icon-github';
+  } else if (/linkedin\.com/i.test(url)) {
+    iconId = 'icon-linkedin';
+  } else if (/credly\.com/i.test(url)) {
+    iconId = 'icon-credly';
+  } else if (/^mailto:/i.test(url)) {
+    iconId = 'icon-mail';
+  }
+
+  if (iconId) {
+    a.innerHTML = `
+      <svg class="w-4 h-4" aria-hidden="true" focusable="false">
+        <use href="assets/icons.svg#${iconId}"></use>
+      </svg>
+      <span>${label}</span>
+    `;
+  } else {
+    a.textContent = label;
+  }
+
   return a;
 }
 
@@ -427,5 +452,27 @@ function mkBtn(label, href, variant){
   }, { rootMargin: '-40% 0px -55% 0px', threshold: [0, .25, .5, .75, 1] });
   sections.forEach(s => io.observe(s));
 })();
+
+// Error pages: reuse mkBtn for consistent buttons on 404/500
+(function setupErrorButtons() {
+  if (typeof mkBtn !== 'function') return;
+
+  const config = [
+    { label: '← Back to homepage', href: '/', variant: 'secondary' },
+    { label: 'Browse all projects', href: '/projects.html', variant: 'secondary' },
+    { label: 'View GitHub profile', href: 'https://github.com/GregoryCarberry', variant: 'secondary' }
+  ];
+
+  function wire(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = '';
+    config.forEach(cfg => container.appendChild(mkBtn(cfg.label, cfg.href, cfg.variant)));
+  }
+
+  wire('errorButtons404');
+  wire('errorButtons500');
+})();
+
 
 setTimeout(setLastUpdated, 500);

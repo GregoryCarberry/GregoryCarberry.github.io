@@ -83,13 +83,26 @@
       </p>
 
       <div class="mt-5 flex flex-wrap gap-3 text-sm">
-        <a href="https://www.credly.com/users/gregory-carberry" target="_blank" rel="noopener"
-          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
-          View full badge list on Credly
+        <a href="https://www.credly.com/users/gregory-carberry" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+                 bg-white/5 text-slate-900 dark:text-slate-100
+                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+          <svg class="w-4 h-4" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#icon-credly"></use>
+          </svg>
+          <span>View full badge list on Credly</span>
         </a>
-        <a href="https://www.linkedin.com/in/gregory-carberry" target="_blank" rel="noopener"
-          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
-          View profile on LinkedIn
+
+        <a href="https://www.linkedin.com/in/gregory-carberry" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+                 bg-white/5 text-slate-900 dark:text-slate-100
+                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+          <svg class="w-4 h-4" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#icon-linkedin"></use>
+          </svg>
+          <span>View profile on LinkedIn</span>
         </a>
       </div>
     </header>
@@ -97,7 +110,7 @@
     <!-- Certifications by area (data-driven) -->
     <section class="mt-12">
       <h2 class="text-2xl font-bold">Key Certifications</h2>
-      <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
+      <p class="hidden mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
         Data-driven from <code>data/certifications-page.json</code>. Edit that file to add, remove,
         or reorganise certifications without touching this HTML.
       </p>
@@ -111,7 +124,7 @@
     <!-- Skills grouped by domain (data-driven) -->
     <section class="mt-16">
       <h2 class="text-2xl font-bold">Skills by Domain</h2>
-      <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
+      <p class="hidden mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
         Data-driven from <code>data/skills-page.json</code>. This is designed to be editor-friendly:
         each domain is just a title plus an array of short skill labels.
       </p>
@@ -136,11 +149,20 @@
       </p>
 
       <div class="mt-6 flex flex-wrap gap-3 text-sm">
-        <a href="/projects.html" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
-          View Projects
+        <a href="/projects.html" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+                 bg-white/5 text-slate-900 dark:text-slate-100
+                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+          <span>View Projects</span>
         </a>
-        <a href="/about.html" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
-          Read About Me
+
+        <a href="/about.html" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+                 bg-white/5 text-slate-900 dark:text-slate-100
+                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+          <span>Read About Me</span>
         </a>
       </div>
     </section>

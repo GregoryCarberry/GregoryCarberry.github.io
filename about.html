@@ -88,39 +88,35 @@
           GJC
         </div>
 
+        <!--
+          To use a real photo instead of the gradient initials, replace the entire <div> above with:
 
-<!--
-  To use a real photo instead of the gradient initials, replace the entire <div> above with:
-
-  <img
-    src="assets/avatar-gjc.jpg"
-    alt="Portrait of Gregory John Carberry"
-    class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-slate-200 dark:border-slate-800
-           object-cover shadow-lg shadow-indigo-500/20 md:translate-y-11"
-    loading="lazy"
-  >
--->
-
+          <img
+            src="assets/avatar-gjc.jpg"
+            alt="Portrait of Gregory John Carberry"
+            class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-slate-200 dark:border-slate-800
+                   object-cover shadow-lg shadow-indigo-500/20 md:translate-y-11"
+            loading="lazy"
+          >
+        -->
       </aside>
     </header>
 
-        <!-- Rotating tagline -->
-        <section
-          class="mt-0 max-w-3xl border border-slate-200/70 dark:border-slate-800 rounded-2xl bg-white/70 dark:bg-slate-900/60 px-4 py-3">
-          <div class="flex items-center justify-between gap-3">
-            <p class="text-xs font-semibold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
-              In a sentence
-            </p>
-            <div class="tagline-progress" aria-hidden="true">
-              <div class="tagline-progress-inner"></div>
-            </div>
-          </div>
-          <p id="taglineRotator" class="mt-2 text-lg text-slate-800 dark:text-slate-100">
-            Turning learning, labs, and late-night debugging into practical cloud skills.
-          </p>
-        </section>
-
-
+    <!-- Rotating tagline -->
+    <section
+      class="mt-0 max-w-3xl border border-slate-200/70 dark:border-slate-800 rounded-2xl bg-white/70 dark:bg-slate-900/60 px-4 py-3">
+      <div class="flex items-center justify-between gap-3">
+        <p class="text-xs font-semibold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
+          In a sentence
+        </p>
+        <div class="tagline-progress" aria-hidden="true">
+          <div class="tagline-progress-inner"></div>
+        </div>
+      </div>
+      <p id="taglineRotator" class="mt-2 text-lg text-slate-800 dark:text-slate-100">
+        Turning learning, labs, and late-night debugging into practical cloud skills.
+      </p>
+    </section>
 
     <!-- Professional summary -->
     <section class="mt-10 max-w-5xl">
@@ -263,17 +259,37 @@
       </p>
 
       <div class="mt-6 flex flex-wrap gap-3 text-sm">
-        <a href="/projects.html"
-          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
-          View Projects
+        <!-- Primary: view projects -->
+<a href="/projects.html" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+         transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+         focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+         bg-white/5 text-slate-900 dark:text-slate-100
+         hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+  <span>View Projects</span>
+</a>
+
+        <!-- Secondary: email -->
+        <a href="mailto:Carberry.GJ@gmail.com" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+                 bg-white/5 text-slate-900 dark:text-slate-100
+                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+          <svg class="w-4 h-4" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#icon-mail"></use>
+          </svg>
+          <span>Contact Me</span>
         </a>
-        <a href="mailto:Carberry.GJ@gmail.com"
-          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
-          Contact Me
-        </a>
-        <a href="https://www.linkedin.com/in/gregory-carberry" target="_blank" rel="noopener"
-          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition">
-          View LinkedIn Profile
+
+        <!-- Secondary: LinkedIn -->
+        <a href="https://www.linkedin.com/in/gregory-carberry" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+                 bg-white/5 text-slate-900 dark:text-slate-100
+                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+          <svg class="w-4 h-4" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#icon-linkedin"></use>
+          </svg>
+          <span>View LinkedIn Profile</span>
         </a>
       </div>
     </section>

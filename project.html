@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth dark">
+
 <head>
   <!-- Basic metadata -->
   <meta charset="utf-8" />
@@ -9,10 +10,8 @@
   <link rel="canonical" href="https://gregorycarberry.github.io/project.html" />
 
   <!-- Favicon -->
-  <link
-    rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>"
-  >
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
 
   <!-- Tailwind v4 browser build -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -31,16 +30,10 @@
   <!-- Shared site styles (bg-grid, skip-link, badges, markdown-body, etc.) -->
   <link rel="stylesheet" href="assets/site.css">
   <!-- highlight.js for code blocks -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css"
-    media="(prefers-color-scheme: light)"
-  >
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css"
-    media="(prefers-color-scheme: dark)"
-  >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css"
+    media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css"
+    media="(prefers-color-scheme: dark)">
   <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
 
   <!-- Mermaid (optional diagrams) -->
@@ -65,12 +58,14 @@
   <meta name="twitter:description" content="Project details and case study.">
   <meta name="twitter:image" content="https://gregorycarberry.github.io/og-image.png">
 </head>
+
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
   <!-- Accessibility: skip to main content -->
   <a href="#main" class="skip-link">Skip to main content</a>
 
   <!-- Header / Nav -->
-  <header class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-900/60 border-b border-slate-200/60 dark:border-slate-800">
+  <header
+    class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-900/60 border-b border-slate-200/60 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="/" class="font-semibold tracking-tight relative group">
         <span class="relative z-10">GJC • Cloud Portfolio</span>
@@ -81,17 +76,9 @@
         </span>
       </a>
 
-      <nav
-        id="navLinks"
-        role="navigation"
-        aria-label="Primary"
-        class="hidden sm:flex gap-6 text-sm"
-      ></nav>
-      <button
-        id="themeToggle"
-        aria-label="Toggle theme"
-        class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700"
-      >
+      <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
+      <button id="themeToggle" aria-label="Toggle theme"
+        class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">
         🌙
       </button>
     </div>
@@ -99,7 +86,7 @@
 
   <!-- Main content -->
   <main id="main" class="max-w-6xl mx-auto px-4 py-10 sm:py-14">
-    <a href="/projects.html" class="text-sm underline">← All Projects</a>
+    <span id="top" class="scroll-mt-24"></span>
 
     <!-- Project header -->
     <div class="mt-3 flex items-start justify-between gap-6">
@@ -119,22 +106,27 @@
           </div>
         </div>
       </div>
+
+      <!-- Action buttons -->
       <div class="flex gap-2 shrink-0">
-        <a
-          id="repoLink"
-          class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition"
-          target="_blank"
-          rel="noopener"
-        >
-          GitHub
+        <!-- GitHub repo link -->
+        <a id="repoLink" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+                 bg-white/5 text-slate-900 dark:text-slate-100
+                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80" target="_blank" rel="noopener">
+          <svg class="w-4 h-4" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#icon-github"></use>
+          </svg>
+          <span>GitHub</span>
         </a>
-        <a
-          id="demoLink"
-          class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 transition hidden"
-          target="_blank"
-          rel="noopener"
-        >
-          Live Demo
+
+        <!-- Live demo link (shown by JS when available) -->
+        <a id="demoLink" class="!hidden inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+                 focus-visible:ring-indigo-500 bg-indigo-600 text-white hover:bg-indigo-500" target="_blank"
+          rel="noopener">
+          <span>Live Demo</span>
         </a>
       </div>
     </div>
@@ -143,9 +135,16 @@
     <section class="mt-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800
              p-6 sm:p-8 bg-grid shadow-lg shadow-slate-950/40">
       <div class="max-w-3xl mx-auto">
-        <p class="text-xs font-semibold tracking-[0.18em] text-slate-500 dark:text-slate-400 uppercase">
-          Case Study
-        </p>
+        <div class="flex items-baseline justify-between gap-4 mb-4">
+          <div>
+            <p class="text-xs font-semibold tracking-[0.18em] text-slate-500 dark:text-slate-400 uppercase">
+              Case Study
+            </p>
+            <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">
+              How this project fits into the portfolio
+            </h2>
+          </div>
+        </div>
 
         <article id="caseStudy" class="markdown-body mt-4 text-sm sm:text-base leading-relaxed">
           <!-- skeleton while loading -->
@@ -158,20 +157,20 @@
       </div>
     </section>
 
-
-    <!-- Prev / Next navigation -->
-    <nav id="prevNext" class="mt-8 flex items-center justify-between gap-4">
-      <a
-        id="prevProject"
-        class="text-sm px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 invisible"
-        href="#"
-      ></a>
-      <a
-        id="nextProject"
-        class="text-sm px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 invisible"
-        href="#"
-      ></a>
+    <!-- Prev / Next navigation (kept for JS, hidden in UI) -->
+    <nav id="prevNext" class="mt-8 flex items-center justify-between gap-4 hidden" aria-hidden="true">
+      <a id="prevProject" class="text-sm px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 invisible"
+        href="#"></a>
+      <a id="nextProject" class="text-sm px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 invisible"
+        href="#"></a>
     </nav>
+
+    <div class="mt-8 flex justify-center">
+      <a href="#top"
+        class="inline-flex items-center px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 transition">
+        ↑ Back to top
+      </a>
+    </div>
   </main>
 
   <!-- Footer -->
@@ -184,4 +183,5 @@
   <script defer src="assets/common.js"></script>
   <script defer src="assets/project.js"></script>
 </body>
+
 </html>
