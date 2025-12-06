@@ -49,13 +49,10 @@
   <header
     class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="/" class="font-semibold tracking-tight relative group">
-        <span class="relative z-10">GJC • Cloud Portfolio</span>
-        <span class="pointer-events-none absolute left-0 -bottom-1 h-0.5 w-full
-                 bg-indigo-500 origin-left
-                 scale-x-0
-                 transition-transform group-hover:scale-x-100">
-        </span>
+
+      <!-- ★ Updated brand link (data-driven via common.js + links.json) -->
+      <a id="brandLink" href="/" class="font-semibold tracking-tight relative group">
+        <span class="relative z-10"></span>
       </a>
 
       <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
@@ -88,16 +85,12 @@
           GJC
         </div>
 
+        <!-- Photo optional -->
         <!--
-          To use a real photo instead of the gradient initials, replace the entire <div> above with:
-
-          <img
-            src="assets/avatar-gjc.jpg"
-            alt="Portrait of Gregory John Carberry"
-            class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-slate-200 dark:border-slate-800
-                   object-cover shadow-lg shadow-indigo-500/20 md:translate-y-11"
-            loading="lazy"
-          >
+          <img src="assets/avatar-gjc.jpg" alt="Portrait"
+               class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-slate-200 dark:border-slate-800
+                      object-cover shadow-lg shadow-indigo-500/20 md:translate-y-11"
+               loading="lazy">
         -->
       </aside>
     </header>
@@ -170,13 +163,13 @@
       </ul>
     </section>
 
-    <!-- Skills snapshot (high level only) -->
+    <!-- Skills snapshot -->
     <section class="mt-10">
       <h2 class="text-2xl font-bold">Skills Snapshot</h2>
       <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
         A high-level view of some of the technologies and domains I’ve spent time with.
         For a more detailed breakdown, including certifications and specific tools,
-        see the dedicated Certifications &amp; Skills page (coming soon / linked from the navigation).
+        see the dedicated Certifications &amp; Skills page.
       </p>
 
       <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
@@ -213,7 +206,7 @@
       </p>
     </section>
 
-    <!-- Learning & certifications (high-level) -->
+    <!-- Learning & certifications -->
     <section class="mt-10 max-w-5xl">
       <h2 class="text-2xl font-bold">Learning & Certifications</h2>
       <p class="mt-3 text-slate-600 dark:text-slate-300">
@@ -259,33 +252,30 @@
       </p>
 
       <div class="mt-6 flex flex-wrap gap-3 text-sm">
-        <!-- Primary: view projects -->
-<a href="/projects.html" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
-         transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-         focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
-         bg-white/5 text-slate-900 dark:text-slate-100
-         hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
-  <span>View Projects</span>
-</a>
+        <a href="/projects.html" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
+               transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+               focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+               bg-white/5 text-slate-900 dark:text-slate-100
+               hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+          <span>View Projects</span>
+        </a>
 
-        <!-- Secondary: email -->
         <a href="mailto:Carberry.GJ@gmail.com" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
-                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
-                 bg-white/5 text-slate-900 dark:text-slate-100
-                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+               transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+               focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+               bg-white/5 text-slate-900 dark:text-slate-100
+               hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
           <svg class="w-4 h-4" aria-hidden="true" focusable="false">
             <use href="assets/icons.svg#icon-mail"></use>
           </svg>
           <span>Contact Me</span>
         </a>
 
-        <!-- Secondary: LinkedIn -->
         <a href="https://www.linkedin.com/in/gregory-carberry" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium
-                 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-                 focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
-                 bg-white/5 text-slate-900 dark:text-slate-100
-                 hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
+               transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+               focus-visible:ring-indigo-500 border border-slate-300 dark:border-slate-700
+               bg-white/5 text-slate-900 dark:text-slate-100
+               hover:bg-slate-100/60 dark:hover:bg-slate-800/80">
           <svg class="w-4 h-4" aria-hidden="true" focusable="false">
             <use href="assets/icons.svg#icon-linkedin"></use>
           </svg>

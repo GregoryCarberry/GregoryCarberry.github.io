@@ -1,4 +1,6 @@
 [
+  { "slot": "brand", "label": "GJC \u2022 Technical Portfolio", "href": "/" },
+
   { "slot": "nav", "label": "All Projects", "href": "/projects.html" },
   { "slot": "nav", "label": "Certs & Skills", "href": "/certifications.html" },
   { "slot": "nav", "label": "Contact", "href": "/contact.html" },
