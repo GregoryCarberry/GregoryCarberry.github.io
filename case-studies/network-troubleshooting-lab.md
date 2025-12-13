@@ -1,165 +1,102 @@
 # Network Troubleshooting Lab
 
-> **Updated:** Nov 2025
-> **Category:** Network lab • **Tech:** Linux, consumer routers, basic switching
+> **Updated:** Dec 2025
+> **Category:** Network lab
+> **Tech:** OpenWrt (BT HH5A), Cisco SG300-28, VLANs, NAT/firewall, Linux/Windows client testing
 
 ## Overview
 
-The Network Troubleshooting Lab is a hands-on environment I built to strengthen practical diagnostic skills across Linux and small-office networks. Rather than relying solely on simulated tools like Packet Tracer, this lab recreates the kinds of unpredictable issues that appear in real environments — latency spikes, misconfigured DNS, link failures, routing inconsistencies, and service outages.
+This project is a practical network troubleshooting lab built around real hardware and real failure modes. It focuses on diagnosing multi-device connectivity problems using repeatable checks and clear evidence, rather than relying on simulated environments.
 
-The aim was simple: become confident diagnosing real network symptoms under realistic pressure, with repeatable scenarios that directly relate to helpdesk, support, and junior NOC responsibilities.
+The lab is intentionally designed so that mistakes are visible and traceable (routing boundaries, VLAN separation, NAT/forwarding, management reachability), producing incidents that can be reproduced and documented.
 
-## Goals
+## Current Topology
 
-- Practise structured, step-by-step network diagnostics instead of guesswork.
-- Get comfortable reading latency, jitter, and packet-loss patterns.
-- Build reproducible “something is slow or broken” scenarios for hands-on learning.
-- Strengthen skills in Linux networking tools and command-line troubleshooting.
-- Capture outcomes and patterns that feed into interview examples (STAR format).
+High level path:
 
-## Environment
-
-**Primary host:** Linux Lite 6.6 on Lenovo C40-30 (Pentium 3805U, 8 GB RAM).
-**Other devices:** Additional Linux or Windows machines for cross-OS testing.
-**Network gear:** Consumer routers, unmanaged/managed switches, spare patch cabling.
-**Addressing:** Basic IPv4 subnets (e.g., `192.168.x.x` ranges) for testing isolation.
-**Tools:**
-- `ping`, `mtr`, `traceroute`
-- `curl` and basic HTTP checks
-- Interface tools (`ip addr`, `ip link`, `nmcli`)
-- `tcpdump`/Wireshark for packet inspection
-- Router admin pages for DHCP/DNS checks
-
-The environment is intentionally low-end. Slow hardware and limited switching gear actually help surface the kinds of inconsistent behaviours you see in real user networks.
-
-## Lab Topology
-
-A simplified view of the lab setup:
+- Virgin Media Hub in **modem mode** (management only at `192.168.100.1`)
+- BT Home Hub 5A running **OpenWrt** as the **only Layer 3 device** (WAN DHCP, NAT, firewall, DHCP/DNS)
+- Cisco **SG300-28** as the primary **Layer 2** switch (VLAN segmentation + switch management)
 
 ![Network Lab Topology](/assets/images/network-lab-topology.svg)
 
+## What This Lab Demonstrates
 
+- Separating **switching problems** from **routing/NAT problems**
+- Understanding “router has internet, LAN doesn’t” patterns
+- VLAN management design (and the requirement for routing or a management host in the same VLAN)
+- Validating assumptions with traffic that matters (DNS + HTTP/HTTPS), not only ICMP
+- Writing documentation that supports repeat testing and recovery
 
-Additional routers and switches can be chained to create:
+## Key Incident: “Router Has Internet, LAN Doesn’t”
 
-- Double-NAT scenarios
-- Slow or misbehaving hops
-- DNS inconsistencies
-- Cable or port-specific failures
+### Symptom
 
-## Scenarios
+- OpenWrt router could reach the internet
+- Clients could reach the router
+- Clients could not reach the internet (reported as “no internet”)
 
-Below are the core scenarios I built and documented.
+### Investigation (evidence-led)
 
----
+Checks were run in a fixed order to avoid chasing red herrings:
 
-### Scenario 1 — Latency & Path Issues
+1. **Layer 1/2**
+   - Link up end-to-end
+   - Client-to-switch-to-router connectivity verified
 
-**Symptom:**
-Intermittent high latency to external hosts.
+2. **Layer 3 basics**
+   - Client addressing and default gateway validated
+   - Router WAN addressing confirmed
 
-**What I tested:**
+3. **Name resolution vs raw reachability**
+   - DNS resolution verified (client querying router resolver)
+   - HTTP/HTTPS tested to validate real traffic paths
 
-- Local ping stability (`ping -c 30 <gateway>`).
-- Hop analysis with `mtr` to identify where spikes occur.
-- DNS vs direct-IP behaviour (`ping google.com` vs `8.8.8.8`).
-- Router load and logs.
+4. **Routing boundary**
+   - Confirmed that the switch was not intended to route
+   - Confirmed OpenWrt was the only device expected to NAT and forward to WAN
 
-**Outcome:**
-Built muscle memory for identifying whether latency is:
+### Root Cause
 
-- On the local link
-- On a LAN hop
-- Starting at the router
-- DNS-related
-- Or genuinely external
+- NAT / forwarding behaviour was not correctly applied for LAN → WAN traffic.
+- Result: the router itself could originate traffic, but client traffic was not being translated/forwarded out of WAN.
 
-This scenario alone improved my troubleshooting speed massively.
+### Fix
 
----
+- Corrected LAN → WAN forwarding and WAN masquerading on OpenWrt
+- Restarted networking/firewall cleanly
+- Re-ran validation checks to confirm the end-to-end path
 
-### Scenario 2 — Cable / Port Faults
+### Verification
 
-**Symptom:**
-Random link drops on a specific device.
+- Client to router: OK
+- Client DNS via router: OK
+- Client HTTP/HTTPS to external sites: OK
+- Traffic remained OK when traversing the SG300 (not only when directly connected)
 
-**What I tested:**
+## Supporting Design Lesson: Management VLAN Reachability
 
-- Physical link LEDs (solid/blinking vs intermittent).
-- Interface logs:
-  - `dmesg | grep -i link`
-  - `journalctl -u NetworkManager`
-- Swapping patch leads and switch ports.
-- Testing negotiation speed (100/1000 Mbps issues).
+A separate fault surfaced when placing switch management into a dedicated VLAN:
 
-**Outcome:**
-Clear understanding of how faulty or low-quality cabling presents at the OS level — something extremely common in support roles.
+- Switch management IP placed in **VLAN 99**
+- Client device remained in **VLAN 1**
+- With **no inter-VLAN routing**, VLAN 1 cannot reach VLAN 99 by design
 
----
-
-### Scenario 3 — DNS / Name Resolution Failures
-
-**Symptom:**
-Hostnames fail, but IP addresses work fine.
-
-**What I tested:**
-
-- `dig <hostname>` and comparing to public resolvers.
-- Reviewing `/etc/resolv.conf`.
-- DNS settings on router and test devices.
-- Latency to DNS servers.
-
-**Outcome:**
-Developed a reliable troubleshooting flow for DNS issues — a huge part of 1st-line and service-desk work.
-
----
-
-### Scenario 4 — Basic Connectivity Failures
-
-**Symptom:**
-User reports “no internet”.
-
-**What I walked through:**
-
-- Confirmed local IP and gateway.
-- Gateway reachability.
-- DNS resolution.
-- HTTP checks (`curl -I http://example.com`).
-- NAT and DHCP information on the router.
-
-**Outcome:**
-A complete checklist for diagnosing “can’t connect” issues quickly and confidently.
-
----
+This was resolved by treating VLAN 99 as an isolated management plane:
+- Either move a management workstation temporarily into VLAN 99 when needed, or
+- Introduce explicit routing later (kept out of scope at this stage)
 
 ## Implementation Notes
 
-- Scenarios are intentionally kept small and repeatable.
-- Everything is logged in a structured format (symptom → checks → outcome).
-- No vendor-specific tools — the focus is fundamentals.
-- Repo includes scripts for basic latency logging and interface checks.
-
-This is deliberately the type of hands-on learning missing from purely theoretical study.
-
-## Issues Encountered
-
-- Low-end hardware made some behaviours inconsistent (good for learning).
-- Certain routers provided poor diagnostics, forcing use of Linux tools instead.
-- Some consumer switches masked packet-loss, requiring more direct host-level testing.
-- Wireless interference occasionally impacted results in unexpected ways.
-
-## Lessons Learned
-
-- Most “network issues” are either DNS or a local-hop fault.
-- mtr is vastly more informative than ping alone.
-- Good troubleshooting is about eliminating layers, not guessing symptoms.
-- Physical checks (cables, ports, LEDs) solve more issues than fancy tools.
-- Documenting everything builds reliable interview examples.
+- Component documentation lives alongside configs (e.g. `configs/openwrt/hh5a-ap1`)
+- Scenarios are kept small and repeatable
+- The focus is on fundamentals: addressing, routing, NAT, firewalling, and VLAN behaviour
 
 ## Next Steps
 
-- Introduce VLANs and segmentation to make the scenarios more realistic.
-- Add structured DHCP and DNS failure exercises.
-- Include iperf3 for throughput testing.
-- Expand notes into a short “Network Troubleshooting Playbook” for reuse.
+- Document and archive Cisco SG300 running configuration (baseline + changes)
+- Add a comparative scenario using the Zyxel GS1920-24 (GUI-driven management vs enterprise-style CLI)
+- Add wireless-focused troubleshooting scenarios using:
+  - Cisco AIR-SAP2602I-E-K9 access points
+  - Alfa AWUS051NH v2 for client-side diagnostics and capture
 
