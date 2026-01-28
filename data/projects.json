@@ -16,6 +16,23 @@
     "page": "/project.html?repo=network-troubleshooting-lab"
   },
   {
+  "title": "Ticket Triage Dashboard",
+  "owner": "GregoryCarberry",
+  "repo": "ticket-triage-dashboard",
+  "blurb": "Full-stack service desk–style dashboard demonstrating first-line IT support workflows, including ticket prioritisation, status tracking, and API-driven data handling.",
+  "readme": "React frontend consuming a RESTful Node.js API to present and manage ticket data in a lightweight, extensible triage system.",
+  "tags": [
+    "React",
+    "JavaScript",
+    "REST API",
+    "IT Support",
+    "Service Desk"
+  ],
+  "featured": true,
+  "caseStudy": "ticket-triage-dashboard.md",
+  "page": "/project.html?repo=ticket-triage-dashboard"
+},
+  {
     "repo": "warehouseone",
     "owner": "GregoryCarberry",
     "title": "WarehouseOne — Internal Ordering & WMS",
