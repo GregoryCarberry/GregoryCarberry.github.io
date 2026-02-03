@@ -19,14 +19,15 @@
   "title": "Ticket Triage Dashboard",
   "owner": "GregoryCarberry",
   "repo": "ticket-triage-dashboard",
-  "blurb": "Full-stack service desk–style dashboard demonstrating first-line IT support workflows, including ticket prioritisation, status tracking, and API-driven data handling.",
-  "readme": "React frontend consuming a RESTful Node.js API to present and manage ticket data in a lightweight, extensible triage system.",
+  "blurb": "Full-stack service desk–style ticket triage dashboard featuring filtering, status updates, self-assignment, and live metrics, built with React and a RESTful Node.js API.",
+  "readme": "Demonstrates realistic first-line IT support workflows using an API-driven React frontend, including optimistic updates, assignment handling, and operational metrics.",
   "tags": [
     "React",
     "JavaScript",
     "REST API",
     "IT Support",
-    "Service Desk"
+    "Service Desk",
+    "Full Stack"
   ],
   "featured": true,
   "caseStudy": "ticket-triage-dashboard.md",
