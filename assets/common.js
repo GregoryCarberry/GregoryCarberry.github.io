@@ -214,13 +214,28 @@
   };
 
   // ---------------------------------------------------------------------------
-  // Service worker (if present)
+  // Service worker cleanup (GitHub Pages caching can cause stale deploys)
+  // We are NOT using a service worker for this site.
+  // This block removes any previously-installed SW and its caches.
   // ---------------------------------------------------------------------------
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("sw.js").catch(() => {
+    window.addEventListener("load", async () => {
+      try {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map((r) => r.unregister()));
+      } catch (_) {
         // best-effort; ignore errors
-      });
+      }
+
+      // Clear SW caches (also best-effort)
+      if ("caches" in window) {
+        try {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((k) => caches.delete(k)));
+        } catch (_) {
+          // ignore
+        }
+      }
     });
   }
 
