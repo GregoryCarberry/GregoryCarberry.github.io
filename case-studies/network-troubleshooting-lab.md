@@ -1,102 +1,198 @@
-# Network Troubleshooting Lab
+# Network Segmentation & Troubleshooting Lab
 
-> **Updated:** Dec 2025
-> **Category:** Network lab
-> **Tech:** OpenWrt (BT HH5A), Cisco SG300-28, VLANs, NAT/firewall, Linux/Windows client testing
+> **Updated:** Feb 2026
+> **Category:** Network Engineering Lab
+> **Tech:** OpenWrt (BT HH5A), Cisco SG300-28, Zyxel GS1920-24, Cisco WLC 2504, Cisco 2602i / 3802i APs, VLAN segmentation, firewall policy design
+
+---
 
 ## Overview
 
-This project is a practical network troubleshooting lab built around real hardware and real failure modes. It focuses on diagnosing multi-device connectivity problems using repeatable checks and clear evidence, rather than relying on simulated environments.
+This is a living network engineering lab built on physical hardware.
+It began as a troubleshooting environment and has evolved into a segmented, policy-driven multi-VLAN architecture focused on controlled trust boundaries, routing centralisation, and deliberate isolation.
 
-The lab is intentionally designed so that mistakes are visible and traceable (routing boundaries, VLAN separation, NAT/forwarding, management reachability), producing incidents that can be reproduced and documented.
+The lab intentionally surfaces realistic failure modes:
 
-## Current Topology
+- VLAN misconfiguration
+- Trunk tagging errors
+- Management plane isolation
+- NAT and masquerade behaviour
+- Firewall rule directionality
+- Inter-VLAN policy enforcement
 
-High level path:
+All validation is performed using real client traffic (DNS, HTTP/HTTPS), not just ICMP.
 
-- Virgin Media Hub in **modem mode** (management only at `192.168.100.1`)
-- BT Home Hub 5A running **OpenWrt** as the **only Layer 3 device** (WAN DHCP, NAT, firewall, DHCP/DNS)
-- Cisco **SG300-28** as the primary **Layer 2** switch (VLAN segmentation + switch management)
+---
 
-![Network Lab Topology](/assets/images/network-lab-topology.svg)
+## Current Segmented Topology
+<div align="center">
 
-## What This Lab Demonstrates
+<img src="../assets/images/network-lab-topology_techdark.svg"
+     alt="Network Lab Topology – Multi-VLAN Segmented Design"
+     width="1000" />
 
-- Separating **switching problems** from **routing/NAT problems**
-- Understanding “router has internet, LAN doesn’t” patterns
-- VLAN management design (and the requirement for routing or a management host in the same VLAN)
-- Validating assumptions with traffic that matters (DNS + HTTP/HTTPS), not only ICMP
-- Writing documentation that supports repeat testing and recovery
+</div>
+> See topology diagram above for port-level and trunk detail.
 
-## Key Incident: “Router Has Internet, LAN Doesn’t”
+High-level flow:
 
-### Symptom
+WAN (Virgin Hub modem)
+↓
+OpenWrt (NAT + Firewall + DHCP + DNS)
+↓ 802.1Q trunk (VLANs 10/20/30/99)
+Zyxel GS1920-24 (Layer 2 switching)
+↓ 802.1Q trunk
+Cisco SG300-28 (Layer 2 switching)
+↓
+Access ports & trunked APs (from both Zyxel and SG300)
 
-- OpenWrt router could reach the internet
-- Clients could reach the router
-- Clients could not reach the internet (reported as “no internet”)
+Routing authority remains centralised on OpenWrt.
+Both switches operate at Layer 2 only.
 
-### Investigation (evidence-led)
+---
 
-Checks were run in a fixed order to avoid chasing red herrings:
+## VLAN & Policy Design
 
-1. **Layer 1/2**
-   - Link up end-to-end
-   - Client-to-switch-to-router connectivity verified
+| VLAN | Name        | Purpose            | Policy Behaviour |
+|------|------------|-------------------|------------------|
+| 10   | Trusted     | Primary LAN        | Can reach VLAN 20 & 99 |
+| 20   | IoT         | Restricted LAN     | Cannot initiate to VLAN 10 or 99 |
+| 30   | Guest       | Fully isolated     | Internet only |
+| 99   | Management  | Infrastructure     | No initiation toward user VLANs |
 
-2. **Layer 3 basics**
-   - Client addressing and default gateway validated
-   - Router WAN addressing confirmed
+### Policy Summary
 
-3. **Name resolution vs raw reachability**
-   - DNS resolution verified (client querying router resolver)
-   - HTTP/HTTPS tested to validate real traffic paths
+- VLAN 10 → VLAN 20: Allowed
+- VLAN 20 → VLAN 10: Blocked
+- VLAN 99 → User VLANs: Blocked
+- VLAN 30 → All internal VLANs: Blocked
+- All VLANs → WAN: NAT via OpenWrt
 
-4. **Routing boundary**
-   - Confirmed that the switch was not intended to route
-   - Confirmed OpenWrt was the only device expected to NAT and forward to WAN
+Trust model:
 
-### Root Cause
+- VLAN 10 (Trusted) has controlled access to VLAN 20 and VLAN 99.
+- VLAN 20 (IoT) and VLAN 99 (Management) cannot initiate toward user VLANs.
+- VLAN 30 (Guest) is fully isolated (internet only).
 
-- NAT / forwarding behaviour was not correctly applied for LAN → WAN traffic.
-- Result: the router itself could originate traffic, but client traffic was not being translated/forwarded out of WAN.
+---
 
-### Fix
+## Layer 2 Architecture
 
-- Corrected LAN → WAN forwarding and WAN masquerading on OpenWrt
-- Restarted networking/firewall cleanly
-- Re-ran validation checks to confirm the end-to-end path
+Both the Zyxel GS1920-24 and Cisco SG300-28 operate strictly as Layer 2 switches.
 
-### Verification
+- 802.1Q trunk from OpenWrt to Zyxel
+- 802.1Q trunk from Zyxel to SG300
+- Trunked AP connections on both switches
+- Access ports assigned per VLAN
+- No inter-VLAN routing on switches (by design)
 
-- Client to router: OK
-- Client DNS via router: OK
-- Client HTTP/HTTPS to external sites: OK
-- Traffic remained OK when traversing the SG300 (not only when directly connected)
+This ensures switching and routing responsibilities remain clearly separated.
 
-## Supporting Design Lesson: Management VLAN Reachability
+---
 
-A separate fault surfaced when placing switch management into a dedicated VLAN:
+## Layer 3 Architecture (OpenWrt)
 
-- Switch management IP placed in **VLAN 99**
-- Client device remained in **VLAN 1**
-- With **no inter-VLAN routing**, VLAN 1 cannot reach VLAN 99 by design
+OpenWrt is the single Layer 3 authority in the lab.
 
-This was resolved by treating VLAN 99 as an isolated management plane:
-- Either move a management workstation temporarily into VLAN 99 when needed, or
-- Introduce explicit routing later (kept out of scope at this stage)
+Responsibilities:
 
-## Implementation Notes
+- Inter-VLAN routing
+- NAT (WAN masquerading)
+- Firewall policy enforcement
+- DHCP/DNS services
 
-- Component documentation lives alongside configs (e.g. `configs/openwrt/hh5a-ap1`)
-- Scenarios are kept small and repeatable
-- The focus is on fundamentals: addressing, routing, NAT, firewalling, and VLAN behaviour
+Key principle:
 
-## Next Steps
+Switching ≠ Routing.
+All routing decisions and security policy enforcement are centralised intentionally.
 
-- Document and archive Cisco SG300 running configuration (baseline + changes)
-- Add a comparative scenario using the Zyxel GS1920-24 (GUI-driven management vs enterprise-style CLI)
-- Add wireless-focused troubleshooting scenarios using:
-  - Cisco AIR-SAP2602I-E-K9 access points
-  - Alfa AWUS051NH v2 for client-side diagnostics and capture
+---
 
+## Wireless Integration
+
+- Cisco WLC 2504 in VLAN 99 (Management)
+- APs trunked from both Zyxel and SG300
+- SSIDs mapped to VLANs 10, 20, 30
+- Segmentation preserved across wired and wireless clients
+
+Wireless segmentation mirrors wired VLAN boundaries — no special exemptions.
+
+---
+
+## Real Incidents & Lessons Learned
+
+### Router Has Internet, LAN Does Not
+
+Root cause: Misconfigured LAN → WAN forwarding / masquerading.
+
+Lesson: Validate NAT and forwarding rules, not just WAN connectivity.
+
+---
+
+### Management VLAN Isolation
+
+Placing management interfaces in VLAN 99 prevented access from default VLANs by design.
+
+Lesson: Isolation is expected behaviour; management access must be deliberate.
+
+---
+
+### VLAN Isolation Validation
+
+Isolation validated using:
+
+- Cross-VLAN ping tests
+- DNS resolution checks
+- HTTP/HTTPS traffic tests
+- Trunk verification on switch ports
+
+Traffic validation is more meaningful than ICMP alone.
+
+---
+
+## Troubleshooting Framework
+
+1. Physical link status
+2. VLAN tagging correctness
+3. IP addressing and gateway validation
+4. Firewall rule directionality
+5. NAT / masquerade behaviour
+6. Real traffic validation
+
+This structured approach prevents chasing symptoms.
+
+---
+
+## Design Tradeoffs
+
+- SG300 kept Layer 2-only for routing clarity
+- OpenWrt centralised for policy simplicity
+- Management plane deliberately isolated
+- Dual-switch design retained for comparative testing and platform familiarity
+
+---
+
+## Why This Lab Matters
+
+This environment is intentionally designed as a living lab.
+Changes are implemented incrementally, tested against real traffic, and documented when failure occurs.
+
+The objective is not just connectivity — but controlled connectivity.
+
+---
+
+## Summary
+
+This lab demonstrates applied network engineering rather than theoretical configuration.
+
+It reflects practical understanding of:
+
+- Multi-VLAN segmented design
+- Controlled trust boundaries
+- Centralised firewall enforcement
+- Wireless + wired policy consistency
+- NAT behaviour and forwarding logic
+- Layer 2 vs Layer 3 responsibility
+- Management plane isolation
+
+Segmentation is enforced, tested, and validated using real client traffic.

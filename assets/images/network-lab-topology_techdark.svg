@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <defs>
+    <style>
+      .bg{fill:#0f141b}
+      .title{fill:#e7edf5;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;font-size:30px;font-weight:700}
+      .sec{fill:#aab6c6;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:.06em}
+      .h{fill:#e7edf5;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;font-size:18px;font-weight:700}
+      .t{fill:#e7edf5;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;font-weight:600}
+      .s{fill:#aab6c6;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;font-size:12.5px;font-weight:500}
+      .mono{fill:#aab6c6;font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;font-size:12px;font-weight:600}
+      .node{fill:#121a24;stroke:#3b4b5f;stroke-width:2;rx:12;ry:12}
+      .panel{fill:none;stroke:#223040;stroke-width:2;rx:14;ry:14}
+      .wan{stroke:#c6d0dc;stroke-width:4;fill:none;stroke-linecap:round}
+      .trunk{stroke:#4ea1ff;stroke-width:3.5;fill:none;stroke-linecap:round}
+      .access{stroke:#9aa7b7;stroke-width:3;fill:none;stroke-linecap:round}
+      .power{stroke:#9aa7b7;stroke-width:3;fill:none;stroke-linecap:round;stroke-dasharray:8 8}
+      .label{fill:#e7edf5;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;font-size:12px;font-weight:700}
+      .tag{fill:#0f141b;stroke:#223040;stroke-width:2;rx:8;ry:8}
+      .tagText{fill:#aab6c6;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;font-size:11px;font-weight:700}
+    </style>
+
+    <marker id="ah" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#c6d0dc"/>
+    </marker>
+    <marker id="ahBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#4ea1ff"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="760"/>
+  <text class="title" x="700" y="56" text-anchor="middle">Network Lab Topology (Current)</text>
+
+  <!-- Legend -->
+  <rect class="tag" x="980" y="22" width="360" height="46"/>
+  <circle cx="1000" cy="45" r="5" fill="#c6d0dc"/><text class="tagText" x="1013" y="49">WAN</text>
+  <circle cx="1060" cy="45" r="5" fill="#4ea1ff"/><text class="tagText" x="1073" y="49">802.1Q Trunk</text>
+  <circle cx="1160" cy="45" r="5" fill="#9aa7b7"/><text class="tagText" x="1173" y="49">Access</text>
+  <line x1="1225" y1="45" x2="1260" y2="45" class="power"/><text class="tagText" x="1270" y="49">Powerline</text>
+
+  <!-- CORE -->
+  <text class="sec" x="70" y="100">CORE</text>
+  <rect class="panel" x="60" y="110" width="1280" height="170"/>
+
+  <!-- Devices (core row) -->
+  <rect class="node" x="80" y="150" width="240" height="90"/>
+  <text class="h" x="200" y="184" text-anchor="middle">Virgin Hub</text>
+  <text class="s" x="200" y="206" text-anchor="middle">Modem mode</text>
+
+  <rect class="node" x="360" y="135" width="310" height="120"/>
+  <text class="h" x="515" y="174" text-anchor="middle">OpenWrt (HH5A)</text>
+  <text class="s" x="515" y="196" text-anchor="middle">Only L3: NAT + FW + DHCP/DNS</text>
+  <text class="mono" x="515" y="218" text-anchor="middle">VLANs: 10 / 20 / 30 / 99</text>
+
+  <rect class="node" x="710" y="135" width="300" height="120"/>
+  <text class="h" x="860" y="174" text-anchor="middle">Zyxel GS1920-24</text>
+  <text class="s" x="860" y="196" text-anchor="middle">Layer 2 Switching</text>
+  <text class="mono" x="860" y="218" text-anchor="middle">P1 trunk ↔ OpenWrt | P2 trunk ↔ SG300</text>
+
+  <rect class="node" x="1045" y="135" width="295" height="120"/>
+  <text class="h" x="1192.5" y="174" text-anchor="middle">Cisco SG300-28</text>
+  <text class="s" x="1192.5" y="196" text-anchor="middle">Layer 2 (future L3 testing)</text>
+  <text class="mono" x="1192.5" y="218" text-anchor="middle">Gi1 trunk ↔ Zyxel | Access ports → clients</text>
+
+  <!-- Links (core) -->
+  <path class="wan" d="M320 195 L360 195" marker-end="url(#ah)"/>
+  <rect class="tag" x="330" y="168" width="40" height="20"/><text class="tagText" x="350" y="182" text-anchor="middle">WAN</text>
+
+  <path class="trunk" d="M670 195 L710 195" marker-end="url(#ahBlue)"/>
+  <rect class="tag" x="676" y="168" width="94" height="20"/><text class="tagText" x="723" y="182" text-anchor="middle">P1 TRUNK</text>
+  <text class="mono" x="685" y="164" text-anchor="start">10,20,30,99</text>
+
+  <path class="trunk" d="M1010 195 L1045 195" marker-end="url(#ahBlue)"/>
+  <rect class="tag" x="1016" y="168" width="94" height="20"/><text class="tagText" x="1063" y="182" text-anchor="middle">P2 TRUNK</text>
+  <text class="mono" x="1026" y="164" text-anchor="start">10,20,30,99</text>
+
+  <!-- WIRELESS / MGMT -->
+  <text class="sec" x="70" y="325">WIRELESS &amp; MANAGEMENT (VLAN 99)</text>
+  <rect class="panel" x="60" y="335" width="1280" height="170"/>
+
+  <!-- WLC -->
+  <rect class="node" x="90" y="385" width="260" height="90"/>
+  <text class="h" x="220" y="418" text-anchor="middle">Cisco WLC 2504</text>
+  <text class="mono" x="220" y="440" text-anchor="middle">Zyxel P3 (Access VLAN 99)</text>
+
+  <!-- APs -->
+  <rect class="node" x="400" y="385" width="250" height="90"/>
+  <text class="h" x="525" y="418" text-anchor="middle">AP #1</text>
+  <text class="mono" x="525" y="440" text-anchor="middle">Zyxel P4 (Trunk 10/20/30)</text>
+
+  <rect class="node" x="685" y="385" width="310" height="90"/>
+  <text class="h" x="840" y="418" text-anchor="middle">AP #2</text>
+  <text class="mono" x="840" y="440" text-anchor="middle">Powerline → Zyxel P5 (Trunk 10/20/30)</text>
+
+  <rect class="node" x="1030" y="385" width="310" height="90"/>
+  <text class="h" x="1185" y="418" text-anchor="middle">AP #3</text>
+  <text class="mono" x="1185" y="440" text-anchor="middle">SG300 Gi2 (Trunk 10/20/30)</text>
+
+  <!-- Links down to wireless devices -->
+  <!-- Zyxel to WLC (access VLAN99) -->
+  <path class="access" d="M790 255 L220 385" marker-end="url(#ah)"/>
+  <rect class="tag" x="435" y="310" width="140" height="20"/><text class="tagText" x="505" y="324" text-anchor="middle">P3 ACCESS VLAN99</text>
+
+  <!-- Zyxel to AP1 (trunk) -->
+  <path class="trunk" d="M840 255 L525 385" marker-end="url(#ahBlue)"/>
+  <rect class="tag" x="640" y="310" width="130" height="20"/><text class="tagText" x="705" y="324" text-anchor="middle">P4 TRUNK</text>
+
+  <!-- Zyxel to AP2 via powerline (dashed) -->
+  <path class="power" d="M880 255 L840 385" marker-end="url(#ah)"/>
+  <rect class="tag" x="872" y="310" width="130" height="20"/><text class="tagText" x="937" y="324" text-anchor="middle">P5 TRUNK</text>
+
+  <!-- SG300 to AP3 (trunk) -->
+  <path class="trunk" d="M1192.5 255 L1185 385" marker-end="url(#ahBlue)"/>
+  <rect class="tag" x="1160" y="310" width="130" height="20"/><text class="tagText" x="1225" y="324" text-anchor="middle">Gi2 TRUNK</text>
+
+  <!-- ENDPOINTS / POLICY -->
+  <text class="sec" x="70" y="555">ENDPOINTS &amp; POLICY</text>
+  <rect class="panel" x="60" y="565" width="1280" height="155"/>
+
+  <rect class="node" x="90" y="605" width="600" height="90"/>
+  <text class="t" x="120" y="635">Endpoints</text>
+  <text class="s" x="120" y="658">Zyxel: IoT device on P6 (Access VLAN 20) + AP #1 (P4) + AP #2 (P5 via powerline) + WLC (P3)</text>
+  <text class="s" x="120" y="680">SG300: PC + Linux + NAS + Raspberry Pi on access ports (VLAN 10) + AP #3 (Gi2 trunk)</text>
+
+  <rect class="node" x="725" y="605" width="615" height="90"/>
+  <text class="t" x="755" y="635">Policy</text>
+  <text class="s" x="755" y="658">VLAN10 → VLAN20, VLAN99 allowed</text>
+  <text class="s" x="755" y="680">VLAN20 &amp; VLAN99: no initiation to others | VLAN30: isolated (internet only)</text>
+
+</svg>
