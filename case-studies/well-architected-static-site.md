@@ -1,150 +1,59 @@
 # WELL-ARCHITECTED STATIC SITE
-*(Case Study — Gregory Carberry)*
 
 ## Overview
-This project delivers a secure, scalable, and cost-efficient static website hosted on AWS. It was built as a hands-on exercise to apply the AWS Well-Architected Framework while demonstrating a complete, production-ready infrastructure using real services — S3, CloudFront, ACM, Route 53, WAF, and Terraform.
 
-The goal wasn’t just to “get a site online”, but to do it properly: security-first, region-appropriate, automated, and designed for maintainability. It reflects the same principles used by real engineering teams, but scaled down to something practical for a personal portfolio.
+This project delivers a secure, scalable, and cost-efficient static website hosted on AWS. It was built as a practical implementation of the AWS Well-Architected Framework using production-grade services: S3, CloudFront, ACM, Route 53, WAF, and Terraform.
+
+The objective was to design a production-aligned static hosting architecture prioritising security, automation, regional correctness, and maintainability — not just basic functionality.
 
 ---
 
 ## Architecture
 
-The architecture follows a typical, secure AWS static hosting pattern:
+The solution follows a secure, modern AWS static hosting pattern:
 
-### 1. Amazon S3 (eu-west-2) – Static website origin
-- Stores HTML, CSS, JS, and assets.
-- **Not publicly accessible** — locked behind CloudFront using **Origin Access Control (OAC)**.
-- **Block Public Access** enabled.
+### 1. Amazon S3 (eu-west-2) – Private Origin
+- Stores static assets (HTML, CSS, JS).
+- Fully private bucket.
+- Access restricted exclusively to CloudFront via Origin Access Control (OAC).
+- Block Public Access enforced.
 
 ### 2. Amazon CloudFront
-- Global CDN distribution for low-latency delivery.
-- Enforces HTTPS-only access.
-- Adds security headers (CSP, HSTS, X-Frame-Options, Referrer-Policy, etc.).
-- Behaviours configured for:
-  - `/` and `/*` default origin.
-  - Cache-control respecting static assets.
+- Global CDN for low-latency delivery.
+- HTTPS-only access enforced.
+- TLS 1.2+ required.
+- Security headers applied via Response Headers Policy:
+  - Strict-Transport-Security
+  - Content-Security-Policy
+  - X-Frame-Options
+  - X-Content-Type-Options
+  - Referrer-Policy
+  - Permissions-Policy
+- Behaviour rules configured for root and asset paths.
+- Optimised caching for static delivery.
 
 ### 3. AWS Certificate Manager (us-east-1)
-- Issues public TLS certificates.
-- Required in **us-east-1** for CloudFront compatibility.
+- Public TLS certificate provisioned in us-east-1 (CloudFront requirement).
+- DNS validation via Route 53.
 
 ### 4. AWS WAF
-- Protects the distribution with core managed rule sets.
-- This is connected directly to CloudFront.
+- Attached directly to CloudFront.
+- AWS Managed Rule Sets enabled for baseline protection.
 
 ### 5. Amazon Route 53
-- DNS for the primary domain.
-- A/AAAA records pointing to the CloudFront distribution.
-- Hosted zone also contains verification records for ACM.
+- Hosted zone for primary domain.
+- A/AAAA alias records pointing to CloudFront.
+- ACM validation records maintained within the same zone.
 
-### 6. Terraform (Infrastructure-as-Code)
-- Full environment defined as reusable, modular Terraform code.
-- Includes region-split providers (`eu-west-2` primary, `us-east-1` ACM).
-- Uses `random_id` suffixing to avoid bucket naming collisions.
-- Modules for:
-  - S3 origin
-  - CloudFront
-  - WAF
-  - ACM
-  - Budgets
+### 6. Terraform (Infrastructure as Code)
+- Full environment defined in modular Terraform.
+- Split providers:
+  - eu-west-2 (primary resources)
+  - us-east-1 (ACM alias provider)
+- Random ID suffixing ensures idempotent redeployments without S3 naming conflicts.
+- Modular structure:
 
-
-
-
-
-![Static Site Architecture](/assets/images/static-site-architecture.svg)
-
-
-## Security Controls
-
-### 1. Origin Access Control (OAC)
-Ensures CloudFront is the *only* service allowed to read the bucket contents.
-Bucket policy restricts access to the CloudFront distribution’s signed principal.
-
-### 2. Security Headers
-Enabled at CloudFront via a response headers policy:
-
-- **Strict-Transport-Security**
-- **Content-Security-Policy**
-- **X-Frame-Options**
-- **X-Content-Type-Options**
-- **Referrer-Policy**
-- **Permissions-Policy**
-
-These significantly improve the site’s security posture and Lighthouse score.
-
-### 3. Block Public Access
-S3 BPA remains fully enabled throughout.
-
-### 4. TLS 1.2+ enforced
-No insecure protocols allowed.
-
-### 5. security.txt and robots.txt
-- `security.txt` provides a standard compliance channel for reporting issues.
-- `robots.txt` prevents unnecessary crawling of irrelevant paths.
-
----
-
-## Logging, Monitoring & Observability
-
-### Implemented Successfully
-- **CloudFront standard logs** (to S3)
-- **WAF logs** (JSON-structured)
-- **S3 access logs**
-- **AWS Budgets** with email alerts for monthly cost thresholds
-
-These ensure visibility into traffic patterns, potential attacks, and unexpected charges.
-
-### Attempted (will revisit)
-
-#### Athena + Glue for querying CloudFront logs
-The initial attempt ran into schema alignment and partitioning issues — specifically:
-
-- CloudFront log structure changed mid-deployment.
-- Glue crawler misinterpreted column types.
-- Partitioning required a more advanced layout in the S3 logging bucket.
-
-This will be revisited in a later phase using:
-
-- A dedicated log prefix structure.
-- A custom Glue table schema.
-- Partition projection (reducing crawler dependency).
-
-This counts as a learning milestone rather than a failure.
-
----
-
-## CI/CD Progress
-
-A GitHub Actions pipeline was planned but not fully implemented yet.
-
-### Completed
-- Repo structure organised to support automation.
-- Terraform validated on local builds.
-- Structure ready for OIDC-based GitHub → AWS deployments.
-
-### Planned Next
-- Automatic deploy on push to `main`.
-- Auto-invalidate CloudFront cache.
-- Optional: preview environments on feature branches.
-
----
-
-## Terraform Implementation
-
-### Provider Setup
-Two providers:
-- `aws` in `eu-west-2` as default.
-- `aws.us_east_1` (alias) for ACM.
-
-This matches AWS requirements and avoids mis-region certificate issues.
-
-### Modules
-
-A modular folder structure:
-
-```text
+```
 modules/
   ├─ s3/
   ├─ cloudfront/
@@ -153,99 +62,124 @@ modules/
   └─ budgets/
 ```
 
-### Random ID Suffixing
-Prevents S3 bucket naming collisions during teardown/redeploy cycles.
+---
 
-### State
-Local state for now (suitable for a personal project) but structure allows migration to:
+## Security Controls
 
-- S3 remote state.
-- DynamoDB locking.
+### Origin Access Control (OAC)
+Restricts S3 access to the CloudFront distribution only. Bucket policy scoped to the distribution’s signed principal.
 
-when needed.
+### Block Public Access
+S3 BPA remains fully enabled at all times.
+
+### TLS Enforcement
+Only modern TLS versions permitted. No insecure protocols supported.
+
+### Security Headers
+Applied at CloudFront to improve browser-side security posture and Lighthouse scoring.
+
+### security.txt & robots.txt
+- security.txt provides a standard vulnerability disclosure channel.
+- robots.txt limits unnecessary crawler behaviour.
 
 ---
 
-## Alignment with the AWS Well-Architected Framework
+## Logging, Monitoring & Cost Controls
 
-### 1. Security
-Strongest pillar for this project.
+### Implemented
+- CloudFront standard logs (S3)
+- WAF logs (JSON structured)
+- S3 access logs
+- AWS Budgets with email alerts
 
-- OAC.
-- WAF.
-- BPAs.
-- TLS enforcement.
-- Security headers.
-- security.txt.
-- IAM-restricted Terraform.
+These provide visibility into traffic patterns, threat activity, and cost anomalies.
 
-### 2. Reliability
+### Analytics (Planned Enhancement)
+Athena + Glue integration identified schema and partitioning challenges during initial implementation. Future iteration will use:
+- Dedicated log prefix structure
+- Explicit Glue schema definitions
+- Partition projection to reduce crawler dependency
 
-- Global CDN distribution.
-- Regional redundancy for ACM.
-- Deterministic Terraform deployments.
-- CloudFront caching reduces origin dependence.
+---
 
-### 3. Performance Efficiency
+## CI/CD Roadmap
 
-- CloudFront edge caching.
-- Compression + cache-control headers.
-- CDN-optimised static delivery.
+### Phase 1 (Complete)
+- Repository structured for automation
+- Terraform validated locally
+- OIDC trust design prepared for GitHub → AWS deployment
 
-### 4. Operational Excellence
+### Phase 2 (Next)
+- GitHub Actions deployment on push to main
+- Automated CloudFront cache invalidation
+- Optional preview environments for feature branches
 
-- IaC for repeatability.
-- Clear modular architecture.
-- Logging + observability.
-- CI/CD pipeline planned.
+---
 
-### 5. Cost Optimisation
+## Terraform Design Decisions
 
-- Static hosting = pennies per month.
-- WAF basic managed rules only.
-- Budgets + alerts.
-- No servers or Lambdas needed.
+- Modular architecture for reuse and clarity
+- Region-split providers to satisfy CloudFront/ACM constraints
+- Deterministic infrastructure deployments
+- Local state (migration-ready for S3 remote state + DynamoDB locking if required)
 
-The entire architecture is built to be extremely cheap while still production-quality.
+---
+
+## Alignment with AWS Well-Architected Framework
+
+### Security (Primary Design Focus)
+- OAC
+- WAF
+- Block Public Access
+- TLS enforcement
+- Security headers
+- IAM-restricted Terraform execution
+
+### Reliability
+- Global CDN distribution
+- Reduced origin dependency via caching
+- Deterministic IaC deployments
+
+### Performance Efficiency
+- Edge caching
+- Compression and cache-control tuning
+- CDN-optimised static delivery
+
+### Operational Excellence
+- Infrastructure as Code
+- Modular architecture
+- Centralised logging
+- CI/CD pipeline design
+
+### Cost Optimisation
+- Serverless static architecture
+- Minimal WAF rule set
+- Budget alerts configured
+- No compute services required
+
+Designed to maintain production-grade security and resilience while keeping operational costs negligible.
 
 ---
 
 ## Lessons Learned
 
-- **S3 + CloudFront is simple, but doing it properly is not.**
-  Security headers, OAC policies, WAF, and TLS setup matter.
-
-- **Cross-region ACM is easy to forget** — but essential.
-
-- **Athena/Glue requires stricter S3 partitioning discipline.**
-  A good reminder that analytics setups need careful planning.
-
-- **Terraform module boundaries are incredibly valuable**, especially when re-using patterns across multiple projects.
-
-- **CloudFront is the real “brain” of the system**, not S3.
-
----
-
-## Next Steps
-
-- Add GitHub Actions-based CI/CD with OIDC.
-- Improve log analytics with Athena partition projection.
-- Expand security headers (e.g. CSP nonce or hashed script support).
-- Add optional Lambda@Edge to handle redirects.
-- Explore adding basic web analytics (privacy-friendly, serverless).
+- Secure S3 + CloudFront configuration requires deliberate policy design.
+- Cross-region ACM provisioning is essential for CloudFront.
+- Log analytics requires disciplined S3 partition strategy.
+- Terraform module boundaries significantly improve reuse and clarity.
+- CloudFront acts as the control layer of the architecture, not S3.
 
 ---
 
 ## Summary
 
-This project takes a simple concept — a static website — and executes it using real AWS best practices. It shows capability across:
+This project demonstrates the implementation of a production-aligned static hosting architecture using AWS best practices. It showcases capability across:
 
-- Cloud architecture.
-- Terraform IaC.
-- Security engineering.
-- AWS regional constraints.
-- DNS + TLS.
-- Observability.
-- Cost-aware design.
+- Cloud architecture design
+- Terraform Infrastructure as Code
+- Security engineering
+- Regional AWS constraints
+- DNS and TLS configuration
+- Observability and cost governance
 
-It is as close to “production-ready” as a personal static site can be, and demonstrates the discipline expected of modern cloud engineers.
+The result is a disciplined, security-first static deployment aligned with modern cloud engineering standards.
