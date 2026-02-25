@@ -58,7 +58,11 @@
       "AWS",
       "CloudFront",
       "Terraform",
-      "GitHub Actions"
+      "GitHub Actions",
+      "WAF",
+      "CloudFront",
+      "S3",
+      "Route 53"
     ],
     "badge": "Case Study",
     "featured": true,
