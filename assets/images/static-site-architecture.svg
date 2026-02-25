@@ -1,47 +1,84 @@
-<svg width="820" height="520" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .box { fill:#1f2937; stroke:#f97316; stroke-width:2; rx:10; ry:10; }
-    .label { fill:#e5e7eb; font-family:Arial, sans-serif; font-size:14px; }
-    .group { stroke:#9ca3af; stroke-dasharray:6,6; fill:none; rx:12; ry:12; }
-    .arrow { stroke:#9ca3af; stroke-width:2; marker-end:url(#arrowhead); }
-  </style>
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="520" viewBox="0 0 1300 520">
   <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#9ca3af"/>
+    <style>
+      .bg { fill: #0f141b; }
+      .title { fill: #e7edf5; font-family: Inter, Segoe UI, Roboto, Arial, sans-serif; font-size: 30px; font-weight: 700; }
+      .label { fill: #e7edf5; font-family: Inter, Segoe UI, Roboto, Arial, sans-serif; font-size: 18px; font-weight: 600; }
+      .sub { fill: #aab6c6; font-family: Inter, Segoe UI, Roboto, Arial, sans-serif; font-size: 14px; font-weight: 500; }
+      .note { fill: #aab6c6; font-family: Inter, Segoe UI, Roboto, Arial, sans-serif; font-size: 13px; font-weight: 500; }
+      .box { fill: #121a24; stroke: #ff9900; stroke-width: 3; rx: 18; ry: 18; }
+      .chip { fill: #0f141b; stroke: #ff9900; stroke-width: 2; rx: 12; ry: 12; }
+      .arrow { stroke: #b8c2cf; stroke-width: 4; fill: none; stroke-linecap: round; }
+      .arrowThin { stroke: #b8c2cf; stroke-width: 3; fill: none; stroke-linecap: round; }
+    </style>
+
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#b8c2cf"/>
+    </marker>
+    <marker id="arrowheadSmall" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#b8c2cf"/>
     </marker>
   </defs>
 
-  <!-- Title above group -->
-  <text x="450" y="55" text-anchor="middle" class="label" style="font-size:16px;">
-    Static Site Architecture – AWS
-  </text>
+  <!-- Background -->
+  <rect class="bg" x="0" y="0" width="1300" height="520"/>
 
-  <!-- Group Box -->
-  <rect x="200" y="70" width="540" height="300" class="group"/>
+  <!-- Title -->
+  <text class="title" x="650" y="60" text-anchor="middle">Static Site Architecture – AWS</text>
 
-  <!-- Internet -->
-  <rect x="40" y="240" width="120" height="50" class="box"/>
-  <text x="100" y="270" text-anchor="middle" class="label">Internet</text>
+  <!-- ================= MAIN FLOW ARROWS (behind boxes) ================= -->
+  <!-- User -> Route53 -->
+  <path class="arrow" d="M250 270 L325 270" marker-end="url(#arrowhead)"/>
+  <!-- Route53 -> CloudFront -->
+  <path class="arrow" d="M530 270 L605 270" marker-end="url(#arrowhead)"/>
+  <!-- CloudFront -> S3 -->
+  <path class="arrow" d="M840 270 L925 270" marker-end="url(#arrowhead)"/>
 
-  <!-- Arrow to CF -->
-  <line x1="160" y1="265" x2="260" y2="265" class="arrow"/>
+  <!-- ================= ATTACHMENT ARROWS ================= -->
+  <!-- ACM -> CloudFront (clean vertical) -->
+  <path class="arrowThin" d="M730 165 L715 200" marker-end="url(#arrowheadSmall)"/>
+  <!-- WAF -> CloudFront (gentle diagonal into top-right edge) -->
+  <path class="arrowThin" d="M950 165 L835 195" marker-end="url(#arrowheadSmall)"/>
+
+  <!-- ================= BOXES ================= -->
+
+  <!-- User -->
+  <rect class="box" x="100" y="220" width="150" height="100"/>
+  <text class="label" x="175" y="270" text-anchor="middle">User</text>
+  <text class="sub" x="175" y="295" text-anchor="middle">Browser</text>
+
+  <!-- Route53 -->
+  <rect class="box" x="340" y="210" width="190" height="120"/>
+  <text class="label" x="435" y="265" text-anchor="middle">Route 53</text>
+  <text class="sub" x="435" y="290" text-anchor="middle">DNS</text>
 
   <!-- CloudFront -->
-  <rect x="260" y="195" width="150" height="140" class="box"/>
-  <text x="335" y="270" text-anchor="middle" class="label">CloudFront</text>
+  <rect class="box" x="620" y="200" width="220" height="140"/>
+  <text class="label" x="730" y="260" text-anchor="middle">CloudFront</text>
+  <text class="sub" x="730" y="285" text-anchor="middle">Global Edge CDN</text>
+  <text class="sub" x="730" y="310" text-anchor="middle">HTTPS-only + Headers</text>
+  <text class="note" x="730" y="360" text-anchor="middle">Scope: Global</text>
 
-  <!-- Arrow to S3 -->
-  <line x1="410" y1="265" x2="540" y2="265" class="arrow"/>
+  <!-- S3 -->
+  <rect class="box" x="940" y="200" width="260" height="140"/>
+  <text class="label" x="1070" y="255" text-anchor="middle">S3 Bucket</text>
+  <text class="sub" x="1070" y="280" text-anchor="middle">Private Origin</text>
+  <text class="sub" x="1070" y="305" text-anchor="middle">Block Public Access</text>
+  <text class="note" x="1070" y="360" text-anchor="middle">Region: eu-west-2</text>
 
-  <!-- S3 Bucket -->
-  <rect x="540" y="195" width="150" height="140" class="box"/>
-  <text x="615" y="270" text-anchor="middle" class="label">S3 Bucket</text>
+  <!-- OAC Label (centred on CloudFront->S3 arrow; no overlap with boxes) -->
+  <rect class="chip" x="790" y="255" width="200" height="30"/>
+  <text class="note" x="890" y="275" text-anchor="middle">Origin Access Control (OAC)</text>
+
+  <!-- ACM -->
+  <text class="note" x="730" y="90" text-anchor="middle">TLS Certificate</text>
+  <rect class="chip" x="660" y="100" width="140" height="70"/>
+  <text class="label" x="730" y="135" text-anchor="middle">ACM</text>
+  <text class="note" x="730" y="155" text-anchor="middle">us-east-1</text>
 
   <!-- WAF -->
-  <rect x="300" y="100" width="150" height="70" class="box"/>
-  <text x="375" y="140" text-anchor="middle" class="label">AWS WAF</text>
+  <rect class="box" x="850" y="100" width="200" height="70"/>
+  <text class="label" x="950" y="145" text-anchor="middle">AWS WAF</text>
 
-  <!-- Arrow from WAF to CF -->
-  <line x1="375" y1="170" x2="335" y2="195" class="arrow"/>
 </svg>

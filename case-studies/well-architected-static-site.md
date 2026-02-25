@@ -8,6 +8,16 @@ The objective was to design a production-aligned static hosting architecture pri
 
 ---
 
+<div align="center">
+
+<img src="../assets/images/static-site-architecture.svg"
+     alt="Static Site Architecture on AWS (Route 53 → CloudFront + WAF → S3 with OAC; ACM in us-east-1)"
+     width="900" />
+
+</div>
+
+---
+
 ## Architecture
 
 The solution follows a secure, modern AWS static hosting pattern:
