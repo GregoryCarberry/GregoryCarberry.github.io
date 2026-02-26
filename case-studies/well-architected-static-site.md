@@ -2,9 +2,11 @@
 
 ## Overview
 
-This project delivers a secure, scalable, and cost-efficient static website hosted on AWS. It was built as a practical implementation of the AWS Well-Architected Framework using production-grade services: S3, CloudFront, ACM, Route 53, WAF, and Terraform.
+I built this project to practise designing a production-ready static site on AWS using Infrastructure as Code.
 
-The objective was to design a production-aligned static hosting architecture prioritising security, automation, regional correctness, and maintainability — not just basic functionality.
+Rather than simply hosting files in S3, the focus was on applying AWS Well-Architected principles from the start — prioritising security, reproducibility, regional correctness, and cost awareness.
+
+The result is a fully reproducible static hosting architecture using S3, CloudFront, WAF, ACM, Route 53, and Terraform.
 
 ---
 
@@ -183,13 +185,12 @@ Designed to maintain production-grade security and resilience while keeping oper
 
 ## Summary
 
-This project demonstrates the implementation of a production-aligned static hosting architecture using AWS best practices. It showcases capability across:
+This project reflects how I approach cloud infrastructure:
 
-- Cloud architecture design
-- Terraform Infrastructure as Code
-- Security engineering
-- Regional AWS constraints
-- DNS and TLS configuration
-- Observability and cost governance
+- Security-first design
+- Infrastructure defined entirely in code
+- Awareness of regional constraints
+- Observability and cost controls built in
+- Clean modular architecture for reuse
 
-The result is a disciplined, security-first static deployment aligned with modern cloud engineering standards.
+It’s intentionally small in scope, but built with production discipline and aligned to modern cloud engineering standards.
