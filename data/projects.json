@@ -1,59 +1,76 @@
 [
-{
-  "title": "Network Segmentation & Troubleshooting Lab",
-  "owner": "GregoryCarberry",
-  "repo": "network-troubleshooting-lab",
-  "blurb": "Living home lab focused on multi-VLAN segmentation, 802.1Q trunking, and policy enforcement (OpenWrt as sole L3), across wired and controller-based wireless.",
-  "readme": "Hands-on lab using OpenWrt, Zyxel GS1920, Cisco SG300 and a Cisco WLC to implement VLAN 10/20/30/99, trunked APs, management-plane isolation, and repeatable validation using real traffic (DNS/HTTP/HTTPS).",
-  "tags": [
-    "Network lab",
-    "Segmentation",
-    "802.1Q",
-    "VLAN",
-    "OpenWrt",
-    "Firewall",
-    "NAT",
-    "DHCP",
-    "Cisco",
-    "WLC",
-    "Switching",
-    "Troubleshooting"
-  ],
-  "featured": true,
-  "caseStudy": "network-troubleshooting-lab.md",
-  "page": "/project.html?repo=network-troubleshooting-lab"
-},
   {
-  "title": "Ticket Triage Dashboard",
-  "owner": "GregoryCarberry",
-  "repo": "ticket-triage-dashboard",
-  "blurb": "Full-stack service desk–style ticket triage dashboard featuring filtering, status updates, self-assignment, and live metrics, built with React and a RESTful Node.js API.",
-  "readme": "Demonstrates realistic first-line IT support workflows using an API-driven React frontend, including optimistic updates, assignment handling, and operational metrics.",
-  "tags": [
-    "React",
-    "JavaScript",
-    "REST API",
-    "IT Support",
-    "Service Desk",
-    "Full Stack"
-  ],
-  "featured": true,
-  "caseStudy": "ticket-triage-dashboard.md",
-  "page": "/project.html?repo=ticket-triage-dashboard"
-},
-  {
-    "repo": "warehouseone",
+    "title": "Network Segmentation & Troubleshooting Lab",
     "owner": "GregoryCarberry",
+    "repo": "network-troubleshooting-lab",
+    "link": "https://github.com/GregoryCarberry/network-troubleshooting-lab",
+    "blurb": "Living home lab focused on multi-VLAN segmentation, 802.1Q trunking, and policy enforcement (OpenWrt as sole L3), across wired and controller-based wireless.",
+    "readme": "Hands-on lab using OpenWrt, Zyxel GS1920, Cisco SG300 and a Cisco WLC to implement VLAN 10/20/30/99, trunked APs, management-plane isolation, and repeatable validation using real traffic (DNS/HTTP/HTTPS).",
+    "tags": [
+      "Network lab",
+      "Segmentation",
+      "802.1Q",
+      "VLAN",
+      "OpenWrt",
+      "Firewall",
+      "NAT",
+      "DHCP",
+      "Cisco",
+      "WLC",
+      "Switching",
+      "Troubleshooting"
+    ],
+    "featured": true,
+    "badge": "",
+    "caseStudy": "network-troubleshooting-lab.md",
+    "updated": "",
+    "page": "/project.html?repo=network-troubleshooting-lab",
+    "share": "/projects/network-troubleshooting-lab.html",
+    "ogImage": "/assets/og/network-troubleshooting-lab.png"
+  },
+  {
+    "title": "Ticket Triage Dashboard",
+    "owner": "GregoryCarberry",
+    "repo": "ticket-triage-dashboard",
+    "link": "https://github.com/GregoryCarberry/ticket-triage-dashboard",
+    "blurb": "Full-stack service desk–style ticket triage dashboard featuring filtering, status updates, self-assignment, and live metrics, built with React and a RESTful Node.js API.",
+    "readme": "Demonstrates realistic first-line IT support workflows using an API-driven React frontend, including optimistic updates, assignment handling, and operational metrics.",
+    "tags": [
+      "React",
+      "JavaScript",
+      "REST API",
+      "IT Support",
+      "Service Desk",
+      "Full Stack"
+    ],
+    "featured": true,
+    "badge": "",
+    "caseStudy": "ticket-triage-dashboard.md",
+    "updated": "",
+    "page": "/project.html?repo=ticket-triage-dashboard",
+    "share": "/projects/ticket-triage-dashboard.html",
+    "ogImage": "/assets/og/ticket-triage-dashboard.png"
+  },
+  {
     "title": "WarehouseOne — Internal Ordering & WMS",
+    "owner": "GregoryCarberry",
+    "repo": "warehouseone",
+    "link": "https://github.com/GregoryCarberry/warehouseone",
     "blurb": "Python/Flask + Postgres + Docker. RBAC, stock lifecycle, future courier flows.",
+    "readme": "Auth, RBAC, picking/packing, API-first. Devcontainer + Compose.",
     "tags": [
       "Python",
       "Flask",
       "Postgres",
       "Docker"
     ],
-    "readme": "Auth, RBAC, picking/packing, API-first. Devcontainer + Compose.",
-    "page": "/project.html?repo=warehouseone"
+    "featured": false,
+    "badge": "",
+    "caseStudy": "",
+    "updated": "",
+    "page": "/project.html?repo=warehouseone",
+    "share": "/projects/warehouseone.html",
+    "ogImage": "/assets/og/warehouseone.png"
   },
   {
     "title": "Well-Architected Static Site",
@@ -68,20 +85,24 @@
       "Terraform",
       "GitHub Actions",
       "WAF",
-      "CloudFront",
       "S3",
       "Route 53"
     ],
-    "badge": "Case Study",
     "featured": true,
+    "badge": "Case Study",
+    "caseStudy": "",
     "updated": "2025-10-23",
-    "page": "/project.html?repo=well-architected-static-site"
+    "page": "/project.html?repo=well-architected-static-site",
+    "share": "/projects/well-architected-static-site.html",
+    "ogImage": "/assets/og/well-architected-static-site.png"
   },
   {
-    "repo": "serverless-crud-api",
-    "owner": "GregoryCarberry",
     "title": "Serverless CRUD (API Gateway + Lambda + DynamoDB)",
+    "owner": "GregoryCarberry",
+    "repo": "serverless-crud-api",
+    "link": "https://github.com/GregoryCarberry/serverless-crud-api",
     "blurb": "Cognito auth, fine-grained IAM; Lambda aliases for canary releases.",
+    "readme": "Blue/green via aliases; unit tests; OpenAPI spec.",
     "tags": [
       "AWS",
       "API Gateway",
@@ -90,14 +111,21 @@
       "Cognito",
       "IaC"
     ],
-    "readme": "Blue/green via aliases; unit tests; OpenAPI spec.",
-    "page": "/project.html?repo=serverless-crud-api"
+    "featured": false,
+    "badge": "",
+    "caseStudy": "",
+    "updated": "",
+    "page": "/project.html?repo=serverless-crud-api",
+    "share": "/projects/serverless-crud-api.html",
+    "ogImage": "/assets/og/serverless-crud-api.png"
   },
   {
-    "repo": "event-driven-image-pipeline",
-    "owner": "GregoryCarberry",
     "title": "Event-Driven Image Pipeline",
+    "owner": "GregoryCarberry",
+    "repo": "event-driven-image-pipeline",
+    "link": "https://github.com/GregoryCarberry/event-driven-image-pipeline",
     "blurb": "S3 -> EventBridge -> Lambda thumbnails -> notify via SNS.",
+    "readme": "CloudWatch dashboards + alarms; sample images + demo script.",
     "tags": [
       "AWS",
       "S3",
@@ -106,14 +134,21 @@
       "SNS",
       "Observability"
     ],
-    "readme": "CloudWatch dashboards + alarms; sample images + demo script.",
-    "page": "/project.html?repo=event-driven-image-pipeline"
+    "featured": false,
+    "badge": "",
+    "caseStudy": "",
+    "updated": "",
+    "page": "/project.html?repo=event-driven-image-pipeline",
+    "share": "/projects/event-driven-image-pipeline.html",
+    "ogImage": "/assets/og/event-driven-image-pipeline.png"
   },
   {
-    "repo": "iac-vpc-baseline",
-    "owner": "GregoryCarberry",
     "title": "IaC VPC Baseline",
+    "owner": "GregoryCarberry",
+    "repo": "iac-vpc-baseline",
+    "link": "https://github.com/GregoryCarberry/iac-vpc-baseline",
     "blurb": "Public/private subnets, NAT, SGs, SSM Session Manager bastion.",
+    "readme": "Security groups opinionated defaults; cost + security notes.",
     "tags": [
       "AWS",
       "VPC",
@@ -122,14 +157,21 @@
       "SSM",
       "Terraform"
     ],
-    "readme": "Security groups opinionated defaults; cost + security notes.",
-    "page": "/project.html?repo=iac-vpc-baseline"
+    "featured": false,
+    "badge": "",
+    "caseStudy": "",
+    "updated": "",
+    "page": "/project.html?repo=iac-vpc-baseline",
+    "share": "/projects/iac-vpc-baseline.html",
+    "ogImage": "/assets/og/iac-vpc-baseline.png"
   },
   {
-    "repo": "ac-call-quality-monitor",
-    "owner": "GregoryCarberry",
     "title": "Amazon Connect Call-Quality Monitor",
+    "owner": "GregoryCarberry",
+    "repo": "ac-call-quality-monitor",
+    "link": "https://github.com/GregoryCarberry/ac-call-quality-monitor",
     "blurb": "Dashboards + alarms for latency/AHT signals; sample Contact Lens notes.",
+    "readme": "Edge test utility + CW metrics; runbook included.",
     "tags": [
       "Amazon Connect",
       "CloudWatch",
@@ -137,14 +179,21 @@
       "Dashboards",
       "Alarms"
     ],
-    "readme": "Edge test utility + CW metrics; runbook included.",
-    "page": "/project.html?repo=ac-call-quality-monitor"
+    "featured": false,
+    "badge": "",
+    "caseStudy": "",
+    "updated": "",
+    "page": "/project.html?repo=ac-call-quality-monitor",
+    "share": "/projects/ac-call-quality-monitor.html",
+    "ogImage": "/assets/og/ac-call-quality-monitor.png"
   },
   {
-    "repo": "ecs-fargate-app",
-    "owner": "GregoryCarberry",
     "title": "Containerised App on ECS Fargate",
+    "owner": "GregoryCarberry",
+    "repo": "ecs-fargate-app",
+    "link": "https://github.com/GregoryCarberry/ecs-fargate-app",
     "blurb": "ECR + ECS service with ALB, health checks, and autoscaling.",
+    "readme": "Multi-env deploy (dev/prod) with task definition versioning.",
     "tags": [
       "AWS",
       "ECS Fargate",
@@ -153,7 +202,12 @@
       "Autoscaling",
       "GitHub Actions"
     ],
-    "readme": "Multi-env deploy (dev/prod) with task definition versioning.",
-    "page": "/project.html?repo=ecs-fargate-app"
+    "featured": false,
+    "badge": "",
+    "caseStudy": "",
+    "updated": "",
+    "page": "/project.html?repo=ecs-fargate-app",
+    "share": "/projects/ecs-fargate-app.html",
+    "ogImage": "/assets/og/ecs-fargate-app.png"
   }
 ]
