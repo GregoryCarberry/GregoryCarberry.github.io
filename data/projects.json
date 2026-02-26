@@ -53,7 +53,7 @@
       "Docker"
     ],
     "readme": "Auth, RBAC, picking/packing, API-first. Devcontainer + Compose.",
-    "page": "/project.html?repo=WarehouseOne"
+    "page": "/project.html?repo=warehouseone"
   },
   {
     "title": "Well-Architected Static Site",

@@ -1,7 +1,7 @@
 # Network Segmentation & Troubleshooting Lab
 
-> **Updated:** Feb 2026
-> **Category:** Network Engineering Lab
+> **Updated:** Feb 2026<br />
+> **Category:** Network Engineering Lab<br />
 > **Tech:** OpenWrt (BT HH5A), Cisco SG300-28, Zyxel GS1920-24, Cisco WLC 2504, Cisco 2602i / 3802i APs, VLAN segmentation, firewall policy design
 
 ---
