@@ -52,6 +52,29 @@
     "ogImage": "/assets/og/ticket-triage-dashboard.png"
   },
   {
+    "title": "API Troubleshooting Lab",
+    "owner": "GregoryCarberry",
+    "repo": "api-troubleshooting-lab",
+    "link": "https://github.com/GregoryCarberry/api-troubleshooting-lab",
+    "blurb": "Hands-on lab for isolating API failures across a lightweight gateway and Python backend, with deliberate break/fix scenarios and clear operational runbooks.",
+    "readme": "Demonstrates practical fault isolation, HTTP debugging, log-led troubleshooting, and clean separation between edge routing and backend behaviour.",
+    "tags": [
+      "Python",
+      "Flask",
+      "API Troubleshooting",
+      "HTTP",
+      "Debugging",
+      "Service Desk"
+    ],
+    "featured": true,
+    "badge": "Case Study",
+    "caseStudy": "api-troubleshooting-lab.md",
+    "updated": "2026-03-16",
+    "page": "/project.html?repo=api-troubleshooting-lab",
+    "share": "/projects/api-troubleshooting-lab.html",
+    "ogImage": "/assets/og/og-project.png"
+  },
+  {
     "title": "WarehouseOne — Internal Ordering & WMS",
     "owner": "GregoryCarberry",
     "repo": "warehouseone",
