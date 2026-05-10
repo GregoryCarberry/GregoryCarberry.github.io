@@ -56,8 +56,8 @@
     "owner": "GregoryCarberry",
     "repo": "api-troubleshooting-lab",
     "link": "https://github.com/GregoryCarberry/api-troubleshooting-lab",
-    "blurb": "Multi-service troubleshooting lab for isolating API failures across a FastAPI gateway and Flask backend, with request tracing, structured logging, failure simulation, and test-backed behaviour.",
-    "readme": "Shows practical fault isolation across service boundaries using X-Request-ID tracing, controlled failure modes, Postman scenarios, and pytest coverage rather than happy-path assumptions.",
+    "blurb": "Multi-service API troubleshooting lab for isolating gateway and backend failures, using request tracing, structured logging, controlled failure simulation, Postman scenarios, screenshots, and pytest-backed evidence.",
+    "readme": "Demonstrates practical fault isolation across a FastAPI gateway and Flask backend, including X-Request-ID tracing, API key/auth failures, XML validation, simulated upstream errors, timeouts, rate limiting, and repeatable tests.",
     "tags": [
       "Python",
       "FastAPI",
@@ -72,10 +72,10 @@
     "featured": true,
     "badge": "Case Study",
     "caseStudy": "api-troubleshooting-lab.md",
-    "updated": "2026-03-18",
+    "updated": "2026-05-10",
     "page": "/project.html?repo=api-troubleshooting-lab",
     "share": "/projects/api-troubleshooting-lab.html",
-    "ogImage": "/assets/og/og-project.png"
+    "ogImage": "/assets/og/api-troubleshooting-lab.png"
   },
   {
     "title": "WarehouseOne — Internal Ordering & WMS",
