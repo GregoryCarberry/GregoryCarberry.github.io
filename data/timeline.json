@@ -1,15 +1,105 @@
 [
   {
+    "date": "2026-05",
+    "title": "PCEP™ – Certified Entry-Level Python Programmer",
+    "summary": "Earned the Python Institute PCEP certification, validating core Python syntax, control flow, data types, functions, exceptions and programming fundamentals.",
+    "category": "cert"
+  },
+  {
+    "date": "2026-05",
+    "title": "API Troubleshooting Lab",
+    "summary": "Built and documented a multi-repo API troubleshooting lab simulating gateway-to-backend request flows, API key authentication, rate limiting, XML processing, validation, and realistic integration failure scenarios.",
+    "category": "project"
+  },
+  {
+    "date": "2026-05",
+    "title": "Getting Started with Generative AI",
+    "summary": "Completed the IBM SkillsBuild Getting Started with Generative AI badge, strengthening awareness of modern generative AI concepts and practical use cases.",
+    "category": "cert"
+  },
+  {
+    "date": "2026-03",
+    "title": "Level 4 Cyber Security course",
+    "summary": "Started structured Level 4 cyber security training covering Linux, vulnerability assessment, penetration testing concepts and security operations fundamentals.",
+    "category": "education"
+  },
+  {
+    "date": "2026-03",
+    "title": "Network Troubleshooting Lab",
+    "summary": "Documented a practical home network troubleshooting lab covering VLAN segmentation, routing, DHCP/DNS, NAT, STP, fault injection, and structured diagnostic scenarios.",
+    "category": "project"
+  },
+  {
+    "date": "2026-02",
+    "title": "Introduction to Modern AI",
+    "summary": "Completed Cisco training covering modern AI concepts and practical awareness of how AI is being used in technical environments.",
+    "category": "cert"
+  },
+  {
+    "date": "2026-02",
+    "title": "Well-Architected Static Site project",
+    "summary": "Built a production-aligned AWS static hosting stack using Terraform, private S3, CloudFront with OAC, WAFv2, ACM, Route 53, and GitHub Actions OIDC-based deployment.",
+    "category": "project"
+  },
+  {
+    "date": "2026-02",
+    "title": "Ticket Triage Dashboard",
+    "summary": "Built a full-stack ticket triage dashboard demonstrating first-line support workflows, ticket prioritisation, status tracking, assignment logic, and API-driven data handling.",
+    "category": "project"
+  },
+  {
+    "date": "2025-11",
+    "title": "AWS infrastructure project set",
+    "summary": "Created a set of AWS portfolio projects covering ECS Fargate, VPC baseline infrastructure, serverless image processing, and a serverless CRUD API to demonstrate cloud architecture patterns.",
+    "category": "project"
+  },
+  {
+    "date": "2025-10",
+    "title": "Amazon Connect Call Quality Monitor",
+    "summary": "Built a Terraform-deployed Amazon Connect monitoring project using CloudWatch dashboards, anomaly alarms, and Lambda-based metric ingestion for operational visibility.",
+    "category": "project"
+  },
+  {
+    "date": "2025-08",
+    "title": "Junior Cybersecurity Analyst Career Path",
+    "summary": "Completed Cisco's Junior Cybersecurity Analyst Career Path, covering network defence, firewalls, endpoint protection, vulnerability assessment and incident response fundamentals.",
+    "category": "cert"
+  },
+  {
+    "date": "2025-08",
+    "title": "WarehouseOne internal ordering system",
+    "summary": "Built a full-stack internal warehouse ordering system with React/Vite, Flask, PostgreSQL, Docker, login, dashboards, product search, order management, and role-based access control.",
+    "category": "project"
+  },
+  {
+    "date": "2025-07",
+    "title": "Postman API Fundamentals Student Expert",
+    "summary": "Completed Postman API fundamentals training, strengthening practical knowledge of requests, responses, status codes, authentication and API testing workflows.",
+    "category": "cert"
+  },
+  {
+    "date": "2025-05",
+    "title": "AWS networking and Well-Architected badges",
+    "summary": "Completed AWS Knowledge: Networking Core and Well-Architected Proficient training, reinforcing AWS networking, architecture and operational best-practice concepts.",
+    "category": "cert"
+  },
+  {
+    "date": "2025-03",
+    "title": "AWS Educate Getting Started with Networking",
+    "summary": "Completed AWS networking training covering foundational cloud networking concepts and AWS network service awareness.",
+    "category": "cert"
+  },
+  {
     "date": "2025-02",
     "title": "Portfolio revamp: dedicated About and Certs & Skills pages",
     "summary": "Restructured the portfolio so the homepage is a clean hub, with long-form About and a data-driven Certifications & Skills page backed by JSON.",
     "category": "project"
   },
   {
-    "date": "2025-02",
-    "title": "Timeline redesign planning",
-    "summary": "Started planning a richer, animated timeline driven by JSON data, ready for auto-rotation and manual scroll controls.",
-    "category": "project"
+    "date": "2024-12",
+    "title": "Essentials of IT Service Management and ITIL Level 4",
+    "summary": "Completed IT service management training covering service management principles, ITIL concepts and support process awareness.",
+    "category": "course"
   },
   {
     "date": "2024-11",
@@ -19,9 +109,9 @@
   },
   {
     "date": "2024-11",
-    "title": "Amazon Connect call quality monitor project",
-    "summary": "Built a proof-of-concept for monitoring Amazon Connect call quality using Lambda, EventBridge, and CloudWatch metrics as part of a portfolio project.",
-    "category": "project"
+    "title": "AWS Educate Introduction to Generative AI",
+    "summary": "Completed AWS Educate training introducing generative AI concepts, use cases and AWS-related AI learning pathways.",
+    "category": "cert"
   },
   {
     "date": "2024-10",
@@ -42,6 +132,12 @@
     "category": "cert"
   },
   {
+    "date": "2024-10",
+    "title": "Network Addressing and Basic Troubleshooting",
+    "summary": "Completed Cisco training focused on DNS, LAN/WAN concepts, network addressing and basic troubleshooting.",
+    "category": "course"
+  },
+  {
     "date": "2024-08",
     "title": "Jira Fundamentals & Jira Service Management Fundamentals",
     "summary": "Completed Atlassian badges for Jira and Jira Service Management, focusing on issues, boards, queues, SLAs, and support workflows.",
@@ -49,14 +145,14 @@
   },
   {
     "date": "2024-08",
-    "title": "Introduction to IoT (Cisco Networking Academy)",
+    "title": "Introduction to IoT",
     "summary": "Studied IoT fundamentals, including device connectivity, data flows, and cloud integration patterns.",
     "category": "cert"
   },
   {
     "date": "2024-07",
     "title": "Certified in Cybersecurity (CC)",
-    "summary": "Completed the (ISC)² CC certification, covering security principles, access control, network security, and basic incident response.",
+    "summary": "Completed the ISC2 CC certification, covering security principles, access control, network security, and basic incident response.",
     "category": "cert"
   },
   {
@@ -66,10 +162,10 @@
     "category": "cert"
   },
   {
-    "date": "2024-03",
-    "title": "Well-Architected Static Site project (AWS + Terraform)",
-    "summary": "Developed a Well-Architected static website on AWS using S3, CloudFront, WAF, and Route 53, managed with Terraform and GitHub Actions.",
-    "category": "project"
+    "date": "2024-04",
+    "title": "AWS Cloud Quest: Cloud Practitioner",
+    "summary": "Completed AWS Cloud Quest: Cloud Practitioner, building practical familiarity with core AWS services and cloud concepts.",
+    "category": "cert"
   },
   {
     "date": "2023-11",
@@ -85,7 +181,7 @@
   },
   {
     "date": "2021-06",
-    "title": "AWS re/Start graduate (TechTalent Academy)",
+    "title": "AWS re/Start graduate",
     "summary": "Completed the TechTalent Academy / AWS re/Start training programme focused on AWS, Linux, networking, scripting, and cloud DevOps fundamentals.",
     "category": "education"
   },
@@ -97,13 +193,13 @@
   },
   {
     "date": "2021-03",
-    "title": "Cybersecurity Essentials (Cisco)",
+    "title": "Cybersecurity Essentials",
     "summary": "Completed Cisco Cybersecurity Essentials, covering CIA triad, basic cryptography, and network security fundamentals.",
     "category": "cert"
   },
   {
     "date": "2020-11",
-    "title": "Introduction to Packet Tracer (Cisco)",
+    "title": "Introduction to Packet Tracer",
     "summary": "Learned to build and test small network topologies using Cisco Packet Tracer for simulation and practice.",
     "category": "cert"
   },
