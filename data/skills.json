@@ -5,10 +5,10 @@
   },
   {
     "title": "Dev & Ops",
-    "text": "Python, Flask, Docker, GitHub Actions, Terraform (foundations), Linux, Networking (VLANs, Wi-Fi APs)."
+    "text": "Python, Flask, Docker, GitHub Actions, Terraform foundations, Linux, OPNsense, VLANs, Wi-Fi APs, Pi-hole, Grafana and Prometheus-style monitoring."
   },
   {
     "title": "Support & Tooling",
-    "text": "Customer support, Jira, ITSM principles, troubleshooting, documentation."
+    "text": "Customer support, Jira, ITSM principles, structured troubleshooting, documentation, service visibility and incident-style fault isolation."
   }
 ]

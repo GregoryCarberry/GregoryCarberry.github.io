@@ -1,165 +1,223 @@
 # Network Segmentation & Troubleshooting Lab
 
-**Updated:** Mar 2026  
-**Category:** Network Engineering Lab  
-**Environment:** Physical home lab (mixed enterprise & SMB hardware)
+**Updated:** May 2026  
+**Category:** Network engineering, segmentation, monitoring and troubleshooting lab  
+**Environment:** Physical home lab using mixed enterprise, SMB and repurposed hardware
 
 ---
 
 ## Executive Overview
 
-This project is a living, policy-driven network lab built on physical hardware to simulate real-world segmentation, trust boundaries, and operational troubleshooting.
+This project is a living network engineering lab built around a real home network rather than a simulated-only topology.
 
-Originally created as a fault-diagnosis environment, the lab evolved into a structured multi-VLAN architecture with centralised routing authority and deliberate Layer 2 / Layer 3 separation.
+The lab has now moved beyond the original OpenWrt-based design. The current baseline uses an HP t730 thin client running OPNsense as the primary router/firewall, with dedicated VLANs, controller-based Cisco wireless, a managed switching layer, DNS filtering, and lightweight monitoring.
 
-The objective is not theoretical configuration — but applied network engineering under realistic constraints.
-
----
-
-## Engineering Intent
-
-This lab was designed to demonstrate the ability to:
-
-- Architect segmented networks intentionally
-- Centralise policy enforcement
-- Maintain strict Layer 2 vs Layer 3 responsibility boundaries
-- Validate behaviour using real application traffic (DNS, HTTP/HTTPS)
-- Introduce and diagnose controlled failure scenarios
-- Refine design incrementally without disrupting core connectivity
-
-It balances experimentation with day-to-day home usability — mirroring operational environments where stability and change must coexist.
+The aim is practical: build, break, observe and troubleshoot a segmented network while keeping it usable enough for day-to-day home connectivity.
 
 ---
 
 ## Current Architecture
 
-High-Level Flow:
+High-level flow:
 
-WAN (Virgin Hub – Modem Mode)  
-↓  
-OpenWrt (NAT + Firewall + DHCP + DNS + Inter-VLAN Routing)  
-↓ 802.1Q trunk (VLANs 10 / 20 / 30 / 99)  
-Zyxel GS1920-24 (Layer 2)  
-↓ 802.1Q trunk  
-Cisco SG300-28 (Layer 2)  
-↓  
-Access ports & trunked APs
+```text
+Virgin Hub in modem mode
+        ↓
+HP t730 running OPNsense
+        ↓
+Zyxel GS1920-24v1 access switch
+        ↓
+Cisco SG300 switch / Cisco WLC / wired clients / APs
+        ↓
+Trusted, IoT, Guest and Management networks
+```
 
-Routing authority is fully centralised on OpenWrt.  
-Both switches operate strictly at Layer 2 to preserve architectural clarity.
+OPNsense is now the central Layer 3 authority for:
+
+- WAN connectivity
+- NAT
+- DHCP
+- DNS forwarding / resolver integration
+- Inter-VLAN routing
+- Firewall policy enforcement
+
+The switches remain Layer 2 only. That separation is deliberate: routing and policy decisions belong on the firewall, while the switches provide VLAN transport and access-layer connectivity.
 
 ---
 
 ## VLAN & Policy Model
 
-| VLAN | Purpose | Behaviour |
-|------|---------|-----------|
-| 10 – Trusted | Primary LAN | Can access VLAN 20 and VLAN 99 (administrative) |
-| 20 – IoT | Restricted devices | Cannot initiate toward VLAN 10 or VLAN 99 |
-| 30 – Guest | Visitor network | Internet only |
-| 99 – Management | Infrastructure | Administrative plane (progressively hardened) |
+| VLAN | Subnet | Purpose | Behaviour |
+|------|--------|---------|-----------|
+| 10 | `10.10.10.0/24` | Trusted | Primary user devices and trusted admin access |
+| 20 | `10.10.20.0/24` | IoT | Restricted smart devices and media devices |
+| 30 | `10.10.30.0/24` | Guest | Internet-only guest access |
+| 99 | `10.10.99.0/24` | Management | Network infrastructure management |
+| 999 | No normal client subnet | Parking / isolation | Unused or untrusted switch ports |
 
-### Enforcement Principles
+The current policy model is asymmetric:
 
-- Asymmetric trust model (Trusted can initiate; restricted VLANs cannot)
-- All inter-VLAN policy enforced at Layer 3
-- No routing performed on switches
-- NAT handled centrally
+- Trusted devices can initiate to selected infrastructure and IoT services.
+- IoT devices cannot freely initiate back into Trusted.
+- Guest is isolated from internal networks.
+- Management is reachable only where operationally required and is planned for further hardening.
+- VLAN 999 is used to avoid leaving unused ports in a useful production VLAN.
 
-This mirrors common enterprise segmentation patterns while remaining operational in a home environment.
+This is not just “VLANs exist”. The important part is that routing behaviour, firewall rules, DNS behaviour and real client traffic are validated together.
 
 ---
 
 ## Wireless Integration
 
-- Cisco WLC 2504 in VLAN 99
-- Cisco 2602i and 3802i APs trunked to switches
-- SSIDs mapped directly to VLANs 10 / 20 / 30
-- Wired and wireless clients subject to identical policy enforcement
+Wireless is provided by a Cisco 2504 WLC and Cisco Aironet APs.
 
-Segmentation is preserved end-to-end — no wireless exemptions.
+Current SSID-to-VLAN mapping:
 
----
+| SSID Type | VLAN |
+|-----------|------|
+| Trusted Wi-Fi | VLAN 10 |
+| IoT Wi-Fi | VLAN 20 |
+| Guest Wi-Fi | VLAN 30 |
 
-## Representative Failure Scenarios
+The wireless side follows the same trust model as the wired network. A phone on Trusted Wi-Fi, for example, can be used to initiate controlled access to IoT/media devices without giving the IoT network broad access back into the Trusted network.
 
-### 1. Router Has Internet, LAN Does Not
-**Cause:** Misconfigured NAT / forwarding rule  
-**Resolution:** Validated firewall zone direction and masquerading behaviour  
-
-**Lesson:** WAN link success does not validate forwarding logic.
+This has been tested with real devices, including Chromecast-style discovery and media playback workflows.
 
 ---
 
-### 2. VLAN Tagging Fault
-**Cause:** Incorrect trunk tagging / PVID mismatch  
-**Resolution:** Verified port membership, trunk configuration, and real application traffic  
+## Monitoring and Services Host
 
-**Lesson:** ICMP success is insufficient; validate with application-layer traffic.
+A repurposed Lenovo Yoga laptop now acts as a lightweight Debian server on the Trusted VLAN.
+
+Current and planned service role:
+
+- Pi-hole for DNS filtering and query visibility
+- Grafana dashboards
+- Prometheus/exporter-style monitoring
+- Node and service metrics
+- Future expansion into more lab observability
+
+This changed the lab from pure connectivity testing into a more operational environment. DNS behaviour, client activity and service health can now be inspected rather than guessed.
 
 ---
 
-### 3. Management Plane Access Design
+## Representative Troubleshooting Scenarios
 
-Management VLAN (99) is reachable from the trusted network for administrative practicality.
+### 1. DHCP or Addressing Failure
 
-Hardening is being progressively introduced to move toward host-based, least-privilege access rather than broad VLAN-level reachability.
+A client lands on the wrong subnet, fails to obtain a lease, or receives a gateway/DNS combination that does not match the intended VLAN.
 
-**Lesson:** Isolation is a design decision — not an assumption.
+Troubleshooting path:
+
+1. Confirm switch port VLAN membership.
+2. Confirm trunk tagging.
+3. Confirm OPNsense interface assignment.
+4. Confirm DHCP scope.
+5. Confirm client lease details.
+
+### 2. DNS Filtering and Client Visibility
+
+Pi-hole provides visibility into what clients are querying and what is being blocked.
+
+This is useful for validating:
+
+- Whether clients are using the intended DNS path
+- Whether IoT devices still function with tracking/telemetry domains blocked
+- Whether DNS failures are policy-related or connectivity-related
+
+### 3. Inter-VLAN Firewall Behaviour
+
+The lab validates that “can reach the internet” does not mean “can reach everything”.
+
+Example checks include:
+
+- Trusted to IoT access where needed
+- IoT blocked from initiating to Trusted
+- Guest isolated from internal services
+- DNS allowed while ICMP or other protocols may be blocked
+
+### 4. Chromecast / Media Discovery Across VLANs
+
+Media casting exposed a realistic home-lab problem: discovery and control traffic may behave differently from direct client/server traffic.
+
+Rather than flattening the network, the lab uses selective rules and validation to allow required media workflows while preserving IoT segregation.
+
+### 5. Monitoring Host Stability
+
+The Debian monitoring host is repurposed laptop hardware, so operational issues such as lid-close behaviour, sleep states and service persistence had to be handled.
+
+This reflects a common real-world constraint: not every useful system starts life as perfect server hardware.
 
 ---
 
 ## Troubleshooting Methodology
 
-Fault isolation follows a structured sequence:
+The working method is intentionally structured:
 
-1. Physical link validation  
-2. VLAN tagging verification  
-3. IP addressing and gateway confirmation  
-4. Firewall rule directionality  
-5. NAT / masquerade validation  
-6. Real application-layer traffic testing  
+1. Confirm physical link and power.
+2. Confirm switch port mode and VLAN membership.
+3. Confirm trunk tagging and native/PVID expectations.
+4. Confirm IP addressing, gateway and DNS.
+5. Confirm OPNsense interface and DHCP state.
+6. Confirm firewall rule order and direction.
+7. Confirm real application behaviour.
+8. Check logs and metrics before guessing.
 
-This approach prevents symptom chasing and accelerates root-cause identification.
+This avoids the trap of changing multiple things at once and then not knowing which change fixed the issue.
 
 ---
 
 ## Design Tradeoffs
 
-- Routing centralised for clarity and policy consistency  
-- Switches intentionally restricted to Layer 2  
-- Mixed hardware retained to maximise learning value  
-- Stability balanced with experimentation  
-- Management hardening implemented incrementally  
+This lab deliberately keeps some imperfect or older hardware because that creates useful engineering constraints.
 
-Older hardware is deliberately retained where viable to explore real-world constraints rather than replacing equipment prematurely.
+Examples:
+
+- Cisco SG300 is not Cisco IOS and must be handled with its own syntax.
+- The Cisco 2504 WLC and Aironet APs are older but still useful for controller-based wireless learning.
+- The Lenovo Yoga is not ideal server hardware but works well as a lightweight monitoring node after tuning.
+- The Buffalo NAS remains useful for storage while future media-server options are evaluated.
+- IoT usability has to be balanced against security isolation.
+
+The result is more valuable than a “perfect” greenfield design because it forces practical operational decisions.
 
 ---
 
 ## Why This Project Matters
 
-This lab demonstrates practical network engineering capability:
+This project demonstrates:
 
-- Designing and enforcing segmented architectures  
-- Applying asymmetric trust models  
-- Understanding NAT and firewall interaction  
-- Integrating wireless infrastructure into segmented networks  
-- Diagnosing multi-layer faults methodically  
-- Iterating architecture safely over time  
+- Practical VLAN design
+- OPNsense firewall and routing administration
+- Layer 2 vs Layer 3 responsibility separation
+- Real Wi-Fi controller integration
+- DNS filtering and client visibility
+- Monitoring and operational observability
+- Cross-VLAN troubleshooting
+- Incremental change management
+- Documentation of real design tradeoffs
 
-It reflects applied problem-solving under operational constraints — not just configuration familiarity.
+For support, cloud, networking or junior infrastructure roles, this is strong evidence because it shows the full loop: design, implementation, validation, troubleshooting and documentation.
 
 ---
 
-## Status
+## Current Status
 
 Active and evolving.
 
-Future focus areas include:
+Recent progress includes:
 
-- Further least-privilege management hardening  
-- Wireless optimisation testing  
-- Expanded policy complexity  
-- Monitoring and visibility integration  
+- Migration from OpenWrt/Home Hub routing to OPNsense on an HP t730
+- Reworked VLAN/firewall baseline
+- Pi-hole deployment
+- Grafana monitoring
+- Chromecast/media cross-VLAN testing
+- Documentation refresh to align the repo with the current architecture
 
-The lab continues to evolve through controlled experimentation and documented iteration.
+Next likely improvements:
+
+- More Grafana/Prometheus dashboards
+- Management VLAN hardening
+- More polished network diagrams
+- Further media-server testing
+- Better long-term documentation of firewall rules and validation tests

@@ -92,11 +92,12 @@ root/
 ---
 
 ## 📈 Current Areas of Development
-- Deeper project case studies
+- Deeper project case studies and project refreshes
 - Sticky mini-header + ToCs
 - Layout/spacing polish
 - Lighthouse score improvements
 - More Well-Architected AWS examples
+- Continued network lab updates as the OPNsense baseline evolves
 - Better caching for GitHub API calls
 
 ---

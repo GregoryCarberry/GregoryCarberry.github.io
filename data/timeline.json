@@ -13,6 +13,12 @@
   },
   {
     "date": "2026-05",
+    "title": "Network lab OPNsense migration and monitoring refresh",
+    "summary": "Migrated the home network lab baseline from OpenWrt/Home Hub routing to OPNsense on an HP t730, added Pi-hole and Grafana monitoring on a Debian host, and refreshed the lab documentation around current VLAN, firewall and media-device troubleshooting workflows.",
+    "category": "project"
+  },
+  {
+    "date": "2026-05",
     "title": "Getting Started with Generative AI",
     "summary": "Completed the IBM SkillsBuild Getting Started with Generative AI badge, strengthening awareness of modern generative AI concepts and practical use cases.",
     "category": "cert"
@@ -26,7 +32,7 @@
   {
     "date": "2026-03",
     "title": "Network Troubleshooting Lab",
-    "summary": "Documented a practical home network troubleshooting lab covering VLAN segmentation, routing, DHCP/DNS, NAT, STP, fault injection, and structured diagnostic scenarios.",
+    "summary": "Documented the practical home network troubleshooting lab covering VLAN segmentation, routing, DHCP/DNS, NAT, STP, fault injection, and structured diagnostic scenarios.",
     "category": "project"
   },
   {
