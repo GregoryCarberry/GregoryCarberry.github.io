@@ -2,54 +2,33 @@
 <html lang="en" class="scroll-smooth dark">
 
 <head>
-  <!-- Basic metadata -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gregory John Carberry — Cloud Portfolio</title>
-  <meta name="description" content="AWS & Cloud portfolio: projects, certifications, and contact." />
+  <title>Gregory John Carberry — Technical Portfolio</title>
+  <meta name="description" content="IT support, cloud support and infrastructure portfolio by Gregory John Carberry: practical projects, certifications, skills and contact details." />
   <link rel="canonical" href="https://gregorycarberry.github.io/" />
-
-  <!-- PWA / icons -->
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-
-  <!-- Favicon -->
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
-
-  <!-- Tailwind v4 browser build -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-  <!-- Tailwind v4 config -->
   <style type="text/tailwindcss">
     @custom-variant dark (&:where(.dark, .dark *));
-    @theme {
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+    @theme { --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
   </style>
-
-  <link rel="stylesheet" href="assets/site.css?v=20260210">
-
-  <!-- Theming -->
+  <link rel="stylesheet" href="assets/site.css?v=20260515">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Gregory John Carberry — Cloud Portfolio">
-  <meta property="og:description" content="Hands-on AWS builds, certs, and projects.">
+  <meta property="og:title" content="Gregory John Carberry — Technical Portfolio">
+  <meta property="og:description" content="Practical IT support, cloud, networking and security project evidence.">
   <meta property="og:url" content="https://gregorycarberry.github.io/">
   <meta property="og:image" content="https://gregorycarberry.github.io/og-image.png">
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Gregory John Carberry — Cloud Portfolio">
-  <meta name="twitter:description" content="Hands-on AWS builds, certs, and projects.">
+  <meta name="twitter:title" content="Gregory John Carberry — Technical Portfolio">
+  <meta name="twitter:description" content="Practical IT support, cloud, networking and security project evidence.">
   <meta name="twitter:image" content="https://gregorycarberry.github.io/og-image.png">
-
-  <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -58,237 +37,104 @@
     "url": "https://gregorycarberry.github.io/",
     "sameAs": [
       "https://www.linkedin.com/in/gregory-carberry/",
+      "https://github.com/GregoryCarberry",
       "https://www.credly.com/users/gregory-carberry"
     ],
-    "jobTitle": "Cloud / IT Support",
-    "knowsAbout": [
-      "Amazon Web Services",
-      "DevOps",
-      "Python",
-      "Networking",
-      "Customer Support"
-    ]
+    "jobTitle": "IT Support / Cloud Support",
+    "knowsAbout": ["IT Support", "Cloud Support", "AWS", "Networking", "Cybersecurity", "Linux", "Terraform"]
   }
   </script>
-
-  <!-- Analytics -->
   <script defer data-domain="gregorycarberry.github.io" src="https://plausible.io/js/script.js"></script>
 </head>
 
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-
-  <a href="#projects" class="skip-link">Skip to main content</a>
-
-  <!-- Header -->
-  <header
-    class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
-
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-
-      <!-- ★ Updated brand: now data-driven via common.js -->
-      <a id="brandLink" href="/" class="font-semibold tracking-tight relative group">
-        <span class="relative z-10"></span>
-      </a>
-
+      <a id="brandLink" href="/" class="font-semibold tracking-tight relative group"><span class="relative z-10"></span></a>
       <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
-
-      <button id="themeToggle" aria-label="Toggle theme"
-        class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">
-        🌙
-      </button>
-    </div>
-
-    <!-- Status banner -->
-    <div class="hidden shadow-sm border-t border-amber-200/70 dark:border-amber-800/70">
-      <div class="max-w-6xl mx-auto px-4 py-2 text-xs sm:text-sm rounded-t-2xl sm:rounded-t-2xl
-                   bg-amber-100/95 dark:bg-amber-900/90
-                   text-amber-900 dark:text-amber-100
-                   flex items-center justify-center gap-2">
-        <span aria-hidden="true">⚠️</span>
-        <span>
-          This portfolio is currently being updated — some sections may be incomplete.
-        </span>
-      </div>
+      <button id="themeToggle" aria-label="Toggle theme" class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">🌙</button>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section id="home" class="relative">
-    <div
-      class="absolute inset-0 bg-gradient-to-b from-indigo-100/60 via-transparent to-transparent dark:from-indigo-950/40 pointer-events-none">
-    </div>
-
-    <div class="relative max-w-6xl mx-auto px-4 pt-10 pb-12 sm:pt-16 sm:pb-24">
-      <div class="max-w-3xl">
-        <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight">
-          Gregory John Carberry
-        </h1>
-        <p id="heroTagline" class="mt-4 text-lg text-slate-600 dark:text-slate-300"></p>
-        <div id="heroButtons" class="mt-4 flex flex-wrap gap-3"></div>
-        <p id="heroLearning" class="mt-3 text-sm text-slate-500 dark:text-slate-400"></p>
-      </div>
-
-      <section
-        class="mt-6 sm:mt-10 max-w-3xl border border-slate-200/80 dark:border-slate-800 rounded-2xl bg-white/80 dark:bg-slate-900/80 px-4 py-3">
-        <p class="text-xs font-semibold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
-          Highlights
-        </p>
-        <div id="highlightsStrip"
-          class="mt-3 flex flex-wrap gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-100"></div>
-      </section>
-    </div>
-  </section>
-
-  <!-- Explore section -->
-  <section class="py-6 sm:py-8">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-xl sm:text-2xl font-semibold mb-4">Explore the portfolio</h2>
-      <div class="grid gap-4 md:grid-cols-3">
-
-        <a href="/about.html" class="block rounded-2xl border border-slate-200/80 dark:border-slate-800
-                bg-white/80 dark:bg-slate-900/80 p-4 sm:p-5
-                hover:border-indigo-400 hover:shadow-md transition">
-          <h3 class="flex items-center gap-2 font-semibold">
-            <span class="text-lg">👤</span>
-            <span>About Me</span>
-          </h3>
-          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
-            Who I am, what I’m working towards, and how I approach cloud and support work.
+  <main id="main">
+    <section id="home" class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-indigo-100/70 via-transparent to-transparent dark:from-indigo-950/40 pointer-events-none"></div>
+      <div class="relative max-w-6xl mx-auto px-4 pt-12 pb-12 sm:pt-18 sm:pb-20">
+        <div class="max-w-4xl">
+          <p class="text-sm font-semibold tracking-widest uppercase text-indigo-500">Technical Portfolio</p>
+          <h1 class="mt-3 text-3xl sm:text-5xl font-extrabold leading-tight">Gregory John Carberry</h1>
+          <p id="heroTagline" class="mt-4 max-w-3xl text-lg sm:text-xl text-slate-600 dark:text-slate-300"></p>
+          <p class="mt-4 max-w-3xl text-sm sm:text-base text-slate-500 dark:text-slate-400">
+            Based in Telford, UK. Targeting IT support, technical service desk, cloud support, infrastructure support and security-adjacent roles where practical troubleshooting, clear documentation and hands-on technical work matter.
           </p>
-        </a>
-
-        <a href="/projects.html" class="block rounded-2xl border border-slate-200/80 dark:border-slate-800
-                bg-white/80 dark:bg-slate-900/80 p-4 sm:p-5
-                hover:border-indigo-400 hover:shadow-md transition">
-          <h3 class="flex items-center gap-2 font-semibold">
-            <span class="text-lg">🛠️</span>
-            <span>Projects</span>
-          </h3>
-          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
-            Data-driven cards for every build, with deep-dive pages for key case studies.
-          </p>
-        </a>
-
-        <a href="/certifications.html" class="block rounded-2xl border border-slate-200/80 dark:border-slate-800
-                bg-white/80 dark:bg-slate-900/80 p-4 sm:p-5
-                hover:border-indigo-400 hover:shadow-md transition">
-          <h3 class="flex items-center gap-2 font-semibold">
-            <span class="text-lg">🎓</span>
-            <span>Certifications &amp; Skills</span>
-          </h3>
-          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
-            Verified badges plus a structured skills map across cloud, networking, and support.
-          </p>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured projects -->
-  <section id="projects" class="hidden py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="flex items-end justify-between gap-4">
-        <h2 class="text-2xl sm:text-3xl font-bold">Featured Projects</h2>
-        <a class="text-sm underline" href="/projects.html">View all projects ▸</a>
-      </div>
-      <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
-        A small selection of builds that best show how I think about reliability, automation, and supportability.
-      </p>
-
-      <div id="projectGrid" class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
-    </div>
-  </section>
-
-  <!-- Certifications snapshot -->
-  <section id="certs" class="hidden py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
-    <div class="max-w-6xl mx-auto px-4 space-y-6">
-      <div class="flex items-end justify-between gap-4">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold">Certifications (Snapshot)</h2>
-          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
-            A quick view of recent and relevant badges. The full breakdown lives on the Certifications &amp; Skills
-            page.
-          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="/projects.html" class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-500 transition">View project evidence</a>
+            <a href="/certifications.html" class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold border border-slate-300 dark:border-slate-700 hover:bg-slate-100/60 dark:hover:bg-slate-800/80 transition">Certifications &amp; Skills</a>
+          </div>
+          <div id="heroButtons" class="mt-4 flex flex-wrap gap-3 text-sm"></div>
         </div>
-        <a href="/certifications.html" class="text-sm underline shrink-0">View full list ▸</a>
       </div>
+    </section>
 
-      <div class="flex items-center justify-between gap-4 text-sm">
-        <div class="flex items-center gap-2">
-          <span id="certCount"
-            class="inline-flex items-center justify-center rounded-full bg-slate-900 text-slate-50 dark:bg-slate-100 dark:text-slate-900 px-3 py-1 text-xs font-semibold">
-            …
-          </span>
-          <span class="text-slate-600 dark:text-slate-300">
-            verified certifications across cloud, networking, and security.
-          </span>
+    <section id="projects" class="py-12 sm:py-16 border-t border-slate-200/70 dark:border-slate-800">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold">Project Evidence</h2>
+            <p class="mt-2 max-w-3xl text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+              Selected work showing practical troubleshooting, cloud, networking, security, documentation and support-focused thinking.
+            </p>
+          </div>
+          <a class="text-sm underline shrink-0" href="/projects.html">View all projects ▸</a>
         </div>
-        <button id="toggleAllCerts"
-          class="text-xs sm:text-sm px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700">
-          Show all
-        </button>
+        <div id="projectGrid" class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
       </div>
+    </section>
 
-      <div id="certGrid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
-    </div>
-  </section>
-
-  <!-- Skills snapshot -->
-  <section id="skills" class="hidden py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="flex items-end justify-between gap-4">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold">Skills Overview</h2>
-          <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
-            Core areas I’m actively using and improving. For the full skills matrix and how it maps to certs, see the
-            Certifications &amp; Skills page.
-          </p>
+    <section class="py-12 sm:py-16 border-t border-slate-200/70 dark:border-slate-800">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold">Core Skill Areas</h2>
+            <p class="mt-2 max-w-3xl text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+              A short snapshot only. The full skills map and certification evidence lives on the dedicated page.
+            </p>
+          </div>
+          <a href="/certifications.html" class="text-sm underline shrink-0">View full skills map ▸</a>
         </div>
-        <a href="/certifications.html" class="text-sm underline shrink-0">View skills matrix ▸</a>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-5"><h3 class="font-semibold">Support &amp; troubleshooting</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Incident-style thinking, fault isolation, documentation and customer-focused problem solving.</p></article>
+          <article class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-5"><h3 class="font-semibold">Cloud &amp; infrastructure</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">AWS, Terraform, GitHub Actions and small but realistic infrastructure projects.</p></article>
+          <article class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-5"><h3 class="font-semibold">Networking &amp; security</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">VLANs, DNS, DHCP, firewalls, segmentation, monitoring and security fundamentals.</p></article>
+        </div>
       </div>
+    </section>
 
-      <div id="skillsGrid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
-    </div>
-  </section>
+    <section class="py-12 sm:py-16 border-t border-slate-200/70 dark:border-slate-800">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-2xl sm:text-3xl font-bold">Current Focus</h2>
+        <div class="mt-5 grid gap-4 md:grid-cols-3 text-sm text-slate-600 dark:text-slate-300">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 p-4">Building out practical cloud, network and security portfolio projects.</div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 p-4">Turning project work into concise, repeatable case-study pages.</div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 p-4">Continuing structured certification and course-based learning alongside hands-on labs.</div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Timeline -->
-  <section id="timeline" class="py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl sm:text-3xl font-bold">Learning &amp; Project Timeline</h2>
-      <p class="mt-2 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
-        A running log of key milestones – certs, builds, and learning sprints.
-      </p>
+    <section class="py-10 border-t border-slate-200/70 dark:border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-sm text-slate-600 dark:text-slate-300">Want the fuller picture? Start with the projects, then use About or Contact for background and next steps.</p>
+        <div id="contactButtons" class="flex flex-wrap gap-3 text-sm"></div>
+      </div>
+    </section>
+  </main>
 
-      <ol id="timelineList" class="mt-6 space-y-4 border-l border-slate-300/60 dark:border-slate-800 pl-4"></ol>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="py-16 sm:py-20 border-t border-slate-200/70 dark:border-slate-800">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl sm:text-3xl font-bold">Contact</h2>
-      <p class="mt-2 text-slate-600 dark:text-slate-300">
-        Open to junior cloud/support roles (remote or West Midlands). Best ways to reach me:
-      </p>
-
-      <div id="contactButtons" class="mt-6 flex flex-wrap gap-3 text-sm"></div>
-
-      <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">
-        For more detail, see the full <a href="/contact.html" class="underline">Contact page</a>.
-      </p>
-    </div>
-  </section>
-
-  <!-- Footer -->
   <footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
     © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
     <div class="mt-2">Last updated: <span id="lastUpdated">—</span></div>
   </footer>
-
-  <!-- Scripts -->
-  <script defer src="assets/common.js?v=20260210"></script>
-  <script defer src="assets/index.js"></script>
+  <script defer src="assets/common.js?v=20260515"></script>
+  <script defer src="assets/index.js?v=20260515"></script>
 </body>
-
 </html>

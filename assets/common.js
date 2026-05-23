@@ -117,8 +117,8 @@
     if (currentPath === "/" && path === "/") return true;
     if (currentPath === "/index.html" && path === "/") return true;
 
-    // Treat project detail page as part of "All Projects"
-    if (currentPath === "/project.html" && path === "/projects.html") {
+    // Treat project detail pages as part of "Projects"
+    if ((currentPath === "/project.html" || currentPath.startsWith("/projects/")) && path === "/projects.html") {
       return true;
     }
 
@@ -139,7 +139,7 @@
   }
 
   function loadLinksJson() {
-    return fetch("data/links.json", { cache: "no-store" }).then((res) => {
+    return fetch("/data/links.json", { cache: "no-store" }).then((res) => {
       if (!res.ok) throw new Error("links.json fetch failed");
       return res.json();
     });

@@ -28,16 +28,22 @@
     "badge": "",
     "caseStudy": "network-troubleshooting-lab.md",
     "updated": "2026-05-14",
-    "page": "/project.html?repo=network-troubleshooting-lab",
+    "page": "/projects/network-troubleshooting-lab.html",
     "share": "/projects/network-troubleshooting-lab.html",
-    "ogImage": "/assets/og/network-troubleshooting-lab.png"
+    "ogImage": "/assets/og/network-troubleshooting-lab.png",
+    "category": "Networking",
+    "status": "Ongoing",
+    "type": "Infrastructure / Networking",
+    "featuredOrder": 1,
+    "proof": "Project-backed VLAN, firewall, wireless and monitoring evidence.",
+    "github": "https://github.com/GregoryCarberry/network-troubleshooting-lab"
   },
   {
     "title": "Ticket Triage Dashboard",
     "owner": "GregoryCarberry",
     "repo": "ticket-triage-dashboard",
     "link": "https://github.com/GregoryCarberry/ticket-triage-dashboard",
-    "blurb": "Full-stack service desk–style ticket triage dashboard featuring filtering, status updates, self-assignment, and live metrics, built with React and a RESTful Node.js API.",
+    "blurb": "Full-stack service desk\u2013style ticket triage dashboard featuring filtering, status updates, self-assignment, and live metrics, built with React and a RESTful Node.js API.",
     "readme": "Demonstrates realistic first-line IT support workflows using an API-driven React frontend, including optimistic updates, assignment handling, and operational metrics.",
     "tags": [
       "React",
@@ -51,9 +57,15 @@
     "badge": "",
     "caseStudy": "ticket-triage-dashboard.md",
     "updated": "",
-    "page": "/project.html?repo=ticket-triage-dashboard",
+    "page": "/projects/ticket-triage-dashboard.html",
     "share": "/projects/ticket-triage-dashboard.html",
-    "ogImage": "/assets/og/ticket-triage-dashboard.png"
+    "ogImage": "/assets/og/ticket-triage-dashboard.png",
+    "category": "Support",
+    "status": "Prototype",
+    "type": "Service Desk / Development",
+    "featuredOrder": 4,
+    "proof": "Support-style workflow project for triage, ownership and status tracking.",
+    "github": "https://github.com/GregoryCarberry/ticket-triage-dashboard"
   },
   {
     "title": "API Troubleshooting Lab",
@@ -77,12 +89,18 @@
     "badge": "Case Study",
     "caseStudy": "api-troubleshooting-lab.md",
     "updated": "2026-05-10",
-    "page": "/project.html?repo=api-troubleshooting-lab",
+    "page": "/projects/api-troubleshooting-lab.html",
     "share": "/projects/api-troubleshooting-lab.html",
-    "ogImage": "/assets/og/api-troubleshooting-lab.png"
+    "ogImage": "/assets/og/api-troubleshooting-lab.png",
+    "category": "Support",
+    "status": "Ongoing",
+    "type": "API / Troubleshooting",
+    "featuredOrder": 2,
+    "proof": "Evidence of structured fault isolation, logging and API debugging.",
+    "github": "https://github.com/GregoryCarberry/api-troubleshooting-lab"
   },
   {
-    "title": "WarehouseOne — Internal Ordering & WMS",
+    "title": "WarehouseOne \u2014 Internal Ordering & WMS",
     "owner": "GregoryCarberry",
     "repo": "warehouseone",
     "link": "https://github.com/GregoryCarberry/warehouseone",
@@ -98,9 +116,15 @@
     "badge": "",
     "caseStudy": "",
     "updated": "",
-    "page": "/project.html?repo=warehouseone",
+    "page": "/projects/warehouseone.html",
     "share": "/projects/warehouseone.html",
-    "ogImage": "/assets/og/warehouseone.png"
+    "ogImage": "/assets/og/warehouseone.png",
+    "category": "Development",
+    "status": "Prototype",
+    "type": "Application / WMS",
+    "featuredOrder": 20,
+    "proof": "Internal ordering and warehouse workflow concept.",
+    "github": "https://github.com/GregoryCarberry/warehouseone"
   },
   {
     "title": "Well-Architected Static Site",
@@ -122,9 +146,15 @@
     "badge": "Case Study",
     "caseStudy": "",
     "updated": "2025-10-23",
-    "page": "/project.html?repo=well-architected-static-site",
+    "page": "/projects/well-architected-static-site.html",
     "share": "/projects/well-architected-static-site.html",
-    "ogImage": "/assets/og/well-architected-static-site.png"
+    "ogImage": "/assets/og/well-architected-static-site.png",
+    "category": "Cloud",
+    "status": "Completed",
+    "type": "Cloud / Infrastructure as Code",
+    "featuredOrder": 3,
+    "proof": "AWS static-site architecture built with Terraform and deployment discipline.",
+    "github": "https://github.com/GregoryCarberry/well-architected-static-site"
   },
   {
     "title": "Serverless CRUD (API Gateway + Lambda + DynamoDB)",
@@ -145,9 +175,15 @@
     "badge": "",
     "caseStudy": "",
     "updated": "",
-    "page": "/project.html?repo=serverless-crud-api",
+    "page": "/projects/serverless-crud-api.html",
     "share": "/projects/serverless-crud-api.html",
-    "ogImage": "/assets/og/serverless-crud-api.png"
+    "ogImage": "/assets/og/serverless-crud-api.png",
+    "category": "Cloud",
+    "status": "Planned",
+    "type": "Cloud / Serverless",
+    "featuredOrder": 30,
+    "proof": "Serverless CRUD API concept using managed AWS services.",
+    "github": "https://github.com/GregoryCarberry/serverless-crud-api"
   },
   {
     "title": "Event-Driven Image Pipeline",
@@ -168,9 +204,15 @@
     "badge": "",
     "caseStudy": "",
     "updated": "",
-    "page": "/project.html?repo=event-driven-image-pipeline",
+    "page": "/projects/event-driven-image-pipeline.html",
     "share": "/projects/event-driven-image-pipeline.html",
-    "ogImage": "/assets/og/event-driven-image-pipeline.png"
+    "ogImage": "/assets/og/event-driven-image-pipeline.png",
+    "category": "Cloud",
+    "status": "Planned",
+    "type": "Cloud / Event Driven",
+    "featuredOrder": 31,
+    "proof": "Event-driven image processing concept.",
+    "github": "https://github.com/GregoryCarberry/event-driven-image-pipeline"
   },
   {
     "title": "IaC VPC Baseline",
@@ -191,9 +233,15 @@
     "badge": "",
     "caseStudy": "",
     "updated": "",
-    "page": "/project.html?repo=iac-vpc-baseline",
+    "page": "/projects/iac-vpc-baseline.html",
     "share": "/projects/iac-vpc-baseline.html",
-    "ogImage": "/assets/og/iac-vpc-baseline.png"
+    "ogImage": "/assets/og/iac-vpc-baseline.png",
+    "category": "Cloud",
+    "status": "Planned",
+    "type": "Cloud / IaC",
+    "featuredOrder": 32,
+    "proof": "Baseline VPC and infrastructure pattern.",
+    "github": "https://github.com/GregoryCarberry/iac-vpc-baseline"
   },
   {
     "title": "Amazon Connect Call-Quality Monitor",
@@ -213,9 +261,15 @@
     "badge": "",
     "caseStudy": "",
     "updated": "",
-    "page": "/project.html?repo=ac-call-quality-monitor",
+    "page": "/projects/ac-call-quality-monitor.html",
     "share": "/projects/ac-call-quality-monitor.html",
-    "ogImage": "/assets/og/ac-call-quality-monitor.png"
+    "ogImage": "/assets/og/ac-call-quality-monitor.png",
+    "category": "Cloud",
+    "status": "Planned",
+    "type": "Cloud / Observability",
+    "featuredOrder": 33,
+    "proof": "Amazon Connect monitoring and dashboard concept.",
+    "github": "https://github.com/GregoryCarberry/ac-call-quality-monitor"
   },
   {
     "title": "Containerised App on ECS Fargate",
@@ -236,8 +290,14 @@
     "badge": "",
     "caseStudy": "",
     "updated": "",
-    "page": "/project.html?repo=ecs-fargate-app",
+    "page": "/projects/ecs-fargate-app.html",
     "share": "/projects/ecs-fargate-app.html",
-    "ogImage": "/assets/og/ecs-fargate-app.png"
+    "ogImage": "/assets/og/ecs-fargate-app.png",
+    "category": "Cloud",
+    "status": "Planned",
+    "type": "Cloud / Containers",
+    "featuredOrder": 34,
+    "proof": "Container deployment concept on ECS Fargate.",
+    "github": "https://github.com/GregoryCarberry/ecs-fargate-app"
   }
 ]

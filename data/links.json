@@ -1,16 +1,62 @@
 [
-  { "slot": "brand", "label": "GJC \u2022 Technical Portfolio", "href": "/" },
-
-  { "slot": "nav", "label": "All Projects", "href": "/projects.html" },
-  { "slot": "nav", "label": "Certs & Skills", "href": "/certifications.html" },
-  { "slot": "nav", "label": "Contact", "href": "/contact.html" },
-  { "slot": "nav", "label": "About Me", "href": "/about.html" },
-
-  { "slot": "hero", "label": "LinkedIn", "href": "https://www.linkedin.com/in/gregory-carberry/" },
-  { "slot": "hero", "label": "Credly", "href": "https://www.credly.com/users/gregory-carberry" },
-  { "slot": "hero", "label": "Email", "href": "mailto:Carberry.GJ@gmail.com" },
-
-  { "slot": "contact", "label": "Email", "href": "mailto:Carberry.GJ@gmail.com" },
-  { "slot": "contact", "label": "LinkedIn", "href": "https://www.linkedin.com/in/gregory-carberry/" },
-  { "slot": "contact", "label": "GitHub", "href": "https://github.com/GregoryCarberry" }
+  {
+    "slot": "brand",
+    "label": "GJC \u2022 Technical Portfolio",
+    "href": "/"
+  },
+  {
+    "slot": "nav",
+    "label": "Projects",
+    "href": "/projects.html"
+  },
+  {
+    "slot": "nav",
+    "label": "Certs & Skills",
+    "href": "/certifications.html"
+  },
+  {
+    "slot": "nav",
+    "label": "About",
+    "href": "/about.html"
+  },
+  {
+    "slot": "nav",
+    "label": "Contact",
+    "href": "/contact.html"
+  },
+  {
+    "slot": "hero",
+    "label": "LinkedIn",
+    "href": "https://www.linkedin.com/in/gregory-carberry/"
+  },
+  {
+    "slot": "hero",
+    "label": "GitHub",
+    "href": "https://github.com/GregoryCarberry"
+  },
+  {
+    "slot": "hero",
+    "label": "Credly",
+    "href": "https://www.credly.com/users/gregory-carberry"
+  },
+  {
+    "slot": "contact",
+    "label": "Email",
+    "href": "mailto:Carberry.GJ@gmail.com"
+  },
+  {
+    "slot": "contact",
+    "label": "LinkedIn",
+    "href": "https://www.linkedin.com/in/gregory-carberry/"
+  },
+  {
+    "slot": "contact",
+    "label": "GitHub",
+    "href": "https://github.com/GregoryCarberry"
+  },
+  {
+    "slot": "contact",
+    "label": "Credly",
+    "href": "https://www.credly.com/users/gregory-carberry"
+  }
 ]

@@ -1,25 +1,212 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Network Segmentation &amp; Troubleshooting Lab — Gregory John Carberry</title>
-  <meta name="description" content="Living home lab running OPNsense on an HP t730, with multi-VLAN segmentation, Cisco wireless, Pi-hole DNS filtering, Grafana monitoring, and real troubleshooting scenarios." />
+  <meta name="description" content="OPNsense, VLAN segmentation, Cisco wireless, Pi-hole DNS, monitoring and real cross-VLAN troubleshooting in a practical home network lab." />
   <link rel="canonical" href="https://gregorycarberry.github.io/projects/network-troubleshooting-lab.html" />
-
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @custom-variant dark (&:where(.dark, .dark *));
+    @theme { --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  </style>
+  <link rel="stylesheet" href="/assets/site.css?v=20260515">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Network Segmentation &amp; Troubleshooting Lab" />
-  <meta property="og:description" content="Living home lab running OPNsense on an HP t730, with multi-VLAN segmentation, Cisco wireless, Pi-hole DNS filtering, Grafana monitoring, and real troubleshooting scenarios." />
+  <meta property="og:description" content="Practical home network lab using OPNsense, VLANs, Cisco wireless, Pi-hole DNS, monitoring and real troubleshooting scenarios." />
   <meta property="og:url" content="https://gregorycarberry.github.io/projects/network-troubleshooting-lab.html" />
   <meta property="og:image" content="https://gregorycarberry.github.io/assets/og/network-troubleshooting-lab.png" />
-
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Network Segmentation &amp; Troubleshooting Lab" />
-  <meta name="twitter:description" content="Living home lab running OPNsense on an HP t730, with multi-VLAN segmentation, Cisco wireless, Pi-hole DNS filtering, Grafana monitoring, and real troubleshooting scenarios." />
-  <meta name="twitter:image" content="https://gregorycarberry.github.io/assets/og/network-troubleshooting-lab.png" />
-
-  <!-- Redirect humans to the dynamic project page (LinkedIn will read the OG tags above) -->
-  <meta http-equiv="refresh" content="0; url=/project.html?repo=network-troubleshooting-lab" />
 </head>
-<body></body>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="sticky top-0 z-50 backdrop-blur bg-white/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a id="brandLink" href="/" class="font-semibold tracking-tight relative group"><span class="relative z-10"></span></a>
+      <nav id="navLinks" role="navigation" aria-label="Primary" class="hidden sm:flex gap-6 text-sm"></nav>
+      <button id="themeToggle" aria-label="Toggle theme" class="text-sm px-3 py-1 rounded-full border border-slate-300/60 dark:border-slate-700">🌙</button>
+    </div>
+  </header>
+
+  <main id="main" class="max-w-6xl mx-auto px-4 py-10 sm:py-14">
+    <nav class="text-sm text-slate-500 dark:text-slate-400" aria-label="Breadcrumb">
+      <a href="/projects.html" class="underline hover:text-indigo-500">Projects</a>
+      <span aria-hidden="true"> / </span>
+      <span>Network Segmentation &amp; Troubleshooting Lab</span>
+    </nav>
+
+    <section class="mt-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-6 sm:p-8">
+      <div class="max-w-4xl">
+        <p class="text-sm font-semibold tracking-widest uppercase text-indigo-500">Networking · Ongoing project</p>
+        <h1 class="mt-3 text-3xl sm:text-5xl font-extrabold leading-tight">Network Segmentation &amp; Troubleshooting Lab</h1>
+        <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
+          A live home network lab using OPNsense, managed switching, Cisco wireless infrastructure, Pi-hole DNS and monitoring to separate trusted, IoT, guest and management traffic while keeping useful services working.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2 text-xs">
+          <span class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">Featured</span>
+          <span class="px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700">OPNsense</span>
+          <span class="px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700">VLANs</span>
+          <span class="px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700">Cisco WLC</span>
+          <span class="px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700">Pi-hole</span>
+          <span class="px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700">Monitoring</span>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-3 text-sm">
+          <a href="https://github.com/GregoryCarberry/network-troubleshooting-lab" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-full px-4 py-2 font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition">View GitHub repo</a>
+          <a href="/projects.html" class="inline-flex items-center justify-center rounded-full px-4 py-2 font-medium border border-slate-300 dark:border-slate-700 hover:bg-slate-100/60 dark:hover:bg-slate-800/80 transition">Back to projects</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_18rem]">
+      <article class="space-y-10">
+        <section class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 p-5 sm:p-6">
+          <h2 class="text-2xl font-bold">TL;DR</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">
+            This project demonstrates practical network design and troubleshooting: VLAN segmentation, firewall rule design, controlled cross-VLAN access, wireless SSID mapping, DNS filtering, monitoring, and documentation of real-world trade-offs using mixed home-lab hardware.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">What this demonstrates</h2>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 p-4">VLAN design across trusted, IoT, guest and management networks.</div>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 p-4">OPNsense firewalling, DHCP, DNS and inter-VLAN routing decisions.</div>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 p-4">Cisco wireless controller SSID-to-VLAN mapping and AP deployment.</div>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 p-4">Structured troubleshooting using logs, client tests and monitoring evidence.</div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">Overview</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">
+            The lab is built around a real home network rather than a simulated-only topology. The current baseline uses a Virgin Hub in modem mode feeding an HP t730 running OPNsense, then a Zyxel GS1920-24v1 switch, a Cisco SG300, a Cisco 2504 WLC and wired Cisco access points.
+          </p>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">
+            The goal is not to make the network unnecessarily complex. The goal is to create realistic support and infrastructure scenarios: client isolation, broken DNS, firewall rule order, multicast/media discovery, switch trunking, management access and monitoring visibility.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">Objective</h2>
+          <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">
+            <li>• Separate trusted, IoT, guest and management traffic using VLANs and firewall policy.</li>
+            <li>• Keep the network usable for normal home devices while reducing unnecessary lateral access.</li>
+            <li>• Use the lab to practise methodical troubleshooting rather than changing settings blindly.</li>
+            <li>• Build evidence suitable for support, infrastructure, networking and security-adjacent roles.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">Tools &amp; technologies</h2>
+          <div class="mt-4 flex flex-wrap gap-2 text-sm">
+            <span class="chip">OPNsense</span><span class="chip">HP t730</span><span class="chip">Zyxel GS1920-24v1</span><span class="chip">Cisco SG300</span><span class="chip">Cisco 2504 WLC</span><span class="chip">Cisco Aironet APs</span><span class="chip">802.1Q VLANs</span><span class="chip">Pi-hole</span><span class="chip">Debian</span><span class="chip">Docker</span><span class="chip">Prometheus</span><span class="chip">Grafana</span>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">Build / implementation</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">
+            OPNsense acts as the central Layer 3 router and firewall. The switches carry VLANs at Layer 2, while wireless SSIDs map to the correct VLANs through the Cisco WLC. DNS filtering and visibility are provided through Pi-hole, with monitoring handled by services running on a Debian host.
+          </p>
+          <div class="mt-4 overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+            <table class="w-full text-sm">
+              <thead class="bg-slate-100 dark:bg-slate-900"><tr><th class="text-left p-3">VLAN</th><th class="text-left p-3">Subnet</th><th class="text-left p-3">Purpose</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tr><td class="p-3">10</td><td class="p-3">10.10.10.0/24</td><td class="p-3">Trusted devices and admin workstation access</td></tr>
+                <tr><td class="p-3">20</td><td class="p-3">10.10.20.0/24</td><td class="p-3">IoT and media devices with restricted access</td></tr>
+                <tr><td class="p-3">30</td><td class="p-3">10.10.30.0/24</td><td class="p-3">Guest network with internet-only behaviour</td></tr>
+                <tr><td class="p-3">99</td><td class="p-3">10.10.99.0/24</td><td class="p-3">Management network for infrastructure</td></tr>
+                <tr><td class="p-3">999</td><td class="p-3">No normal client subnet</td><td class="p-3">Parking / unused-port isolation VLAN</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">Troubleshooting &amp; decisions</h2>
+          <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">
+            <li>• Moved routing and policy from OpenWrt to OPNsense to give the lab a stronger firewall and observability baseline.</li>
+            <li>• Kept switching at Layer 2 so firewall policy remains centralised and easier to reason about.</li>
+            <li>• Validated guest isolation by allowing required DNS/internet behaviour without allowing internal reachability.</li>
+            <li>• Solved Chromecast and media usability by allowing controlled access rather than flattening the IoT network.</li>
+            <li>• Treated older hardware as a design constraint rather than pretending the lab is a perfect greenfield build.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">Testing &amp; validation</h2>
+          <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">
+            <li>• Confirmed DHCP, gateway and DNS behaviour per VLAN.</li>
+            <li>• Tested that guest clients can reach the internet but not internal networks.</li>
+            <li>• Tested Trusted-to-IoT access where required for media control, while preventing broad IoT-to-Trusted initiation.</li>
+            <li>• Verified Cisco WLC SSID mappings for Trusted, IoT and Guest wireless networks.</li>
+            <li>• Used Pi-hole, firewall logs and monitoring dashboards to check behaviour instead of relying on assumptions.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">Outcome</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">
+            The lab is now a stable, usable segmented network with working guest isolation, separated IoT devices, controlled media access, DNS filtering and monitoring. It also gives me a realistic environment for future documentation, diagrams, dashboard screenshots and deeper technical side pages.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">What I learned</h2>
+          <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">
+            <li>• Segmentation only matters when firewall rules, DNS, DHCP and real client workflows are tested together.</li>
+            <li>• Some “simple” home-network features, such as casting, expose genuinely useful troubleshooting problems.</li>
+            <li>• Clear documentation is part of the engineering work, not an afterthought.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold">Further detail / links</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">
+            This page is intentionally the recruiter-readable version. Deeper technical pages for diagrams, dashboards, firewall examples and troubleshooting notes can be added later without overloading the main case study.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-3 text-sm">
+            <a href="https://github.com/GregoryCarberry/network-troubleshooting-lab" target="_blank" rel="noopener" class="underline text-indigo-600 dark:text-indigo-400">GitHub repository</a>
+            <a href="/projects.html" class="underline text-indigo-600 dark:text-indigo-400">All projects</a>
+          </div>
+        </section>
+      </article>
+
+      <aside class="lg:sticky lg:top-24 self-start space-y-4">
+        <section class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-5">
+          <h2 class="font-semibold">Project metadata</h2>
+          <dl class="mt-4 space-y-3 text-sm">
+            <div><dt class="text-slate-500 dark:text-slate-400">Type</dt><dd>Infrastructure / Networking</dd></div>
+            <div><dt class="text-slate-500 dark:text-slate-400">Status</dt><dd>Ongoing</dd></div>
+            <div><dt class="text-slate-500 dark:text-slate-400">Updated</dt><dd>May 2026</dd></div>
+            <div><dt class="text-slate-500 dark:text-slate-400">Environment</dt><dd>Physical home lab</dd></div>
+          </dl>
+        </section>
+        <section class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-5">
+          <h2 class="font-semibold">Useful for roles involving</h2>
+          <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>• IT support</li>
+            <li>• Infrastructure support</li>
+            <li>• Network troubleshooting</li>
+            <li>• Cloud/security-adjacent support</li>
+            <li>• Technical documentation</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="py-10 text-center text-xs text-slate-500 border-t border-slate-200/70 dark:border-slate-800">
+    © <span id="year"></span> Gregory John Carberry • Built with Tailwind • Hosted on GitHub Pages
+    <div class="mt-2">Last updated: <span id="lastUpdated">—</span></div>
+  </footer>
+  <script defer src="/assets/common.js?v=20260515"></script>
+</body>
 </html>

@@ -25,7 +25,7 @@
   </style>
 
   <!-- Shared styles -->
-  <link rel="stylesheet" href="assets/site.css?v=20260210">
+  <link rel="stylesheet" href="assets/site.css?v=20260515">
 
   <!-- Colour scheme hints -->
   <meta name="color-scheme" content="dark light">
@@ -71,12 +71,11 @@
         Certifications &amp; Skills Overview
       </h1>
       <p class="mt-4 text-slate-600 dark:text-slate-300">
-        A consolidated view of the certifications, learning paths, and technical skills
-        that underpin the projects and case studies in this portfolio.
+        A role-focused view of the certifications, technical skills and learning paths behind this portfolio.
+        The aim is simple: show what I can support, troubleshoot, configure and continue building on.
       </p>
       <p class="mt-2 text-slate-600 dark:text-slate-300">
-        This page focuses on <strong>what I’ve studied</strong> and <strong>what I can work with</strong>.
-        The portfolio itself shows <strong>how I apply it</strong>.
+        Certifications are useful evidence of structured learning. The project pages show how that knowledge is applied in practice.
       </p>
 
       <div class="mt-5 flex flex-wrap gap-3 text-sm">
@@ -104,9 +103,28 @@
       </div>
     </header>
 
-    <!-- Certifications by area (data-driven) -->
     <section class="mt-12">
-      <h2 class="text-2xl font-bold">Key Certifications</h2>
+      <h2 class="text-2xl font-bold">Role-Focused Skill Areas</h2>
+      <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
+        These are the areas most relevant to IT support, technical service desk, cloud support, infrastructure support and security-adjacent roles.
+      </p>
+
+      <div id="skillsDomains" class="mt-6 grid gap-6 md:grid-cols-2">
+        <p class="text-sm text-slate-500 dark:text-slate-400">Loading skills…</p>
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold">Most Relevant Certifications</h2>
+      <p class="mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
+        A short, role-relevant selection first. The full grouped list follows below.
+      </p>
+      <div id="relevantCerts" class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+
+    <!-- Certifications by area (data-driven) -->
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold">All Certifications by Area</h2>
       <p class="hidden mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
         Data-driven from <code>data/certifications-page.json</code>. Edit that file to add, remove,
         or reorganise certifications without touching this HTML.
@@ -118,19 +136,6 @@
       </div>
     </section>
 
-    <!-- Skills grouped by domain (data-driven) -->
-    <section class="mt-16">
-      <h2 class="text-2xl font-bold">Skills by Domain</h2>
-      <p class="hidden mt-3 max-w-5xl text-slate-600 dark:text-slate-300">
-        Data-driven from <code>data/skills-page.json</code>. This is designed to be editor-friendly:
-        each domain is just a title plus an array of short skill labels.
-      </p>
-
-      <div id="skillsDomains" class="mt-6 grid gap-6 md:grid-cols-2">
-        <!-- Loading state -->
-        <p class="text-sm text-slate-500 dark:text-slate-400">Loading skills…</p>
-      </div>
-    </section>
 
     <!-- Closing note -->
     <section class="mt-16 max-w-5xl">
@@ -141,8 +146,7 @@
         are where I put this knowledge into practice — from AWS builds to troubleshooting and automation work.
       </p>
       <p class="mt-3 text-slate-600 dark:text-slate-300">
-        If you’d like to understand how any of these certifications or skills map onto a particular role,
-        feel free to get in touch or ask about a specific area.
+        If you want the practical evidence behind a skill area, start with the projects page and follow the links into the individual project write-ups.
       </p>
 
       <div class="mt-6 flex flex-wrap gap-3 text-sm">
@@ -174,7 +178,7 @@
   </footer>
 
   <!-- Shared JS -->
-  <script defer src="assets/common.js?v=20260210"></script>
+  <script defer src="assets/common.js?v=20260515"></script>
   <script defer src="assets/certifications.js"></script>
 </body>
 
