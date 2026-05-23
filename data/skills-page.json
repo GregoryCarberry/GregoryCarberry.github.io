@@ -10,7 +10,8 @@
         "GitHub Actions",
         "Linux basics",
         "Networking fundamentals (TCP/IP, DNS, LAN/WAN)"
-      ]
+      ],
+      "summary": "AWS, Terraform, Linux and infrastructure basics, backed by cloud projects and a working home-lab environment."
     },
     {
       "id": "security",
@@ -22,7 +23,8 @@
         "Endpoint & system protection",
         "Incident response fundamentals",
         "Critical infrastructure protection basics"
-      ]
+      ],
+      "summary": "Security fundamentals, network hardening, access control and incident-response concepts applied through lab work and structured learning."
     },
     {
       "id": "dev-automation",
@@ -33,7 +35,8 @@
         "API consumption & CLI tooling",
         "Git & GitHub workflows",
         "Network programmability (Cisco DevNet concepts)"
-      ]
+      ],
+      "summary": "Python, Bash, APIs, Git and automation practices used to build troubleshooting tools and repeatable project workflows."
     },
     {
       "id": "support-itsm",
@@ -45,7 +48,8 @@
         "ITIL / ISO/IEC 20000 awareness",
         "Jira & Jira Service Management",
         "Customer communication"
-      ]
+      ],
+      "summary": "Service-desk style thinking: incident triage, documentation, communication, root-cause analysis and practical support workflows."
     }
   ]
 }
